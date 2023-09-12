@@ -4,7 +4,8 @@ import { StyleSheet, View, Alert, Button } from "react-native";
 import { Input } from "react-native-elements";
 import { Session } from "@supabase/supabase-js";
 
-export default function Account({ session }: { session: Session }) {
+
+export default function AccountScreen({ session }: any) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
 
