@@ -4,13 +4,15 @@ import { StyleSheet, View, Alert, Button } from "react-native";
 import { Input } from "react-native-elements";
 import { Session } from "@supabase/supabase-js";
 
-
-export default function AccountScreen({ session }: any) {
+export default function AccountScreen(props: any) {
   const [loading, setLoading] = useState(true);
   const [username, setUsername] = useState("");
 
+  const session = props.route.params.session;
+
   useEffect(() => {
     if (session) getProfile();
+    console.log("session", session);
   }, [session]);
 
   async function getProfile() {

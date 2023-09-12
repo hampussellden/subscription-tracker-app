@@ -4,10 +4,9 @@ import { supabase } from "./lib/supabase";
 import LoginScreen from "./src/Screens/LoginScreen";
 import { View } from "react-native";
 import { Session } from "@supabase/supabase-js";
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack'
+import { NavigationContainer } from "@react-navigation/native";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AccountScreen from "./src/Screens/AccountScreen";
-
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -25,21 +24,21 @@ export default function App() {
   const Stack = createNativeStackNavigator();
 
   return (
-    <View>
     <NavigationContainer>
       <Stack.Navigator>
-      {session && session.user ? (
-        <AccountScreen key={session.user.id} session={session} />
+        {session && session.user ? (
+          <Stack.Screen
+            name='Account'
+            component={AccountScreen}
+            initialParams={{ session: session }}
+          />
         ) : (
-            <LoginScreen />
-          // <Stack.Screen
-          // name="AccountScreen"
-          // component={AccountScreen}
-          // options={{title: 'Welcome'}}
-          // />
-          )}
-          </Stack.Navigator>
+          // <AccountScreen key={session.user.id} session={session} />
+          // <AccountScreen key={session.user.id} session={session} />
+          // <LoginScreen />
+          <Stack.Screen name='Login' component={LoginScreen} />
+        )}
+      </Stack.Navigator>
     </NavigationContainer>
-    </View>
   );
 }
