@@ -27,16 +27,25 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         {session && session.user ? (
+          // {
+          // tos_accepted != true &&
+          // <Stack.Screen name="onboardingScreen" component={OnboardingScreen} />
+          // }
+          // {
+          //   // <Stack.Screen name="homeScreen" component={HomeScreen} />
+          //   // <Stack.Screen name="subscriptionInfoScreen" component={SubscriptionInfoScreen} />
+          //   // <Stack.Screen name="AddSubscriptionScreen" component={AddSubscriptionScreen} />
+          //   // <Stack.Screen name="AppSettingsSCreen" component={AppSettingsScreen} />
+          //   // <Stack.Screen name="AddNewUserScreen" component={AddNewUserScreen} />
+          // }
           <Stack.Screen
             name='Account'
             component={AccountScreen}
             initialParams={{ session: session }}
           />
         ) : (
-          // <AccountScreen key={session.user.id} session={session} />
-          // <AccountScreen key={session.user.id} session={session} />
-          // <LoginScreen />
           <Stack.Screen name='Login' component={LoginScreen} />
+          // <Stack.Sreen name="RegisterScreen" component={RegisterScreen} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
