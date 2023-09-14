@@ -50,7 +50,7 @@ function OnboardingScreen(props: any) {
       console.log(error);
     }
 
-    Alert.alert('Pressed')
+    Alert.alert('Terms accepted')
   }
 
   return (
