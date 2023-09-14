@@ -12,6 +12,7 @@ import RegisterScreen from "./src/Screens/RegisterScreen";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
+  const [tosAccepted, setTosAccepted] = useState(false)
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -22,6 +23,32 @@ export default function App() {
       setSession(session);
     });
   }, []);
+
+  useEffect(() => {
+    const fetchTos = async () => {
+      if(session) {
+        const {data: tos} = await supabase
+        .from('profiles')
+        .select('tos_accepted')
+        .eq('id',session.user.id )
+  
+        
+        console.log(tos);
+        
+        if(tos) {
+            const tosAccepted = tos[0].tos_accepted as boolean;
+            setTosAccepted(tosAccepted);
+        }
+      }
+    }
+    fetchTos()
+  }, [])
+
+  console.log(tosAccepted);
+
+  // console.log(session?.user);
+  
+  
 
   const Stack = createNativeStackNavigator();
 
@@ -41,16 +68,21 @@ export default function App() {
           //   // <Stack.Screen name="AddNewUserScreen" component={AddNewUserScreen} />
           // }
           <>
-            <Stack.Screen
+          {/* {!tosAccepted && <Stack.Screen
               initialParams={{ session: session }}
               name='Onboard'
               component={OnboardingScreen}
-            />
+            />} */}
+
+            {!tosAccepted &&
             <Stack.Screen
               name='Account'
               component={AccountScreen}
               initialParams={{ session: session }}
             />
+            
+            }
+           
           </>
         ) : (
           <>
