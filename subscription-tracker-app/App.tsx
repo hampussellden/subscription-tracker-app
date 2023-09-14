@@ -7,6 +7,7 @@ import { Session } from "@supabase/supabase-js";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import AccountScreen from "./src/Screens/AccountScreen";
+import OnboardingScreen from "./OnboardingScreen";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -38,12 +39,16 @@ export default function App() {
           //   // <Stack.Screen name="AppSettingsSCreen" component={AppSettingsScreen} />
           //   // <Stack.Screen name="AddNewUserScreen" component={AddNewUserScreen} />
           // }
+          <>
+          <Stack.Screen  name="Onboard" component={OnboardingScreen}/>
           <Stack.Screen
-            name='Account'
-            component={AccountScreen}
-            initialParams={{ session: session }}
+          name='Account'
+          component={AccountScreen}
+          initialParams={{ session: session }}
           />
+          </>
         ) : (
+         
           <Stack.Screen name='Login' component={LoginScreen} />
           // <Stack.Sreen name="RegisterScreen" component={RegisterScreen} />
         )}
