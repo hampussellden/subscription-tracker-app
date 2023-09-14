@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Alert, StyleSheet, View, Text, Pressable } from "react-native";
-import { Button } from "react-native-elements";
+import { Alert, StyleSheet, View, Text, Pressable, Image } from "react-native";
+import { Button, Input } from "react-native-elements";
 import { supabase } from "../../lib/supabase";
-import { Input } from "react-native-elements";
+import { rnwlLogo } from "../images/images";
 
 export default function LoginScreen({ navigation }: any) {
   const [email, setEmail] = useState("");
@@ -22,27 +22,34 @@ export default function LoginScreen({ navigation }: any) {
 
   return (
     <View style={styles.container}>
+      <Image style={styles.logo} source={rnwlLogo} />
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input
-          label='Email'
-          rightIcon={{ type: "font-awesome", name: "envelope" }}
+          label='Emailadress:'
+          labelStyle={{ color: "black", fontSize: 22 }}
           onChangeText={(text) => setEmail(text)}
           value={email}
-          placeholder='email@address.com'
+          placeholder='jane@doe.com'
+          placeholderTextColor={"rgba(0,0,0,0.5)"}
           autoCapitalize={"none"}
           style={styles.textInput}
+          underlineColorAndroid='transparent'
+          inputContainerStyle={{ borderBottomWidth: 0 }}
         />
       </View>
       <View style={styles.verticallySpaced}>
         <Input
-          label='Password'
-          rightIcon={{ type: "font-awesome", name: "lock" }}
+          label='Lösenord:'
+          labelStyle={{ color: "black", fontSize: 22 }}
           onChangeText={(text) => setPassword(text)}
           value={password}
           secureTextEntry={true}
-          placeholder='Password'
+          placeholder='********'
+          placeholderTextColor={"rgba(0,0,0,0.5)"}
           autoCapitalize={"none"}
           style={styles.textInput}
+          underlineColorAndroid='transparent'
+          inputContainerStyle={{ borderBottomWidth: 0 }}
         />
       </View>
       <View style={styles.row}>
@@ -51,14 +58,22 @@ export default function LoginScreen({ navigation }: any) {
           <Text style={styles.link}>Skapa Konto</Text>
         </Pressable>
       </View>
-      <View style={[styles.verticallySpaced, styles.mt20]}>
-        <Button
-          title='Sign in'
-          style={{ width: 200 }}
-          disabled={loading}
-          onPress={() => signInWithEmail()}
-        />
-      </View>
+      <Button
+        title='Sign in'
+        titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
+        buttonStyle={{
+          marginTop: 20,
+          width: "100%",
+          maxWidth: 396,
+          paddingHorizontal: 24,
+          paddingVertical: 16,
+          borderRadius: 5,
+          backgroundColor: "rgba(0, 0, 0, 1)",
+          alignSelf: "center",
+        }}
+        disabled={loading}
+        onPress={() => signInWithEmail()}
+      />
     </View>
   );
 }
@@ -69,8 +84,10 @@ const styles = StyleSheet.create({
     padding: 12,
   },
   textInput: {
-    borderRadius: 1,
-    borderColor: "black",
+    borderRadius: 4,
+    backgroundColor: "'rgba(0, 0, 0, 0.25)'",
+    boxShadow: "2px 2px 4px 0px rgba(0, 0, 0, 0.25) inset",
+    padding: 10,
   },
   verticallySpaced: {
     display: "flex",
@@ -93,5 +110,12 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     marginTop: 12,
     gap: 4,
+  },
+  logo: {
+    height: 50,
+    width: "100%",
+    resizeMode: "contain",
+    marginBottom: 20,
+    marginTop: 20,
   },
 });
