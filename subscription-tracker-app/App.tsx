@@ -40,7 +40,7 @@ export default function App() {
           //   // <Stack.Screen name="AddNewUserScreen" component={AddNewUserScreen} />
           // }
           <>
-          <Stack.Screen  name="Onboard" component={OnboardingScreen}/>
+          <Stack.Screen initialParams={{session: session}} name="Onboard" component={OnboardingScreen}/>
           <Stack.Screen
           name='Account'
           component={AccountScreen}

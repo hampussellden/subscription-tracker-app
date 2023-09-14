@@ -5,6 +5,20 @@ import { supabase } from './lib/supabase';
 import { Session } from "@supabase/supabase-js";
 
 function OnboardingScreen(props: any) {
+  // const [session, setSession] = useState<Session | null>(null);
+
+  // const session = props.route.params.session;
+
+  // useEffect(() => {
+  //   if (session) getProfile();
+  //   console.log("session", session);
+  // }, [session]);
+  const session = props.route.params.session;
+
+  console.log( session.user.id);
+  
+
+
 
   // const session = props.route.params.session;
 
@@ -30,7 +44,7 @@ function OnboardingScreen(props: any) {
     const {error} = await supabase
     .from('profiles')
     .update({tos_accepted: true} )
-    .eq('id', 1)
+    .eq('id', session.user.id)
 
     if(error) {
       console.log(error);
