@@ -80,9 +80,6 @@ export default function App() {
               component={AccountScreen}
               initialParams={{ session: session }}
             />
-            
-            
-           
           </>
         ) : (
           <>

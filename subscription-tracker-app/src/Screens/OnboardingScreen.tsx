@@ -8,6 +8,7 @@ import {
 } from "../images/images";
 import { supabase } from "../../lib/supabase";
 import { Session } from "@supabase/supabase-js";
+import { arrowRight } from "../images/images";
 
 function OnboardingScreen(props: any) {
   const [tosAccepted, setTosAccepted] = useState<boolean | null>(null)
@@ -32,13 +33,8 @@ fetchTos()
 })
 
 
-
-// console.log(tosAccepted);
-
-
   const session = props.route.params.session;
 
-  // console.log( session.user.id);
 
   const [count, setCount] = useState(0);
 
@@ -72,11 +68,6 @@ fetchTos()
 
     props.navigation.navigate('Account');
   }
-
-  console.log(tosAccepted);
-  
-  
-  
 
   if(tosAccepted) {
     props.navigation.navigate('Account')
@@ -116,8 +107,6 @@ fetchTos()
           paddingVertical: 16,
           borderRadius: 5,
           backgroundColor: "rgba(0, 0, 0, 1)",
-          // marginTop: 28,
-          // marginBottom: 48,
         }}
         onPress={() => handlePress()}
       />
@@ -126,13 +115,13 @@ fetchTos()
       </View>
       <View style={count <2 ? styles.navContainer : styles.navContainerLast}>
       <TouchableOpacity onPress={decrement}>
-      <Text style={styles.p}>L</Text>
+      <Image style={styles.arrowLeft} source={arrowRight}/>
       </TouchableOpacity>
       <View style={ count <= 0 ?styles.indicatorActive : styles.indicator}></View>
       <View style={count == 1 ?styles.indicatorActive : styles.indicator}></View>
       <View style={count >= 2 ?styles.indicatorActive : styles.indicator}></View>
         <TouchableOpacity onPress={increment}>
-          <Text style={styles.p}>R</Text>
+          <Image source={arrowRight}/>
         </TouchableOpacity>
       </View>
     </View>
@@ -143,7 +132,7 @@ const styles = StyleSheet.create({
   screenWrapper: {
     height: "100%",
     flexDirection: "column",
-// justifyContent: 'space-between'
+    justifyContent: 'space-between'
   },
   header: {
     height: 392,
@@ -158,8 +147,8 @@ const styles = StyleSheet.create({
   },
   h1: {
     fontSize: 32,
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: -30,
+    marginBottom: 10,
   },
   p: {
     fontSize: 18,
@@ -169,7 +158,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 55,
      // backgroundColor: 'blue',
-     marginTop: 110,
+    //  marginTop: 110,
      marginBottom: 2,
      alignItems: 'center',
      justifyContent: 'space-around'
@@ -195,7 +184,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'black'
   },
-  arrow: {},
+  arrowLeft: {
+    transform: 'rotate(180deg)',
+  },
 });
 
 export default OnboardingScreen;
