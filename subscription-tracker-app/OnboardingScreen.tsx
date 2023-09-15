@@ -3,16 +3,37 @@ import { StyleSheet, View, Alert, Button, Text, Image, TouchableOpacity } from "
 import { onBoardingOne, onBoardingTwo, onBoardingThree } from './src/images/images';
 import { supabase } from './lib/supabase';
 import { Session } from "@supabase/supabase-js";
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import LoginScreen from "./src/Screens/LoginScreen";
 
 function OnboardingScreen(props: any) {
-  // const [session, setSession] = useState<Session | null>(null);
+  const [tosAccepted, setTosAccepted] = useState<boolean | null>(null)
 
-  // const session = props.route.params.session;
+useEffect(() => {
+  const fetchTos = async () => {
+    const {data, error} = await supabase
+    .from('profiles')
+    .select('tos_accepted')
+    .eq('id', session?.user.id)
 
-  // useEffect(() => {
-  //   if (session) getProfile();
-  //   console.log("session", session);
-  // }, [session]);
+    if(data) {
+      setTosAccepted(data[0].tos_accepted)
+    }
+
+    if(error) {
+      console.log(error);
+    }
+  }
+
+fetchTos()
+})
+
+
+
+console.log(tosAccepted);
+
+
   const session = props.route.params.session;
 
   console.log( session.user.id);
@@ -51,7 +72,15 @@ function OnboardingScreen(props: any) {
     }
 
     Alert.alert('Terms accepted')
+
+    props.navigation.navigate('Account');
   }
+
+  if(tosAccepted) {
+    props.navigation.navigate('Account')
+  }
+
+
 
   return (
     <View style={styles.screenWrapper}>
@@ -71,6 +100,7 @@ function OnboardingScreen(props: any) {
         <Text>Nu när du har lagt till dina prenumerationer, kan du se en tydlig översikt över dina utgifter. [Appens Namn] hjälper dig att hålla koll på din budget och föreslår sätt att spara pengar. Låt oss tillsammans förbättra din ekonomiska situation! Lycka till med din onboarding-process! Om du har några frågor, tveka inte att kontakta vår support.</Text>
         
         <Button title='Starta' onPress={handlePress}/>
+        {/* <Button title='To Account' onPress={handleNavigate}/> */}
         </>
         }
         
