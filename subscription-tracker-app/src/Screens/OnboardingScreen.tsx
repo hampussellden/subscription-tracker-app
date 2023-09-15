@@ -32,13 +32,8 @@ fetchTos()
 })
 
 
-
-// console.log(tosAccepted);
-
-
   const session = props.route.params.session;
 
-  // console.log( session.user.id);
 
   const [count, setCount] = useState(0);
 
@@ -72,11 +67,6 @@ fetchTos()
 
     props.navigation.navigate('Account');
   }
-
-  console.log(tosAccepted);
-  
-  
-  
 
   if(tosAccepted) {
     props.navigation.navigate('Account')
@@ -116,8 +106,6 @@ fetchTos()
           paddingVertical: 16,
           borderRadius: 5,
           backgroundColor: "rgba(0, 0, 0, 1)",
-          // marginTop: 28,
-          // marginBottom: 48,
         }}
         onPress={() => handlePress()}
       />
@@ -143,7 +131,7 @@ const styles = StyleSheet.create({
   screenWrapper: {
     height: "100%",
     flexDirection: "column",
-// justifyContent: 'space-between'
+    justifyContent: 'space-between'
   },
   header: {
     height: 392,
@@ -158,8 +146,8 @@ const styles = StyleSheet.create({
   },
   h1: {
     fontSize: 32,
-    marginTop: 10,
-    marginBottom: 20,
+    marginTop: -30,
+    marginBottom: 10,
   },
   p: {
     fontSize: 18,
@@ -169,7 +157,7 @@ const styles = StyleSheet.create({
     width: "100%",
     height: 55,
      // backgroundColor: 'blue',
-     marginTop: 110,
+    //  marginTop: 110,
      marginBottom: 2,
      alignItems: 'center',
      justifyContent: 'space-around'
