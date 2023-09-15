@@ -8,6 +8,7 @@ import {
 } from "../images/images";
 import { supabase } from "../../lib/supabase";
 import { Session } from "@supabase/supabase-js";
+import { arrowRight } from "../images/images";
 
 function OnboardingScreen(props: any) {
   const [tosAccepted, setTosAccepted] = useState<boolean | null>(null)
@@ -114,13 +115,13 @@ fetchTos()
       </View>
       <View style={count <2 ? styles.navContainer : styles.navContainerLast}>
       <TouchableOpacity onPress={decrement}>
-      <Text style={styles.p}>L</Text>
+      <Image style={styles.arrowLeft} source={arrowRight}/>
       </TouchableOpacity>
       <View style={ count <= 0 ?styles.indicatorActive : styles.indicator}></View>
       <View style={count == 1 ?styles.indicatorActive : styles.indicator}></View>
       <View style={count >= 2 ?styles.indicatorActive : styles.indicator}></View>
         <TouchableOpacity onPress={increment}>
-          <Text style={styles.p}>R</Text>
+          <Image source={arrowRight}/>
         </TouchableOpacity>
       </View>
     </View>
@@ -183,7 +184,9 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: 'black'
   },
-  arrow: {},
+  arrowLeft: {
+    transform: 'rotate(180deg)',
+  },
 });
 
 export default OnboardingScreen;
