@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { StyleSheet, View, Alert, Button, Text, Image, TouchableOpacity } from "react-native";
+import { StyleSheet, View, Alert, Text, Image, TouchableOpacity } from "react-native";
+import { Button } from 'react-native-elements';
 import { onBoardingOne, onBoardingTwo, onBoardingThree } from './src/images/images';
 import { supabase } from './lib/supabase';
 import { Session } from "@supabase/supabase-js";
@@ -90,29 +91,49 @@ console.log(tosAccepted);
         { count >= 2 && <Image  source={onBoardingThree} />}
       </View>
       <View style={styles.textContainer}>
-        <Text style={styles.h1}>Välkommen!</Text>
-        {count <= 0 && <Text>Välkommen till [Appens Namn]! Vi är glada att du är här. Med vår app kan du enkelt hantera alla dina prenumerationer och få en klar översikt över dina utgifter. Låt oss ta dig genom hur du kommer igång</Text>}
 
-        {count == 1 && <Text>Nu är det dags att börja organisera dina prenumerationer. Tryck på knappen "Lägg till prenumeration" och fyll i detaljerna för varje prenumeration du har. Vi hjälper dig att hålla koll på förfallodatum och kostnader.</Text>
-        }
+        {count <= 0 && <> 
+        <Text style={styles.h1}>Välkommen</Text> 
+        <Text style={styles.p}>Välkommen till [Appens Namn]! Vi är glada att du är här. Med vår app kan du enkelt hantera alla dina prenumerationer och få en klar översikt över dina utgifter. Låt oss ta dig genom hur du kommer igång</Text> 
+        </>}
+
+        {count == 1 && <> 
+        <Text style={styles.h1}>Hur börjar man?</Text>
+        <Text style={styles.p}>Nu är det dags att börja organisera dina prenumerationer. Tryck på knappen "Lägg till prenumeration" och fyll i detaljerna för varje prenumeration du har. Vi hjälper dig att hålla koll på förfallodatum och kostnader.</Text> 
+        </> }
 
         {count >= 2 && <>
-        <Text>Nu när du har lagt till dina prenumerationer, kan du se en tydlig översikt över dina utgifter. [Appens Namn] hjälper dig att hålla koll på din budget och föreslår sätt att spara pengar. Låt oss tillsammans förbättra din ekonomiska situation! Lycka till med din onboarding-process! Om du har några frågor, tveka inte att kontakta vår support.</Text>
+        <Text style={styles.h1}>Nu kör vi!</Text>
+        <Text style={styles.p}>Nu när du har lagt till dina prenumerationer, kan du se en tydlig översikt över dina utgifter. [Appens Namn] hjälper dig att hålla koll på din budget och föreslår sätt att spara pengar. Låt oss tillsammans förbättra din ekonomiska situation! Lycka till med din onboarding-process! Om du har några frågor, tveka inte att kontakta vår support.</Text>
         
-        <Button title='Starta' onPress={handlePress}/>
-        {/* <Button title='To Account' onPress={handleNavigate}/> */}
+        <Button
+        title='Starta'
+        titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
+        buttonStyle={{
+          alignSelf: "center",
+          width: "100%",
+          maxWidth: 396,
+          paddingHorizontal: 24,
+          paddingVertical: 16,
+          borderRadius: 5,
+          backgroundColor: "rgba(0, 0, 0, 1)",
+          // marginTop: 28,
+          // marginBottom: 48,
+        }}
+        onPress={() => handlePress()}
+      />
         </>
         }
         
       </View>
-    <View style={styles.navContainer}>
+    <View style={count <2 ? styles.navContainer : styles.navContainerLast}>
       <TouchableOpacity onPress={decrement}>
       <Text style={styles.p}>L</Text>
       </TouchableOpacity>
-      <View style={styles.indicator} ></View>
-      <View style={styles.indicator}></View>
-      <View style={styles.indicator}></View>
-      <TouchableOpacity onPress={increment}>
+      <View style={ count <= 0 ?styles.indicatorActive : styles.indicator}></View>
+      <View style={count == 1 ?styles.indicatorActive : styles.indicator}></View>
+      <View style={count >= 2 ?styles.indicatorActive : styles.indicator}></View>
+      <TouchableOpacity  onPress={increment}>
         <Text style={styles.p}>R</Text>
       </TouchableOpacity>
     </View>
@@ -124,7 +145,7 @@ const styles = StyleSheet.create({
   screenWrapper: {
     height: '100%',
     flexDirection: 'column',
-    justifyContent: 'space-between'
+    // justifyContent: 'space-between'
   },
   header: {
     height: 392,
@@ -138,16 +159,28 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   h1: {
-    fontSize: 32
+    fontSize: 32,
+    marginTop: 10,
+    marginBottom: 20,
   },
   p: {
-    fontSize: 20
+    fontSize: 18
   },
   navContainer: {
     flexDirection: 'row',
     width: '100%',
     height: 55,
-    backgroundColor: 'blue',
+    // backgroundColor: 'blue',
+    marginTop: 110,
+    marginBottom: 2,
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  navContainerLast: {
+    marginTop: 0,
+    flexDirection: 'row',
+    width: '100%',
+    height: 55,
     marginBottom: 2,
     alignItems: 'center',
     justifyContent: 'space-around'
@@ -155,6 +188,13 @@ const styles = StyleSheet.create({
   indicator: {
     height: 20,
     width: 20,
+    backgroundColor: 'grey',
+    borderRadius: 5,
+  },
+  indicatorActive: {
+    height: 20,
+    width: 20,
+    borderRadius: 5,
     backgroundColor: 'black'
   },
   arrow: {},
