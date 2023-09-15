@@ -171,6 +171,7 @@ export interface Database {
       services: {
         Row: {
           banner: string | null;
+          category_id: number | null;
           color: string | null;
           created_at: string;
           icon: string | null;
@@ -179,6 +180,7 @@ export interface Database {
         };
         Insert: {
           banner?: string | null;
+          category_id?: number | null;
           color?: string | null;
           created_at?: string;
           icon?: string | null;
@@ -187,13 +189,21 @@ export interface Database {
         };
         Update: {
           banner?: string | null;
+          category_id?: number | null;
           color?: string | null;
           created_at?: string;
           icon?: string | null;
           id?: number;
           name?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "services_category_id_fkey";
+            columns: ["category_id"];
+            referencedRelation: "categories";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       subscription_tiers: {
         Row: {
