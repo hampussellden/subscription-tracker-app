@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, Switch, TouchableOpacity, Alert } from '
 import { Button } from 'react-native-elements'
 import React, {useState} from 'react'
 import { gangplankProfile, arrowRight } from '../images/images'
+import { supabase } from '../../lib/supabase'
 
 
 const SettingScreen = () => {
@@ -15,10 +16,6 @@ const SettingScreen = () => {
 
     const toggleDarkModeSwitch = () => {
         setDarkModeEnabled(previousState => !previousState)
-    }
-
-    const LogoutUser = () => {
-      Alert.alert('utloggad')
     }
 
   return (
@@ -83,7 +80,7 @@ const SettingScreen = () => {
         borderRadius: 5,
         backgroundColor: "rgba(0, 0, 0, 1)",
       }}
-      onPress={() => LogoutUser()}
+      onPress={() => supabase.auth.signOut()}
     />
     
       </View>
