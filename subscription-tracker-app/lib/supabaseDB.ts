@@ -66,37 +66,6 @@ export interface Database {
         };
         Relationships: [];
       };
-      profile_to_users: {
-        Row: {
-          id: number;
-          profile_id: string | null;
-          user_id: number | null;
-        };
-        Insert: {
-          id?: number;
-          profile_id?: string | null;
-          user_id?: number | null;
-        };
-        Update: {
-          id?: number;
-          profile_id?: string | null;
-          user_id?: number | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "profile_to_users_profile_id_fkey";
-            columns: ["profile_id"];
-            referencedRelation: "profiles";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "profile_to_users_user_id_fkey";
-            columns: ["user_id"];
-            referencedRelation: "users";
-            referencedColumns: ["id"];
-          }
-        ];
-      };
       profiles: {
         Row: {
           avatar_url: string | null;
@@ -275,20 +244,30 @@ export interface Database {
           created_at: string;
           id: number;
           name: string | null;
+          profile_id: string | null;
         };
         Insert: {
           avatar_url?: string | null;
           created_at?: string;
           id?: number;
           name?: string | null;
+          profile_id?: string | null;
         };
         Update: {
           avatar_url?: string | null;
           created_at?: string;
           id?: number;
           name?: string | null;
+          profile_id?: string | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "users_profile_id_fkey";
+            columns: ["profile_id"];
+            referencedRelation: "profiles";
+            referencedColumns: ["id"];
+          }
+        ];
       };
     };
     Views: {
