@@ -8,3 +8,4 @@ export const arrowRight = require("./arrowRight.png");
 export const arrowDown = require("./arrowDown.png");
 export const arrowUp = require("./arrowUp.png");
 export const gangplankProfile = require('./gangplank-profile.jpeg');
+export const closeDark = require('./closeDark.png');

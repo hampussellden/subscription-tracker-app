@@ -3,12 +3,17 @@ import { Button } from 'react-native-elements'
 import React, {useState} from 'react'
 import { gangplankProfile, arrowRight } from '../images/images'
 import { supabase } from '../../lib/supabase'
+import CookiepopUp from '../Components/CookiepopUp'
+import TosService from '../Components/TosService'
 
 
-const SettingScreen = () => {
+const SettingScreen = (props:any) => {
     
     const [darkModeenabled, setDarkModeEnabled] = useState(false);
     const [notificationEnabled, setNotificationEnabled] = useState(false);
+    const [viewCookies, setViewCookies] = useState(false);
+    const [viewTos, setViewTos] = useState(false);
+    const [viewGdpr, setViewGdpr] = useState(false);
 
     const toggleNotificationEnabled = () => {
       setNotificationEnabled(previousState => !previousState)
@@ -18,8 +23,23 @@ const SettingScreen = () => {
         setDarkModeEnabled(previousState => !previousState)
     }
 
+    const handleCookies = () => {
+      setViewCookies(false)
+    }
+
+    const handleTos = () => {
+      setViewTos(false)
+    }
+
+    const handleGdpr = () => {
+      setViewGdpr(false)
+    }
+
   return (
     <View style={styles.settingsScreenWrapper}>
+      {viewCookies && <CookiepopUp onClick={handleCookies}/>}
+      {viewTos && <TosService onClick={handleTos}/>}
+      {viewGdpr && <TosService onClick={handleGdpr}/>}
       <Text style={styles.h1}>Inställningar</Text>
       <View style={styles.profileContainer}>
         <Image style={styles.profileImg} source={gangplankProfile}/>
@@ -55,13 +75,13 @@ const SettingScreen = () => {
         </View>
         <View style={styles.DataAlt}>
           <Text style={styles.altText}>Integritet och data</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setViewCookies(true)}>
           <Text>Cookies</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setViewTos(true)}>
           <Text>Användarvillkor & integritetspolicy</Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setViewGdpr(true)}>
           <Text>GDPR</Text>
           </TouchableOpacity>
           <TouchableOpacity>

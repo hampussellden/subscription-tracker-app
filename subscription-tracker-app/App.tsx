@@ -31,15 +31,17 @@ export default function App() {
         {session && session.user ? (
           <>
             <Stack.Screen
-              name='Home'
-              component={HomeScreen}
-              initialParams={{ session: session }}
-            />
-            <Stack.Screen
               name='Settings'
               component={SettingScreen}
               initialParams={{ session: session }}
             />
+
+            <Stack.Screen
+              name='Home'
+              component={HomeScreen}
+              initialParams={{ session: session }}
+            />
+            
           </>
         ) : (
           <>
