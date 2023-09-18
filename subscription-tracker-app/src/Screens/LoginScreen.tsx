@@ -26,6 +26,7 @@ export default function LoginScreen({ navigation }: any) {
       <View style={[styles.verticallySpaced, styles.mt20]}>
         <Input
           label='Emailadress:'
+          keyboardType='email-address'
           labelStyle={{ color: "black", fontSize: 22 }}
           onChangeText={(text) => setEmail(text)}
           value={email}
@@ -86,7 +87,6 @@ const styles = StyleSheet.create({
   textInput: {
     borderRadius: 4,
     backgroundColor: "'rgba(0, 0, 0, 0.25)'",
-    boxShadow: "2px 2px 4px 0px rgba(0, 0, 0, 0.25) inset",
     padding: 10,
   },
   verticallySpaced: {

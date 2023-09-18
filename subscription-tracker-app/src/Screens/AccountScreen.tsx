@@ -12,7 +12,6 @@ export default function AccountScreen(props: any) {
 
   useEffect(() => {
     if (session) getProfile();
-    console.log("session", session);
   }, [session]);
 
   async function getProfile() {

@@ -38,8 +38,6 @@ const RegisterScreen = ({ navigation }: any) => {
       return false;
     }
     if (typeof createPinCode() != "string") {
-      console.log("hola");
-      console.log(pinCode);
       return false;
     }
     return true;

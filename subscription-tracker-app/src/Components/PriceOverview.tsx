@@ -1,11 +1,11 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 const styles = StyleSheet.create({});
-const PriceOverview = () => {
+const example = () => {
   return (
     <View>
       <Text></Text>
     </View>
   );
 };
-export default PriceOverview;
+export default example;
