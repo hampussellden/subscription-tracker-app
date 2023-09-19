@@ -5,9 +5,14 @@ import { gangplankProfile, arrowRight } from '../images/images'
 import { supabase } from '../../lib/supabase'
 import CookiepopUp from '../Components/CookiepopUp'
 import TosService from '../Components/TosService'
+import GdprPopUp from '../Components/GdprPopUp'
 
 
 const SettingScreen = (props:any) => {
+
+  const session = props.session;
+
+  // console.log(session.user.id);
     
     const [darkModeenabled, setDarkModeEnabled] = useState(false);
     const [notificationEnabled, setNotificationEnabled] = useState(false);
@@ -17,7 +22,22 @@ const SettingScreen = (props:any) => {
 
     const toggleNotificationEnabled = () => {
       setNotificationEnabled(previousState => !previousState)
-    }
+  }
+
+  // const updateNotification = async () => {
+  //   const { error } = await supabase
+  //     .from("profiles")
+  //     .update({ global_notifications_on: true })
+  //     .eq("id", session?.user.id);
+  //     Alert.alert('hej')
+  //     if (error) {
+  //       console.log(error);
+  //     }
+  //   }
+
+  // notificationEnabled && updateNotification();
+  // updateNotification();
+
 
     const toggleDarkModeSwitch = () => {
         setDarkModeEnabled(previousState => !previousState)
@@ -39,7 +59,7 @@ const SettingScreen = (props:any) => {
     <View style={styles.settingsScreenWrapper}>
       {viewCookies && <CookiepopUp onClick={handleCookies}/>}
       {viewTos && <TosService onClick={handleTos}/>}
-      {viewGdpr && <TosService onClick={handleGdpr}/>}
+      {viewGdpr && <GdprPopUp onClick={handleGdpr}/>}
       <Text style={styles.h1}>Inställningar</Text>
       <View style={styles.profileContainer}>
         <Image style={styles.profileImg} source={gangplankProfile}/>

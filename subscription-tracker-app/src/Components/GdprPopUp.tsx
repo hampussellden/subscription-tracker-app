@@ -4,7 +4,7 @@ import { closeDark } from '../images/images'
 
 const GdprPopUp = (props:any) => {
   return (
-    <View>
+    <View style={styles.gdprWrapper}> 
          <View style={styles.header}>
                 <TouchableOpacity onPress={() => props.onClick()}>
                 <Image source={closeDark}/>
