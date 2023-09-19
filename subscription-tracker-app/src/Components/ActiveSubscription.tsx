@@ -2,8 +2,12 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { arrowRight } from "../images/images";
 import { supabase } from "../../lib/supabase";
-import { Service } from "../Screens/HomeScreen";
-const ActiveSubscription = ({ service }: { service: Service }) => {
+import { Subscription } from "../Screens/HomeScreen";
+const ActiveSubscription = ({
+  subscription,
+}: {
+  subscription: Subscription;
+}) => {
   const styles = StyleSheet.create({
     container: {
       display: "flex",
@@ -11,9 +15,9 @@ const ActiveSubscription = ({ service }: { service: Service }) => {
       gap: 160,
       paddingHorizontal: 8,
       paddingVertical: 16,
-      borderRadius: 5,
-      backgroundColor: service.color || "rgba(0, 0, 0, 0.25)",
+      borderRadius: 4,
       minWidth: 241,
+      backgroundColor: subscription.service?.color || "rgba(0, 0, 0, 0.25)",
       maxHeight: 262,
       maerginRight: 16,
     },
@@ -32,7 +36,7 @@ const ActiveSubscription = ({ service }: { service: Service }) => {
 
   const imageUrl = supabase.storage
     .from("service_icons")
-    .getPublicUrl(service.icon as string);
+    .getPublicUrl(subscription.service?.icon as string);
 
   return (
     <Pressable style={[styles.container]}>
@@ -41,9 +45,7 @@ const ActiveSubscription = ({ service }: { service: Service }) => {
         <Image source={arrowRight} />
       </View>
       <View style={styles.bottomRow}>
-        <Text>
-          {service.name.charAt(0).toUpperCase() + service.name.substring(1)}
-        </Text>
+        <Text>{subscription.service?.name}</Text>
       </View>
     </Pressable>
   );
