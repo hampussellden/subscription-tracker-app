@@ -12,9 +12,9 @@ const CookiepopUp = (props:any) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.textContainer}>
-                <Text>
+                <Text style={styles.text}>
                     <Text style={styles.boldText}>Cookie-inställningar</Text>
-Vi värdesätter din integritet och använder cookies och liknande tekniker för att förbättra din upplevelse på vår app och webbplats. Nedan kan du anpassa dina cookie-inställningar.
+Vi värdesätter din integritet och använder cookies och liknande tekniker för att förbättra din upplevelse på vår app och webbplats. Nedan kan du anpassa dina cookie-inställningar. 
 Nödvändiga cookies Dessa cookies är nödvändiga för att appen ska fungera korrekt. De hjälper till med att göra webbplatsen användbar genom att aktivera grundläggande funktioner som sidnavigering och åtkomst till säkra områden.
 Prestanda och statistik Vi använder dessa cookies för att samla in information om hur du interagerar med vår app och för att förbättra prestanda och användarupplevelse. Informationen vi samlar in är anonym och hjälper oss att förstå hur våra användare använder appen.
 Funktionella cookies Dessa cookies gör det möjligt för appen att erbjuda utökade funktioner och personlig anpassning. De kan vara inställda av oss eller tredje parter vars tjänster vi har lagt till i appen.
@@ -45,6 +45,13 @@ const styles = StyleSheet.create({
     textContainer: {},
     boldText: {
         fontWeight: 'bold',
+    },
+    text: {
+    fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    lineHeight: 20, /* 125% */
+    letterSpacing: 0.8,
     }
 
 })

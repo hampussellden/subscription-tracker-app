@@ -10,7 +10,7 @@ const GdprPopUp = (props:any) => {
                 <Image source={closeDark}/>
                 </TouchableOpacity>
             </View>
-      <Text>Dataskyddsförordning (GDPR)
+      <Text style={styles.text}>Dataskyddsförordning (GDPR)
 Vi värnar om din integritet och följer Dataskyddsförordningen (GDPR) för att säkerställa att dina personuppgifter hanteras på ett säkert och rättvist sätt. Nedan finns information om vilken data vi samlar in och varför:
 AnvändarinformationDitt namn, e-postadress, och annan relevant användarinformation.
 AnvändningsdataInformation om hur du använder vår app, inklusive sidvisningar, funktioner du använder, och interaktioner med innehåll.
@@ -39,4 +39,11 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'flex-end',
       },
+      text: {
+        fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    lineHeight: 20, /* 125% */
+    letterSpacing: 0.8,
+      }
   })
