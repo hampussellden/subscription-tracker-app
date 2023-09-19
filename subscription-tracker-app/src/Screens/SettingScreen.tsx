@@ -10,12 +10,12 @@ import GdprPopUp from '../Components/GdprPopUp'
 
 const SettingScreen = (props:any) => {
 
-  const session = props.session;
+  const session = props.route.params.session;
 
   // console.log(session.user.id);
     
     const [darkModeenabled, setDarkModeEnabled] = useState(false);
-    const [notificationEnabled, setNotificationEnabled] = useState(false);
+    const [notificationEnabled, setNotificationEnabled] = useState<boolean>(false);
     const [viewCookies, setViewCookies] = useState(false);
     const [viewTos, setViewTos] = useState(false);
     const [viewGdpr, setViewGdpr] = useState(false);
@@ -24,19 +24,34 @@ const SettingScreen = (props:any) => {
       setNotificationEnabled(previousState => !previousState)
   }
 
-  // const updateNotification = async () => {
-  //   const { error } = await supabase
-  //     .from("profiles")
-  //     .update({ global_notifications_on: true })
-  //     .eq("id", session?.user.id);
-  //     Alert.alert('hej')
-  //     if (error) {
-  //       console.log(error);
-  //     }
-  //   }
+  const updateNotification = async () => {
+    const { error } = await supabase
+      .from("profiles")
+      .update({ global_notifications_on: true })
+      .eq("id", session?.user.id);
 
-  // notificationEnabled && updateNotification();
-  // updateNotification();
+      if (error) {
+        console.log(error);
+      }
+
+    }
+
+    const noNotificationsUpdate = async () => {
+      const { error } = await supabase
+      .from("profiles")
+      .update({ global_notifications_on: false })
+      .eq("id", session?.user.id);
+
+      if (error) {
+        console.log(error);
+      }
+    }
+   
+
+  notificationEnabled && updateNotification();
+  !notificationEnabled && noNotificationsUpdate();
+  
+  
 
 
     const toggleDarkModeSwitch = () => {
