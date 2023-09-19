@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Switch, TouchableOpacity, Alert } from 'react-native'
+import { View, Text, StyleSheet, Image, Switch, TouchableOpacity, Alert, ScrollView, SafeAreaView, StatusBar } from 'react-native'
 import { Button } from 'react-native-elements'
 import React, {useState} from 'react'
 import { gangplankProfile, arrowRight } from '../images/images'
@@ -72,6 +72,7 @@ const SettingScreen = (props:any) => {
 
   return (
     <View style={styles.settingsScreenWrapper}>
+    <ScrollView style={styles.settingsScreenWrapper}>
       {viewCookies && <CookiepopUp onClick={handleCookies}/>}
       {viewTos && <TosService onClick={handleTos}/>}
       {viewGdpr && <GdprPopUp onClick={handleGdpr}/>}
@@ -139,6 +140,7 @@ const SettingScreen = (props:any) => {
     />
     
       </View>
+    </ScrollView>
     </View>
   )
 }
@@ -148,9 +150,11 @@ export default SettingScreen
 const styles = StyleSheet.create({
     settingsScreenWrapper: {
         height: '100%',
+        flex: 1,
         gap: 10,
-        paddingRight: 24, 
-        paddingLeft: 24, 
+        paddingRight: 5, 
+        paddingLeft: 5, 
+        
     },
     h1: {
         fontSize: 36,
