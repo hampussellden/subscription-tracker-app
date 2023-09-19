@@ -10,7 +10,7 @@ const TosService = (props:any) => {
                 <Image source={closeDark}/>
                 </TouchableOpacity>
             </View>
-      <Text>Användarvillkor & IntegritetspolicyVåra användarvillkor och integritetspolicy är viktiga dokument som reglerar din användning av vår app och skyddet av dina personuppgifter. Vi uppmuntrar dig att noggrant läsa igenom och förstå dessa dokument innan du fortsätter att använda appen. Nedan hittar du en sammanfattning:
+      <Text style={styles.text}>Användarvillkor & IntegritetspolicyVåra användarvillkor och integritetspolicy är viktiga dokument som reglerar din användning av vår app och skyddet av dina personuppgifter. Vi uppmuntrar dig att noggrant läsa igenom och förstå dessa dokument innan du fortsätter att använda appen. Nedan hittar du en sammanfattning:
 Användarvillkor
 Våra användarvillkor innehåller regler och riktlinjer som styr din användning av vår app. Det inkluderar information om dina rättigheter och skyldigheter som användare.
 Integritetspolicy
@@ -36,4 +36,11 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'flex-end',
     },
+    text: {
+      fontSize: 16,
+    fontStyle: 'normal',
+    fontWeight: '700',
+    lineHeight: 20, /* 125% */
+    letterSpacing: 0.8,
+    }
 })
