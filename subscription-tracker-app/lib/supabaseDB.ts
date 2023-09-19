@@ -106,37 +106,6 @@ export interface Database {
           }
         ];
       };
-      service_to_subscription_tiers: {
-        Row: {
-          id: number;
-          service_id: number | null;
-          subscription_tier_id: number | null;
-        };
-        Insert: {
-          id?: number;
-          service_id?: number | null;
-          subscription_tier_id?: number | null;
-        };
-        Update: {
-          id?: number;
-          service_id?: number | null;
-          subscription_tier_id?: number | null;
-        };
-        Relationships: [
-          {
-            foreignKeyName: "service_to_subscription_tiers_service_id_fkey";
-            columns: ["service_id"];
-            referencedRelation: "services";
-            referencedColumns: ["id"];
-          },
-          {
-            foreignKeyName: "service_to_subscription_tiers_subscription_tier_id_fkey";
-            columns: ["subscription_tier_id"];
-            referencedRelation: "subscription_tiers";
-            referencedColumns: ["id"];
-          }
-        ];
-      };
       services: {
         Row: {
           banner: string | null;
@@ -178,25 +147,35 @@ export interface Database {
         Row: {
           created_at: string;
           id: number;
-          interval_days: number | null;
+          interval_period: Database["public"]["Enums"]["interval_days"] | null;
           name: string | null;
           price: number | null;
+          service_id: number | null;
         };
         Insert: {
           created_at?: string;
           id?: number;
-          interval_days?: number | null;
+          interval_period?: Database["public"]["Enums"]["interval_days"] | null;
           name?: string | null;
           price?: number | null;
+          service_id?: number | null;
         };
         Update: {
           created_at?: string;
           id?: number;
-          interval_days?: number | null;
+          interval_period?: Database["public"]["Enums"]["interval_days"] | null;
           name?: string | null;
           price?: number | null;
+          service_id?: number | null;
         };
-        Relationships: [];
+        Relationships: [
+          {
+            foreignKeyName: "subscription_tiers_service_id_fkey";
+            columns: ["service_id"];
+            referencedRelation: "services";
+            referencedColumns: ["id"];
+          }
+        ];
       };
       subscriptions: {
         Row: {
@@ -205,7 +184,6 @@ export interface Database {
           id: number;
           renewal_date: string | null;
           service_id: number | null;
-          subscription_cycle: number | null;
           subscription_tier_id: number | null;
           user_id: number | null;
         };
@@ -215,7 +193,6 @@ export interface Database {
           id?: number;
           renewal_date?: string | null;
           service_id?: number | null;
-          subscription_cycle?: number | null;
           subscription_tier_id?: number | null;
           user_id?: number | null;
         };
@@ -225,11 +202,22 @@ export interface Database {
           id?: number;
           renewal_date?: string | null;
           service_id?: number | null;
-          subscription_cycle?: number | null;
           subscription_tier_id?: number | null;
           user_id?: number | null;
         };
         Relationships: [
+          {
+            foreignKeyName: "subscriptions_service_id_fkey";
+            columns: ["service_id"];
+            referencedRelation: "services";
+            referencedColumns: ["id"];
+          },
+          {
+            foreignKeyName: "subscriptions_subscription_tier_id_fkey";
+            columns: ["subscription_tier_id"];
+            referencedRelation: "subscription_tiers";
+            referencedColumns: ["id"];
+          },
           {
             foreignKeyName: "subscriptions_user_id_fkey";
             columns: ["user_id"];
@@ -277,7 +265,7 @@ export interface Database {
       [_ in never]: never;
     };
     Enums: {
-      [_ in never]: never;
+      interval_days: "monthly" | "quarterly" | "semi-annual" | "annual";
     };
     CompositeTypes: {
       [_ in never]: never;
