@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { arrowRight } from "../images/images";
 import { supabase } from "../../lib/supabase";
-import { Subscription } from "../Screens/HomeScreen";
+import { Subscription } from "../types";
 const ActiveSubscription = ({
   subscription,
 }: {
@@ -12,7 +12,7 @@ const ActiveSubscription = ({
     container: {
       display: "flex",
       flexDirection: "column",
-      gap: 160,
+      gap: 120, // 160
       paddingHorizontal: 8,
       paddingVertical: 16,
       borderRadius: 4,
@@ -27,10 +27,17 @@ const ActiveSubscription = ({
       justifyContent: "space-between",
       alignItems: "center",
     },
-    bottomRow: {},
+    bottomRow: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "space-between",
+    },
     icon: {
       width: 40,
       height: 40,
+    },
+    subTitle: {
+      fontSize: 24,
     },
   });
 
@@ -45,7 +52,16 @@ const ActiveSubscription = ({
         <Image source={arrowRight} />
       </View>
       <View style={styles.bottomRow}>
-        <Text>{subscription.service?.name}</Text>
+        <Text style={styles.subTitle}>
+          {subscription.service?.name.charAt(0).toUpperCase()}
+          {subscription.service?.name.slice(1)}
+        </Text>
+        <View>
+          <Text>{subscription.renewal_date}</Text>
+          <Text>{subscription.user?.name}</Text>
+          <Text>{subscription.subscription_tier?.price}</Text>
+          <Text>{subscription.subscription_tier?.interval_period}</Text>
+        </View>
       </View>
     </Pressable>
   );

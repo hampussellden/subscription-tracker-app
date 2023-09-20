@@ -1,38 +1,63 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Image } from "react-native-elements";
-import { supabase } from "../../lib/supabase";
 import ActiveSubscription from "./ActiveSubscription";
 import { arrowLeft, arrowRight } from "../images/images";
-import { Category, Subscription, Service } from "../Screens/HomeScreen";
+import {
+  Category,
+  Subscription,
+  Service,
+  User,
+  SubscriptionTier,
+} from "../types";
 const ActiveSubscriptionsContainer = ({
   categories,
   subscriptions,
   services,
+  users,
+  subscriptionTiers,
 }: {
   categories: Category[];
   subscriptions: Subscription[];
   services: Service[];
+  users: User[];
+  subscriptionTiers: SubscriptionTier[];
 }) => {
-  const addServiceToSubscription = (
+  const mergeTables = (
     services: Service[],
-    subscriptions: Subscription[]
+    subscriptions: Subscription[],
+    subscriptionTiers: SubscriptionTier[],
+    users: User[]
   ) => {
     services.map((service: Service) => {
       subscriptions.map((subscription: Subscription) => {
         if (subscription.service_id === service.id) {
           subscription.service = service;
         }
+        subscriptionTiers.map((subscriptionTier: SubscriptionTier) => {
+          if (
+            subscription.service?.id == subscriptionTier.service_id &&
+            subscription.subscription_tier_id == subscriptionTier.id
+          ) {
+            subscription.subscription_tier = subscriptionTier;
+          }
+        });
+        users.map((user: User) => {
+          if (subscription.user_id == user.id) {
+            subscription.user = user;
+          }
+        });
       });
     });
   };
-  addServiceToSubscription(services, subscriptions);
-  const filterSubscriptions = (category_id: number) => {
+  mergeTables(services, subscriptions, subscriptionTiers, users);
+
+  const filterSubscriptions = (id: number, subscriptions: Subscription[]) => {
     return subscriptions.filter(
-      (subscription: Subscription) =>
-        subscription.service?.category_id === category_id
+      (subscription: Subscription) => subscription.service?.category_id == id
     );
   };
+
   return (
     <>
       <ScrollView>
@@ -51,9 +76,9 @@ const ActiveSubscriptionsContainer = ({
                 indicatorStyle={"white"}
                 contentContainerStyle={styles.contentContainer}
               >
-                {filterSubscriptions(category.id).map(
-                  (subscription: Subscription) => (
-                    <ActiveSubscription subscription={subscription} />
+                {filterSubscriptions(category.id, subscriptions).map(
+                  (subscription: Subscription, i: number) => (
+                    <ActiveSubscription subscription={subscription} key={i} />
                   )
                 )}
               </ScrollView>
@@ -78,6 +103,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    marginTop: 20,
+    marginBottom: 8,
   },
   subTitle: {
     fontSize: 24,
@@ -89,7 +116,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   },
   arrows: {
-    height: 40,
-    width: 40,
+    height: 30,
+    width: 30,
   },
 });

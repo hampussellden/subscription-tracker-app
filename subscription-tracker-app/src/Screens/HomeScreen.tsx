@@ -5,51 +5,14 @@ import { supabase } from "../../lib/supabase";
 import Onboarding from "../Components/Onboarding";
 import NewsContainer from "../Components/NewsContainer";
 import UsersContainer from "../Components/UsersContainer";
-
-export type Interval_periods =
-  | "monthly"
-  | "quarterly"
-  | "semi-annual"
-  | "annual";
-export type SubscriptionTier = {
-  id: number;
-  name: string;
-  price: number;
-  service_id: number;
-  interval_period: Interval_periods;
-};
-export type Service = {
-  id: number;
-  name: string;
-  icon: string | null;
-  color: string | null;
-  banner: string | null;
-  category_id: number | null;
-  subscription_tiers?: SubscriptionTier[];
-};
-export type Category = {
-  id: number;
-  name: string | null;
-};
-export type Subscription = {
-  id: number;
-  user_id: number;
-  service_id: number;
-  subscription_tier_id: number;
-  renewal_date: string;
-  active: boolean;
-  created_at: string;
-  service?: Service;
-  subscription_tier?: SubscriptionTier;
-  user?: User;
-};
-export type User = {
-  id: number;
-  name: string;
-  profile_id: string;
-  created_at: string;
-  avatar_url: string;
-};
+import UpcomingPaymentsContainer from "../Components/UpcomingPaymentsContainer";
+import {
+  Subscription,
+  Service,
+  User,
+  Category,
+  SubscriptionTier,
+} from "../types";
 
 const HomeScreen = (props: any) => {
   const [tosAccepted, setTosAccepted] = useState<boolean | null>(null);
@@ -78,9 +41,9 @@ const HomeScreen = (props: any) => {
       if (users) {
         setUserIds(
           users.map((user, i) => {
-            // if (i == 0) {
-            //   setSelectedUser(user as User);
-            // }
+            if (i == 0) {
+              setSelectedUser(user as User);
+            }
             return user.id;
           })
         );
@@ -122,32 +85,19 @@ const HomeScreen = (props: any) => {
   //fetching of subscriptions
   useEffect(() => {
     const fetchSubscriptions = async () => {
-      if (selectedUser != null) {
-        const { data: subscriptions, error } = await supabase
-          .from("subscriptions")
-          .select("*")
-          .eq("user_id", selectedUser.id);
-        if (error) {
-          console.log(error);
-        }
-        if (subscriptions) {
-          setSubscriptions(subscriptions as Subscription[]);
-        }
-      } else {
-        const { data: subscriptions, error } = await supabase
-          .from("subscriptions")
-          .select("*")
-          .in("user_id", userIds);
-        if (error) {
-          console.log(error);
-        }
-        if (subscriptions) {
-          setSubscriptions(subscriptions as Subscription[]);
-        }
+      const { data: subscriptions, error } = await supabase
+        .from("subscriptions")
+        .select("*")
+        .in("user_id", userIds);
+      if (error) {
+        console.log(error);
+      }
+      if (subscriptions) {
+        setSubscriptions(subscriptions as Subscription[]);
       }
     };
     fetchSubscriptions();
-  }, [selectedUser, userIds]);
+  }, []);
   //fetching of subscription_tiers
   useEffect(() => {
     const fetchSubscriptionTiers = async () => {
@@ -162,7 +112,7 @@ const HomeScreen = (props: any) => {
       }
     };
     fetchSubscriptionTiers();
-  }, [subscriptions]);
+  }, []);
   if (props.route.params.accepted != undefined && loading == true) {
     setTosAccepted(props.route.params.accepted);
   }
@@ -211,15 +161,15 @@ const HomeScreen = (props: any) => {
           <>
             <ScrollView contentContainerStyle={styles.main}>
               {/* price overview */}
-              {/* upcoming payments */}
+              <UpcomingPaymentsContainer subscriptions={subscriptions} />
               <NewsContainer />
               <UsersContainer users={users} />
               <ActiveSubscriptionsContainer
                 categories={categories}
                 subscriptions={subscriptions}
                 services={services}
-                subscriptionTiers={subscriptionTiers}
                 users={users}
+                subscriptionTiers={subscriptionTiers}
               />
             </ScrollView>
           </>
