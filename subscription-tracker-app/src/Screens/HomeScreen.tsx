@@ -5,8 +5,19 @@ import { supabase } from "../../lib/supabase";
 import Onboarding from "../Components/Onboarding";
 import NewsContainer from "../Components/NewsContainer";
 import UsersContainer from "../Components/UsersContainer";
-import { User } from "@supabase/supabase-js";
 
+export type Interval_periods =
+  | "monthly"
+  | "quarterly"
+  | "semi-annual"
+  | "annual";
+export type SubscriptionTier = {
+  id: number;
+  name: string;
+  price: number;
+  service_id: number;
+  interval_period: Interval_periods;
+};
 export type Service = {
   id: number;
   name: string;
@@ -14,6 +25,7 @@ export type Service = {
   color: string | null;
   banner: string | null;
   category_id: number | null;
+  subscription_tiers?: SubscriptionTier[];
 };
 export type Category = {
   id: number;
@@ -28,6 +40,15 @@ export type Subscription = {
   active: boolean;
   created_at: string;
   service?: Service;
+  subscription_tier?: SubscriptionTier;
+  user?: User;
+};
+export type User = {
+  id: number;
+  name: string;
+  profile_id: string;
+  created_at: string;
+  avatar_url: string;
 };
 
 const HomeScreen = (props: any) => {
@@ -39,6 +60,9 @@ const HomeScreen = (props: any) => {
   const [services, setServices] = useState<Service[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
+  const [subscriptionTiers, setSubscriptionTiers] = useState<
+    SubscriptionTier[]
+  >([]);
   const session = props.route.params.session;
   const profileId = session.user.id;
   //fetching of users on the authenticated profile
@@ -53,11 +77,13 @@ const HomeScreen = (props: any) => {
       }
       if (users) {
         setUserIds(
-          users.map((user) => {
+          users.map((user, i) => {
+            // if (i == 0) {
+            //   setSelectedUser(user as User);
+            // }
             return user.id;
           })
         );
-        console.log("userIds: " + userIds);
         setUsers(users);
       }
     };
@@ -93,6 +119,7 @@ const HomeScreen = (props: any) => {
     };
     fetchCategories();
   }, []);
+  //fetching of subscriptions
   useEffect(() => {
     const fetchSubscriptions = async () => {
       if (selectedUser != null) {
@@ -104,7 +131,6 @@ const HomeScreen = (props: any) => {
           console.log(error);
         }
         if (subscriptions) {
-          console.log("subscriptions: " + subscriptions);
           setSubscriptions(subscriptions as Subscription[]);
         }
       } else {
@@ -116,17 +142,31 @@ const HomeScreen = (props: any) => {
           console.log(error);
         }
         if (subscriptions) {
-          console.log("subscriptions: " + subscriptions);
           setSubscriptions(subscriptions as Subscription[]);
         }
       }
     };
     fetchSubscriptions();
   }, [selectedUser, userIds]);
-
+  //fetching of subscription_tiers
+  useEffect(() => {
+    const fetchSubscriptionTiers = async () => {
+      const { data: subscriptionTiers, error } = await supabase
+        .from("subscription_tiers")
+        .select("*");
+      if (error) {
+        console.log(error);
+      }
+      if (subscriptionTiers) {
+        setSubscriptionTiers(subscriptionTiers as SubscriptionTier[]);
+      }
+    };
+    fetchSubscriptionTiers();
+  }, [subscriptions]);
   if (props.route.params.accepted != undefined && loading == true) {
     setTosAccepted(props.route.params.accepted);
   }
+  //fetching of tos_accepted
   useEffect(() => {
     const fetchTos = async () => {
       const { data, error } = await supabase
@@ -143,7 +183,6 @@ const HomeScreen = (props: any) => {
     };
     fetchTos();
   }, [loading]);
-
   useEffect(() => {
     if (tosAccepted != null) {
       setLoading(false);
@@ -163,6 +202,7 @@ const HomeScreen = (props: any) => {
 
   return (
     <>
+      {loading && <Text>Loading...</Text>}
       {!loading &&
         (!tosAccepted ? (
           //   props.navigation.navigate("Onboard", { session: session })
@@ -171,13 +211,15 @@ const HomeScreen = (props: any) => {
           <>
             <ScrollView contentContainerStyle={styles.main}>
               {/* price overview */}
-              {/* kommande betalningar */}
-              <UsersContainer users={users} />
+              {/* upcoming payments */}
               <NewsContainer />
+              <UsersContainer users={users} />
               <ActiveSubscriptionsContainer
                 categories={categories}
                 subscriptions={subscriptions}
                 services={services}
+                subscriptionTiers={subscriptionTiers}
+                users={users}
               />
             </ScrollView>
           </>
