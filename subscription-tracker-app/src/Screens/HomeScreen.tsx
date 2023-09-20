@@ -161,7 +161,10 @@ const HomeScreen = (props: any) => {
           <>
             <ScrollView contentContainerStyle={styles.main}>
               {/* price overview */}
-              <UpcomingPaymentsContainer subscriptions={subscriptions} />
+              <UpcomingPaymentsContainer
+                subscriptions={subscriptions}
+                services={services}
+              />
               <NewsContainer />
               <UsersContainer users={users} />
               <ActiveSubscriptionsContainer

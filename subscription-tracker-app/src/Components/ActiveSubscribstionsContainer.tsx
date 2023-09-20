@@ -62,7 +62,7 @@ const ActiveSubscriptionsContainer = ({
     <>
       <ScrollView>
         {categories.length > 0 &&
-          categories.map((category: Category) => (
+          categories.map((category: Category, i: number) => (
             <>
               <View style={styles.subTitleContainer}>
                 <Text style={styles.subTitle}>{category.name}</Text>
