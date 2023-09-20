@@ -11,3 +11,5 @@ export const gangplankProfile = require("./gangplank-profile.jpeg");
 export const closeDark = require("./closeDark.png");
 export const netflixIcon = require("./netflixIcon.png");
 export const spotifyIcon = require("./spotifyIcon.png");
+export const testUser = require('./testUser.png');
+export const addUser = require('./addUserCropped.png');
