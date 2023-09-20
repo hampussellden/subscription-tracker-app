@@ -8,7 +8,7 @@ import TosService from '../Components/TosService'
 import GdprPopUp from '../Components/GdprPopUp'
 
 
-const SettingScreen = (props:any) => {
+const SettingScreen = (props:any, {navigation}: any) => {
 
   const session = props.route.params.session;
 
@@ -103,8 +103,10 @@ const SettingScreen = (props:any) => {
             />
           </View>
           <View style={styles.familyAlt}>
+            <TouchableOpacity onPress={() => props.navigation.navigate("Family")}>
             <Text style={styles.altText}>Familjehantering</Text>
-            <TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => props.navigation.navigate("Family")}>
             <Image source={arrowRight}/>
             </TouchableOpacity>
           </View>

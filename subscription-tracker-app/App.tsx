@@ -9,6 +9,8 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import RegisterScreen from "./src/Screens/RegisterScreen";
 import SettingScreen from "./src/Screens/SettingScreen";
 import HomeScreen from "./src/Screens/HomeScreen";
+import FamilyScreen from "./src/Screens/FamilyScreen";
+import AddUserScreen from "./src/Screens/AddUserScreen";
 
 export default function App() {
   const [session, setSession] = useState<Session | null>(null);
@@ -30,10 +32,23 @@ export default function App() {
       <Stack.Navigator>
         {session && session.user ? (
           <>
+         
             <Stack.Screen
               name='Settings'
               component={SettingScreen}
               initialParams={{ session: session }}
+            />
+
+            <Stack.Screen 
+            name='Family'
+            component={FamilyScreen}
+            initialParams={{ session: session }}
+            />
+
+            <Stack.Screen 
+            name='addUser'
+            component={AddUserScreen}
+            initialParams={{ session: session }}
             />
 
             <Stack.Screen
