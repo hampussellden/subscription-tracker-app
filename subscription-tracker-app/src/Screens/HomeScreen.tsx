@@ -96,6 +96,7 @@ const HomeScreen = (props: any) => {
         setSubscriptions(subscriptions as Subscription[]);
       }
     };
+    // console.log(subscriptions);
     fetchSubscriptions();
   }, []);
   //fetching of subscription_tiers

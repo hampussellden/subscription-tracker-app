@@ -27,7 +27,7 @@ export type User = {
 
 const example = ({ users }: { users: User[] }) => {
   return (
-    <>
+    <View>
       <Text style={styles.subTitle}>Användare</Text>
       <ScrollView horizontal={true} contentContainerStyle={{ gap: 8 }}>
         {users.map((user) => {
@@ -45,7 +45,7 @@ const example = ({ users }: { users: User[] }) => {
           }}
         />
       </ScrollView>
-    </>
+    </View>
   );
 };
 export default example;
