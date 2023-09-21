@@ -147,7 +147,7 @@ const HomeScreen = (props: any) => {
       .eq("id", session.user.id);
 
     if (error) {
-      // console.log(error);
+      console.log(error);
     }
     setTosAccepted(true);
   };
@@ -174,7 +174,12 @@ const HomeScreen = (props: any) => {
               services={services}
             />
             <NewsContainer />
-            <PriceOverview profileId={profileId} />
+            <PriceOverview
+              profileId={profileId}
+              subscriptions={subscriptions}
+              services={services}
+              subscriptionTiers={subscriptionTiers}
+            />
           </ScrollView>
         ))}
     </View>

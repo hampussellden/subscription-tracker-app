@@ -1,8 +1,86 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { supabase } from "../../lib/supabase";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
+import NumberInput from "./NumberInput";
+const PinCodePopUp = ({
+  profileId,
+  handleUnlock,
+}: {
+  profileId: any;
+  handleUnlock: any;
+}) => {
+  const [inputValue, setInputValue] = React.useState<string>("");
+  const [correctPin, setCorrectPin] = React.useState<string | null>(null);
+  const [pinCodeHolder, setPinCodeHolder] = React.useState<string[]>([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
 
-const PinCodePopUp = () => {
-  return <View style={styles.container}></View>;
+  useEffect(() => {
+    const fetchPinCode = async () => {
+      let { data: pinCode, error } = await supabase
+        .from("profiles")
+        .select("pin_code")
+        .eq("id", profileId);
+      if (error) {
+        console.log(error);
+      }
+      if (pinCode) {
+        console.log(pinCode);
+        setCorrectPin(pinCode[0]?.pin_code);
+      }
+    };
+    fetchPinCode();
+  }, []);
+  const pinCodeIsOnlyNumbers = (): boolean => {
+    const pinCodeOkay = pinCodeHolder.every((element) =>
+      /^[0-9]{1}$/.test(element)
+    );
+    return pinCodeOkay;
+  };
+  const createPinCode = (): string | false => {
+    if (pinCodeIsOnlyNumbers()) {
+      return pinCodeHolder.join("");
+    }
+    return false;
+  };
+
+  const handleInputChange = ({
+    value,
+    index,
+  }: {
+    value: string;
+    index: number;
+  }) => {
+    pinCodeHolder[index] = value;
+    setInputValue(value);
+    if (createPinCode() == correctPin) {
+      handleUnlock();
+    }
+  };
+
+  return (
+    <View style={styles.container}>
+      <View style={styles.pinCodeContainer}>
+        <Text>Ange din pinkod:</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            justifyContent: "space-evenly",
+            minWidth: 250,
+          }}
+        >
+          {pinCodeHolder.map((value, i) => (
+            <NumberInput key={i} index={i} onInputChange={handleInputChange} />
+          ))}
+        </View>
+      </View>
+    </View>
+  );
 };
 export default PinCodePopUp;
 
@@ -10,10 +88,31 @@ const styles = StyleSheet.create({
   container: {
     position: "absolute",
     top: 0,
-    left: 0,
+    left: -16,
     width: Dimensions.get("window").width,
     height: Dimensions.get("window").height,
-    backgroundColor: "hotpink",
+    backgroundColor: "rgba(0,0,0,0.8))",
+    zIndex: 50,
+    display: "flex",
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: "column",
+  },
+  pinCodeContainer: {
     zIndex: 100,
+    backgroundColor: "white",
+    minHeight: 76,
+    minWidth: 360,
+    maxWidth: 370,
+    maxHeight: 124,
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    borderRadius: 4,
+    gap: 16,
+    transform: [{ translateY: -100 }],
+    paddingHorizontal: 16,
+    paddingVertical: 24,
   },
 });

@@ -1,24 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { Input } from "react-native-elements";
+import { View, Text, StyleSheet, TextInput } from "react-native";
+// import { Input } from "react-native-elements";
 
-const NumberInput = ({ onValueChange, index }: any) => {
-  const handleInputChange = (event: any) => {
-    const value = event.target.value;
-    const obj = { value: value, key: index };
-    onValueChange(obj);
+const NumberInput = ({ onInputChange, index }: any) => {
+  const handleInputChange = (value: string) => {
+    const obj = { index: index, value: value };
+    onInputChange(obj);
   };
 
   return (
     <View style={styles.container}>
-      <Input
+      <TextInput
         keyboardType='numeric'
         maxLength={1}
-        onChange={handleInputChange}
+        onChangeText={handleInputChange}
         style={styles.Input}
         secureTextEntry={true}
-        inputContainerStyle={{ borderBottomWidth: 0, padding: 0 }}
-        containerStyle={{ padding: 0 }}
       />
     </View>
   );
@@ -36,7 +33,7 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 4,
     backgroundColor: "'rgba(0, 0, 0, 0.25)'",
-    boxShadow: "2px 2px 4px 0px rgba(0, 0, 0, 0.25) inset",
+    // boxShadow: "2px 2px 4px 0px rgba(0, 0, 0, 0.25) inset",
     padding: 10,
     textAlign: "center",
   },
