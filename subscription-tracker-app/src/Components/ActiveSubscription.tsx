@@ -17,7 +17,7 @@ const ActiveSubscription = ({
       paddingVertical: 16,
       borderRadius: 4,
       minWidth: 241,
-      backgroundColor: subscription.services?.color || "rgba(0, 0, 0, 0.25)",
+      backgroundColor: subscription.services.color || "rgba(0, 0, 0, 0.25)",
       maxHeight: 262,
       maerginRight: 16,
     },
@@ -57,10 +57,10 @@ const ActiveSubscription = ({
           {subscription.services?.name.slice(1)}
         </Text>
         <View>
-          <Text>{subscription.renewal_date}</Text>
-          <Text>{subscription.users.name}</Text>
-          <Text>{subscription.subscription_tiers.price}</Text>
-          <Text>{subscription.subscription_tiers.interval_period}</Text>
+          <Text style={[styles.subTitle, { fontWeight: "500" }]}>
+            {subscription.users.name.charAt(0).toUpperCase()}
+            {subscription.users.name.slice(1)}
+          </Text>
         </View>
       </View>
     </Pressable>
