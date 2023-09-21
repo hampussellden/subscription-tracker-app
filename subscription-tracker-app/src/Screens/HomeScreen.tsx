@@ -6,6 +6,7 @@ import Onboarding from "../Components/Onboarding";
 import NewsContainer from "../Components/NewsContainer";
 import UsersContainer from "../Components/UsersContainer";
 import UpcomingPaymentsContainer from "../Components/UpcomingPaymentsContainer";
+import PriceOverview from "../Components/PriceOverview";
 import {
   Subscription,
   Service,
@@ -152,33 +153,31 @@ const HomeScreen = (props: any) => {
   };
 
   return (
-    <>
+    <View>
       {loading && <Text>Loading...</Text>}
       {!loading &&
         (!tosAccepted ? (
           //   props.navigation.navigate("Onboard", { session: session })
           <Onboarding session={session} onClick={handlePress} />
         ) : (
-          <>
-            <ScrollView contentContainerStyle={styles.main}>
-              {/* price overview */}
-              <UpcomingPaymentsContainer
-                subscriptions={subscriptions}
-                services={services}
-              />
-              <NewsContainer />
-              <UsersContainer users={users} />
-              <ActiveSubscriptionsContainer
-                categories={categories}
-                subscriptions={subscriptions}
-                services={services}
-                users={users}
-                subscriptionTiers={subscriptionTiers}
-              />
-            </ScrollView>
-          </>
+          <ScrollView contentContainerStyle={styles.main}>
+            <PriceOverview />
+            <UpcomingPaymentsContainer
+              subscriptions={subscriptions}
+              services={services}
+            />
+            <NewsContainer />
+            <UsersContainer users={users} />
+            <ActiveSubscriptionsContainer
+              categories={categories}
+              subscriptions={subscriptions}
+              services={services}
+              users={users}
+              subscriptionTiers={subscriptionTiers}
+            />
+          </ScrollView>
         ))}
-    </>
+    </View>
   );
 };
 export default HomeScreen;
