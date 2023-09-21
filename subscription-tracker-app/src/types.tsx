@@ -31,9 +31,9 @@ export type Subscription = {
   renewal_date: string;
   active: boolean;
   created_at: string;
-  service?: Service;
-  subscription_tier?: SubscriptionTier;
-  user?: User;
+  services: Service;
+  subscription_tiers: SubscriptionTier;
+  users: User;
 };
 export type User = {
   id: number;
