@@ -161,13 +161,6 @@ const HomeScreen = (props: any) => {
           <Onboarding session={session} onClick={handlePress} />
         ) : (
           <ScrollView contentContainerStyle={styles.main}>
-            <PriceOverview />
-            <UpcomingPaymentsContainer
-              subscriptions={subscriptions}
-              services={services}
-            />
-            <NewsContainer />
-            <UsersContainer users={users} />
             <ActiveSubscriptionsContainer
               categories={categories}
               subscriptions={subscriptions}
@@ -175,6 +168,13 @@ const HomeScreen = (props: any) => {
               users={users}
               subscriptionTiers={subscriptionTiers}
             />
+            <UsersContainer users={users} />
+            <UpcomingPaymentsContainer
+              subscriptions={subscriptions}
+              services={services}
+            />
+            <NewsContainer />
+            <PriceOverview profileId={profileId} />
           </ScrollView>
         ))}
     </View>
@@ -186,5 +186,6 @@ const styles = StyleSheet.create({
   main: {
     marginHorizontal: 16,
     gap: 16,
+    flexDirection: "column-reverse",
   },
 });
