@@ -1,4 +1,5 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Modal, ImageBackground } from 'react-native'
+import { Button } from 'react-native-elements'
 import React, {useEffect, useState} from 'react'
 import { supabase } from '../../lib/supabase'
 import { testUser, addUser } from '../images/images'
@@ -7,6 +8,7 @@ import DeleteUser from '../Components/DeleteUser'
 const FamilyScreen = (props: any, {navigation}: any) => {
     const [userNames, setUserNames] = useState<string[]>([]);
     const [deleteUser, setDeleteUser] = useState(false)
+    const [visible, setVisible] = useState<boolean>(false)
     
 
     const session = props.route.params.session;
@@ -35,10 +37,10 @@ const FamilyScreen = (props: any, {navigation}: any) => {
   // console.log(userNames);
   
 
-  
   return (
-    <View style={styles.wrapper}>
-      {deleteUser && <DeleteUser state={deleteUser} setState={setDeleteUser} />}
+    <View>
+    {deleteUser && <DeleteUser state={deleteUser} setState={setDeleteUser} />}
+    <View style={[deleteUser ? styles.blurred : styles.wrapper]}>
       <Text style={styles.h1}>Familjehantering</Text>
       <View style={styles.userSection}>
         <Text style={styles.h2}>användare</Text>
@@ -67,6 +69,7 @@ const FamilyScreen = (props: any, {navigation}: any) => {
         <Image style={styles.addUserImg} source={addUser}/>
         </TouchableOpacity>
        </View>
+       </View>
     </View>
   )
 }
@@ -78,8 +81,20 @@ const styles = StyleSheet.create({
         height: '100%',
         width: '100%',
         padding: 5,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        zIndex: 0,
+        position: 'relative',
     },
+    blurred: {
+      height: '100%',
+      width: '100%',
+      padding: 5,
+      justifyContent: 'space-between',
+      zIndex: 0,
+      position: 'relative',
+      opacity: 0.2,
+    },
+
     h1: {
         fontSize: 40,
         fontWeight: '700',
@@ -135,5 +150,6 @@ const styles = StyleSheet.create({
     addUserImg: {
       height: 50,
       width: 50,
-    }
+    },
+
 })

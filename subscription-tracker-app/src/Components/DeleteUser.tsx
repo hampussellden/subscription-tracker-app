@@ -9,7 +9,7 @@ const DeleteUser = (props: any) => {
     }
   return (
     <View style={styles.deleteContainer}>
-      <Text>Är du säker på att du vill ta bort användaren?</Text>
+      <Text style={{fontWeight: 'bold'}}>Är du säker på att du vill ta bort användaren?</Text>
       <Button
         title='Radera användare'
         titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
@@ -28,7 +28,7 @@ const DeleteUser = (props: any) => {
       />
       <Button
         title='Gå Tillbaka'
-        titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
+        titleStyle={{ color: "black", fontWeight: "bold", fontSize: 24 }}
         buttonStyle={{
           marginTop: 20,
           width: "100%",
@@ -36,7 +36,9 @@ const DeleteUser = (props: any) => {
           paddingHorizontal: 24,
           paddingVertical: 16,
           borderRadius: 5,
-          backgroundColor: "rgba(0, 0, 0, 1)",
+          borderWidth: 2,
+          borderColor: '#000000', 
+          backgroundColor: "white",
           alignSelf: "center",
         }}
         // disabled={loading}
@@ -52,6 +54,10 @@ const styles = StyleSheet.create({
     deleteContainer: {
         height: 208,
         width: 395.2,
-        backgroundColor: 'blue'
+        zIndex: 100,
+        padding: 5,
+        position: 'absolute',
+        top: '30%',
+        opacity: 1,
     }
 })
