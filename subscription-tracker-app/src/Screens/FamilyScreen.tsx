@@ -2,9 +2,11 @@ import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView } from 'rea
 import React, {useEffect, useState} from 'react'
 import { supabase } from '../../lib/supabase'
 import { testUser, addUser } from '../images/images'
+import DeleteUser from '../Components/DeleteUser'
 
 const FamilyScreen = (props: any, {navigation}: any) => {
     const [userNames, setUserNames] = useState<string[]>([]);
+    const [deleteUser, setDeleteUser] = useState(false)
     
 
     const session = props.route.params.session;
@@ -36,6 +38,7 @@ const FamilyScreen = (props: any, {navigation}: any) => {
   
   return (
     <View style={styles.wrapper}>
+      {deleteUser && <DeleteUser state={deleteUser} setState={setDeleteUser} />}
       <Text style={styles.h1}>Familjehantering</Text>
       <View style={styles.userSection}>
         <Text style={styles.h2}>användare</Text>
@@ -54,7 +57,7 @@ const FamilyScreen = (props: any, {navigation}: any) => {
         <Image style={styles.selectedUserImg} source={testUser}/>
         <View style={styles.userInfoContainer}>
         <Text style={styles.userInfo}>Jane Doe</Text>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={() => setDeleteUser(true)}>
             <Text style={styles.userInfo}>Radera Användare </Text>
           </TouchableOpacity>
         </View>
