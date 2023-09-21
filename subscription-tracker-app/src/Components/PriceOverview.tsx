@@ -10,28 +10,28 @@ import {
   unlockedDark,
   unlockedLight,
 } from "../images/images";
-const styles = StyleSheet.create({
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    paddingVertical: 16,
-    paddingHorizontal: 8,
-    borderRadius: 4,
-  },
-  topRow: {
-    display: "flex",
-    flexDirection: "row",
-    width: "100%",
-    justifyContent: "space-between",
-    alignItems: "center",
-  },
-});
-const PriceOverview = () => {
+import { Subscription, Service, SubscriptionTier } from "../types";
+
+const PriceOverview = ({
+  profileId,
+  subscriptions,
+  services,
+  subscriptionTiers,
+}: {
+  profileId: any;
+  subscriptions: Subscription[];
+  services: Service[];
+  subscriptionTiers: SubscriptionTier[];
+}) => {
   const [active, setActive] = React.useState(true);
   const [unlocked, setUnlocked] = React.useState(false);
   const [showPinInput, setShowPinInput] = React.useState(false);
   const darkMode = false;
+
+  const handleUnlock = () => {
+    setUnlocked(true);
+    setShowPinInput(false);
+  };
 
   const handlePress = () => {
     if (!unlocked) {
@@ -43,7 +43,9 @@ const PriceOverview = () => {
 
   return (
     <View>
-      {showPinInput && !unlocked && <PinCodePopUp />}
+      {showPinInput && !unlocked && (
+        <PinCodePopUp profileId={profileId} handleUnlock={handleUnlock} />
+      )}
       <Text style={S.subTitleBold}>Mina Kostnader</Text>
       <Pressable
         style={[styles.container, S.primaryColor]}
@@ -66,7 +68,7 @@ const PriceOverview = () => {
               marginTop: 8,
             }}
           >
-            <Text style={S.subTitleBold}>1 337 kr/mån</Text>
+            <Text style={S.subTitleBold}> 1 000kr/mån</Text>
           </View>
         )}
         <View>
@@ -87,3 +89,21 @@ const PriceOverview = () => {
   );
 };
 export default PriceOverview;
+
+const styles = StyleSheet.create({
+  container: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    paddingVertical: 16,
+    paddingHorizontal: 8,
+    borderRadius: 4,
+  },
+  topRow: {
+    display: "flex",
+    flexDirection: "row",
+    width: "100%",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+});

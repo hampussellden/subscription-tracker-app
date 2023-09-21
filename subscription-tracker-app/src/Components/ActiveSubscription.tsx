@@ -12,12 +12,12 @@ const ActiveSubscription = ({
     container: {
       display: "flex",
       flexDirection: "column",
-      gap: 120, // 160
+      gap: 160,
       paddingHorizontal: 8,
       paddingVertical: 16,
       borderRadius: 4,
       minWidth: 241,
-      backgroundColor: subscription.service?.color || "rgba(0, 0, 0, 0.25)",
+      backgroundColor: subscription.services.color || "rgba(0, 0, 0, 0.25)",
       maxHeight: 262,
       maerginRight: 16,
     },
@@ -43,7 +43,7 @@ const ActiveSubscription = ({
 
   const imageUrl = supabase.storage
     .from("service_icons")
-    .getPublicUrl(subscription.service?.icon as string);
+    .getPublicUrl(subscription.services?.icon as string);
 
   return (
     <Pressable style={[styles.container]}>
@@ -53,14 +53,14 @@ const ActiveSubscription = ({
       </View>
       <View style={styles.bottomRow}>
         <Text style={styles.subTitle}>
-          {subscription.service?.name.charAt(0).toUpperCase()}
-          {subscription.service?.name.slice(1)}
+          {subscription.services?.name.charAt(0).toUpperCase()}
+          {subscription.services?.name.slice(1)}
         </Text>
         <View>
-          <Text>{subscription.renewal_date}</Text>
-          <Text>{subscription.user?.name}</Text>
-          <Text>{subscription.subscription_tier?.price}</Text>
-          <Text>{subscription.subscription_tier?.interval_period}</Text>
+          <Text style={[styles.subTitle, { fontWeight: "500" }]}>
+            {subscription.users.name.charAt(0).toUpperCase()}
+            {subscription.users.name.slice(1)}
+          </Text>
         </View>
       </View>
     </Pressable>

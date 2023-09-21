@@ -30,7 +30,7 @@ const UpcomingPayment = ({ subscription }: { subscription: Subscription }) => {
 
   const imageUrl = supabase.storage
     .from("service_icons")
-    .getPublicUrl(subscription.service?.icon as string);
+    .getPublicUrl(subscription.services.icon as string);
 
   return (
     <View style={[styles.container, S.primaryColor]}>

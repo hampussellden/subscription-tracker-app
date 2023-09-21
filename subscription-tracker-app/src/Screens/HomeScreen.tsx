@@ -88,32 +88,23 @@ const HomeScreen = (props: any) => {
     const fetchSubscriptions = async () => {
       const { data: subscriptions, error } = await supabase
         .from("subscriptions")
-        .select("*")
+        .select(
+          `*,
+        services (name, icon, color, banner, category_id),
+        subscription_tiers (*),
+        users (*)
+      `
+        )
         .in("user_id", userIds);
+
       if (error) {
         console.log(error);
       }
       if (subscriptions) {
-        setSubscriptions(subscriptions as Subscription[]);
+        setSubscriptions(subscriptions as any[]);
       }
     };
-    // console.log(subscriptions);
     fetchSubscriptions();
-  }, []);
-  //fetching of subscription_tiers
-  useEffect(() => {
-    const fetchSubscriptionTiers = async () => {
-      const { data: subscriptionTiers, error } = await supabase
-        .from("subscription_tiers")
-        .select("*");
-      if (error) {
-        console.log(error);
-      }
-      if (subscriptionTiers) {
-        setSubscriptionTiers(subscriptionTiers as SubscriptionTier[]);
-      }
-    };
-    fetchSubscriptionTiers();
   }, []);
   if (props.route.params.accepted != undefined && loading == true) {
     setTosAccepted(props.route.params.accepted);
@@ -136,10 +127,10 @@ const HomeScreen = (props: any) => {
     fetchTos();
   }, [loading]);
   useEffect(() => {
-    if (tosAccepted != null) {
+    if (tosAccepted != null && subscriptions.length > 0) {
       setLoading(false);
     }
-  }, [tosAccepted]);
+  }, [tosAccepted, subscriptions]);
   const handlePress = async () => {
     const { error } = await supabase
       .from("profiles")
@@ -147,7 +138,7 @@ const HomeScreen = (props: any) => {
       .eq("id", session.user.id);
 
     if (error) {
-      // console.log(error);
+      console.log(error);
     }
     setTosAccepted(true);
   };
@@ -161,18 +152,22 @@ const HomeScreen = (props: any) => {
           <Onboarding session={session} onClick={handlePress} />
         ) : (
           <ScrollView contentContainerStyle={styles.main}>
-            <PriceOverview />
+            {subscriptions.length > 0 && categories.length > 0 && (
+              <ActiveSubscriptionsContainer
+                categories={categories}
+                subscriptions={subscriptions}
+              />
+            )}
+            <UsersContainer users={users} />
             <UpcomingPaymentsContainer
               subscriptions={subscriptions}
               services={services}
             />
             <NewsContainer />
-            <UsersContainer users={users} />
-            <ActiveSubscriptionsContainer
-              categories={categories}
+            <PriceOverview
+              profileId={profileId}
               subscriptions={subscriptions}
               services={services}
-              users={users}
               subscriptionTiers={subscriptionTiers}
             />
           </ScrollView>
@@ -186,5 +181,6 @@ const styles = StyleSheet.create({
   main: {
     marginHorizontal: 16,
     gap: 16,
+    flexDirection: "column-reverse",
   },
 });

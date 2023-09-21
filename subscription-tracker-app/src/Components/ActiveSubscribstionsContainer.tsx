@@ -13,77 +13,36 @@ import {
 const ActiveSubscriptionsContainer = ({
   categories,
   subscriptions,
-  services,
-  users,
-  subscriptionTiers,
 }: {
   categories: Category[];
   subscriptions: Subscription[];
-  services: Service[];
-  users: User[];
-  subscriptionTiers: SubscriptionTier[];
 }) => {
-  const mergeTables = (
-    services: Service[],
-    subscriptions: Subscription[],
-    subscriptionTiers: SubscriptionTier[],
-    users: User[]
-  ) => {
-    services.map((service: Service) => {
-      subscriptions.map((subscription: Subscription) => {
-        if (subscription.service_id === service.id) {
-          subscription.service = service;
-        }
-        subscriptionTiers.map((subscriptionTier: SubscriptionTier) => {
-          if (
-            subscription.service?.id == subscriptionTier.service_id &&
-            subscription.subscription_tier_id == subscriptionTier.id
-          ) {
-            subscription.subscription_tier = subscriptionTier;
-          }
-        });
-        users.map((user: User) => {
-          if (subscription.user_id == user.id) {
-            subscription.user = user;
-          }
-        });
-      });
-    });
-  };
-  mergeTables(services, subscriptions, subscriptionTiers, users);
-
-  const filterSubscriptions = (id: number, subscriptions: Subscription[]) => {
-    return subscriptions.filter(
-      (subscription: Subscription) => subscription.service?.category_id == id
-    );
-  };
-
   return (
     <>
       <ScrollView>
-        {categories.length > 0 &&
-          categories.map((category: Category, i: number) => (
-            <>
-              <View style={styles.subTitleContainer}>
-                <Text style={styles.subTitle}>{category.name}</Text>
-                <View style={styles.arrowsContainer}>
-                  <Image source={arrowLeft} style={styles.arrows} />
-                  <Image source={arrowRight} style={styles.arrows} />
-                </View>
+        {categories.map((category: Category, i: number) => (
+          <>
+            <View style={styles.subTitleContainer} key={i}>
+              <Text style={styles.subTitle}>{category.name}</Text>
+              <View style={styles.arrowsContainer}>
+                <Image source={arrowLeft} style={styles.arrows} />
+                <Image source={arrowRight} style={styles.arrows} />
               </View>
-              <ScrollView
-                horizontal={true}
-                indicatorStyle={"white"}
-                contentContainerStyle={styles.contentContainer}
-              >
-                {filterSubscriptions(category.id, subscriptions).map(
-                  (subscription: Subscription, i: number) => (
+            </View>
+            <ScrollView
+              horizontal={true}
+              indicatorStyle={"white"}
+              contentContainerStyle={styles.contentContainer}
+            >
+              {subscriptions.map(
+                (subscription: Subscription, i: number) =>
+                  subscription.services?.category_id == category.id && (
                     <ActiveSubscription subscription={subscription} key={i} />
                   )
-                )}
-              </ScrollView>
-            </>
-          ))}
+              )}
+            </ScrollView>
+          </>
+        ))}
       </ScrollView>
     </>
   );
