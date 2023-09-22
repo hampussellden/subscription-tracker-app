@@ -56,7 +56,7 @@ const UserContainer = ({
             alignSelf: "flex-end",
             transform: [{ translateX: -24 }],
           }}
-          onPress={() => navigation.navigate("addUser")}
+          onPress={() => navigation.navigate("AddUser")}
         />
       </ScrollView>
     </View>

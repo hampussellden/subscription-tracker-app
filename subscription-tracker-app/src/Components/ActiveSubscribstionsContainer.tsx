@@ -13,9 +13,11 @@ import {
 const ActiveSubscriptionsContainer = ({
   categories,
   subscriptions,
+  handleOpenSingleSubscription,
 }: {
   categories: Category[];
   subscriptions: Subscription[];
+  handleOpenSingleSubscription: any;
 }) => {
   return (
     <>
@@ -36,8 +38,15 @@ const ActiveSubscriptionsContainer = ({
             >
               {subscriptions.map(
                 (subscription: Subscription, i: number) =>
-                  subscription.services?.category_id == category.id && (
-                    <ActiveSubscription subscription={subscription} key={i} />
+                  subscription.services?.category_id == category.id &&
+                  subscription.active && (
+                    <ActiveSubscription
+                      subscription={subscription}
+                      key={i}
+                      handleOpenSingleSubscription={
+                        handleOpenSingleSubscription
+                      }
+                    />
                   )
               )}
             </ScrollView>

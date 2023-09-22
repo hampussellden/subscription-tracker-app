@@ -14,8 +14,10 @@ import {
   Category,
   SubscriptionTier,
 } from "../types";
+import SingleSubscription from "../Components/SingleSubscription";
 
 const HomeScreen = (props: any) => {
+  const [reload, setReload] = useState<boolean>(false);
   const [tosAccepted, setTosAccepted] = useState<boolean | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [users, setUsers] = useState<any[]>([]);
@@ -28,6 +30,8 @@ const HomeScreen = (props: any) => {
     SubscriptionTier[]
   >([]);
   const [priceOverviewActive, setPriceOverviewActive] = React.useState(false);
+  const [activeSingleSubscription, setActiveSingleSubscription] =
+    React.useState<Subscription | false>(false);
   const session = props.route.params.session;
   const profileId = session.user.id;
   //fetching of users on the authenticated profile
@@ -104,10 +108,11 @@ const HomeScreen = (props: any) => {
       if (subscriptions) {
         console.log("subs: " + subscriptions);
         setSubscriptions(subscriptions as any[]);
+        reload && setReload(false);
       }
     };
     fetchSubscriptions();
-  }, [tosAccepted]);
+  }, [tosAccepted, reload]);
   if (props.route.params.accepted != undefined && loading == true) {
     setTosAccepted(props.route.params.accepted);
   }
@@ -144,7 +149,13 @@ const HomeScreen = (props: any) => {
     }
     setTosAccepted(true);
   };
-
+  const handleOpenSingleSubscription = (subscription: Subscription) => {
+    setActiveSingleSubscription(subscription);
+  };
+  const handleCloseSingleSubscription = () => {
+    setActiveSingleSubscription(false);
+    setReload(true);
+  };
   return (
     <View>
       {loading && <Text>Loading...</Text>}
@@ -152,6 +163,11 @@ const HomeScreen = (props: any) => {
         (!tosAccepted ? (
           //   props.navigation.navigate("Onboard", { session: session })
           <Onboarding session={session} onClick={handlePress} />
+        ) : activeSingleSubscription ? (
+          <SingleSubscription
+            subscription={activeSingleSubscription}
+            closeSingle={handleCloseSingleSubscription}
+          />
         ) : (
           <ScrollView
             contentContainerStyle={styles.main}
@@ -161,6 +177,7 @@ const HomeScreen = (props: any) => {
               <ActiveSubscriptionsContainer
                 categories={categories}
                 subscriptions={subscriptions}
+                handleOpenSingleSubscription={handleOpenSingleSubscription}
               />
             )}
             <UsersContainer users={users} navigation={props.navigation} />

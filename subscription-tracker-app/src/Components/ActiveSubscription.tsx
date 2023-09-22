@@ -5,8 +5,10 @@ import { supabase } from "../../lib/supabase";
 import { Subscription } from "../types";
 const ActiveSubscription = ({
   subscription,
+  handleOpenSingleSubscription,
 }: {
   subscription: Subscription;
+  handleOpenSingleSubscription: any;
 }) => {
   const styles = StyleSheet.create({
     container: {
@@ -51,7 +53,10 @@ const ActiveSubscription = ({
     .getPublicUrl(subscription.services?.icon as string);
 
   return (
-    <Pressable style={[styles.container]}>
+    <Pressable
+      style={[styles.container]}
+      onPress={() => handleOpenSingleSubscription(subscription)}
+    >
       <View style={styles.topRow}>
         <Image source={{ uri: imageUrl.data.publicUrl }} style={styles.icon} />
         <Image source={arrowRight} />
