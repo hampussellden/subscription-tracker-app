@@ -52,7 +52,7 @@ const FamilyScreen = (props: any, {navigation}: any) => {
 
   return (
     <View>
-    {deleteUser && <DeleteUser state={deleteUser} setState={setDeleteUser} />}
+    {deleteUser && <DeleteUser choosenUser={ choosenUser} setState={setDeleteUser} />}
     <View style={[deleteUser ? styles.blurred : styles.wrapper]}>
       <Text style={styles.h1}>Familjehantering</Text>
       <View style={styles.userSection}>

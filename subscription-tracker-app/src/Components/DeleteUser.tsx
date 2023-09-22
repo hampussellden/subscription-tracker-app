@@ -9,8 +9,9 @@ const DeleteUser = (props: any) => {
   return (
     <View style={styles.deleteContainer}>
       <Text style={{ fontWeight: "bold" }}>
-        Är du säker på att du vill ta bort användaren?
+        Är du säker på att du vill ta bort användaren? 
       </Text>
+      <Text>{props.choosenUser}</Text>
       <Button
         title='Radera användare'
         titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
