@@ -45,7 +45,7 @@ const FamilyScreen = (props: any, {navigation}: any) => {
   //   setChoosenUser()
   // }
 
-  console.log(userData);
+  // console.log(userData);
   // console.log(choosenUser);
   
   
@@ -86,7 +86,7 @@ const FamilyScreen = (props: any, {navigation}: any) => {
         </View>
        </View>
        <View style={styles.addUserSection}>
-        <TouchableOpacity onPress={() => props.navigation.navigate('addUser')}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('AddUser')}>
         <Image style={styles.addUserImg} source={addUser}/>
         </TouchableOpacity>
        </View>

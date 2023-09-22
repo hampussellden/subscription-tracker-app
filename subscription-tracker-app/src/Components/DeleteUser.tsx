@@ -1,11 +1,26 @@
 import { View, Text, StyleSheet, Alert } from "react-native";
 import { Button } from "react-native-elements";
 import React from "react";
+import { supabase } from "../../lib/supabase";
 
 const DeleteUser = (props: any) => {
+
+
   const handlePress = () => {
     props.setState(false);
   };
+
+  const deleteFunction = async () => {
+    const {error} = await supabase
+    .from('users')
+    .delete()
+    .eq('id', props.choosenUser)
+
+    if(error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.deleteContainer}>
       <Text style={{ fontWeight: "bold" }}>
@@ -26,7 +41,7 @@ const DeleteUser = (props: any) => {
           alignSelf: "center",
         }}
         // disabled={loading}
-        // onPress={() => {Alert.alert('clicked')}}
+        onPress={deleteFunction}
       />
       <Button
         title='Gå Tillbaka'
