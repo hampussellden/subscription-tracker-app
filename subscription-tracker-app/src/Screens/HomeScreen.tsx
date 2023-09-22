@@ -160,11 +160,8 @@ const HomeScreen = (props: any) => {
                 subscriptions={subscriptions}
               />
             )}
-            <UsersContainer users={users} />
-            <UpcomingPaymentsContainer
-              subscriptions={subscriptions}
-              services={services}
-            />
+            <UsersContainer users={users} navigation={props.navigation} />
+            <UpcomingPaymentsContainer subscriptions={subscriptions} />
             <NewsContainer />
             <PriceOverview
               profileId={profileId}

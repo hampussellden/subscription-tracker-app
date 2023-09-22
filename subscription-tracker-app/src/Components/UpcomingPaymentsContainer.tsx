@@ -6,10 +6,8 @@ import S from "../style";
 const styles = StyleSheet.create({});
 const UpcomingPaymentsContainer = ({
   subscriptions,
-  services,
 }: {
   subscriptions: Subscription[];
-  services: Service[];
 }) => {
   const compareDates = (a: Subscription, b: Subscription): number => {
     const date1 = new Date(a.renewal_date);

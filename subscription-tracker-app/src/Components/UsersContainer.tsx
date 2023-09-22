@@ -25,27 +25,41 @@ export type User = {
   avatar_url: string;
 };
 
-const example = ({ users }: { users: User[] }) => {
+const UserContainer = ({
+  users,
+  navigation,
+}: {
+  users: User[];
+  navigation: any;
+}) => {
   return (
-    <View>
+    <View style={{ minHeight: 130 }}>
       <Text style={styles.subTitle}>Användare</Text>
       <ScrollView horizontal={true} contentContainerStyle={{ gap: 8 }}>
         {users.map((user) => {
           return <UserItem user={user} />;
         })}
         <Button
-          title='+'
-          buttonStyle={{ backgroundColor: "rgba(214, 61, 57, 1)" }}
-          containerStyle={{
-            height: 40,
-            width: 40,
-            borderRadius: 20,
-            marginBottom: 10,
-            alignSelf: "flex-end",
+          icon={{
+            name: "plus",
+            type: "font-awesome",
+            size: 20,
+            color: "white",
           }}
+          buttonStyle={{
+            backgroundColor: "#edaaa8",
+            minHeight: 40,
+            minWidth: 40,
+            borderRadius: 20,
+          }}
+          containerStyle={{
+            alignSelf: "flex-end",
+            transform: [{ translateX: -24 }],
+          }}
+          onPress={() => navigation.navigate("addUser")}
         />
       </ScrollView>
     </View>
   );
 };
-export default example;
+export default UserContainer;

@@ -3,13 +3,20 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { NewsItemType } from "./NewsContainer";
 import S from "../style";
 const NewsItem = ({ news }: { news: NewsItemType }) => {
+  const maxChars = 39;
+  const truncatedText = (text: string): string => {
+    if (text.length < maxChars) return text;
+    const returnText =
+      text.length > maxChars ? text.slice(0, maxChars) + "..." : text;
+    return returnText;
+  };
   return (
     <View style={styles.container}>
       <View style={styles.row}>
         <Image source={news.icon} style={{ marginRight: 8 }} />
         <Text style={{ fontSize: 24 }}>{news.title}</Text>
       </View>
-      <Text>{news.content}</Text>
+      <Text>{truncatedText(news.content)}</Text>
     </View>
   );
 };

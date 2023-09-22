@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
-import { User } from "../Screens/HomeScreen";
+import { User } from "../types";
 import { supabase } from "../../lib/supabase";
 const styles = StyleSheet.create({
   userImg: {
@@ -27,9 +27,6 @@ const UserItem = ({ user }: { user: User }) => {
           source={{ uri: imageUrl.data.publicUrl }}
           style={styles.userImg}
         />
-        <Text>
-          {user.name.charAt(0).toLocaleUpperCase() + user.name.slice(1)}
-        </Text>
       </View>
     </>
   );
