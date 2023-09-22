@@ -90,7 +90,7 @@ const HomeScreen = (props: any) => {
         .from("subscriptions")
         .select(
           `*,
-        services (name, icon, color, banner, category_id),
+        services (*),
         subscription_tiers (*),
         users (*)
       `
@@ -101,11 +101,13 @@ const HomeScreen = (props: any) => {
         console.log(error);
       }
       if (subscriptions) {
+        console.log("subs: " + subscriptions);
+
         setSubscriptions(subscriptions as any[]);
       }
     };
     fetchSubscriptions();
-  }, []);
+  }, [tosAccepted]);
   if (props.route.params.accepted != undefined && loading == true) {
     setTosAccepted(props.route.params.accepted);
   }
@@ -127,7 +129,7 @@ const HomeScreen = (props: any) => {
     fetchTos();
   }, [loading]);
   useEffect(() => {
-    if (tosAccepted != null && subscriptions.length > 0) {
+    if (tosAccepted == true && subscriptions.length > 0) {
       setLoading(false);
     }
   }, [tosAccepted, subscriptions]);
