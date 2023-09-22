@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Modal, ImageBackground } from 'react-native'
+import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Modal, ImageBackground, Alert } from 'react-native'
 import { Button } from 'react-native-elements'
 import React, {useEffect, useState} from 'react'
 import { supabase } from '../../lib/supabase'
@@ -7,6 +7,9 @@ import DeleteUser from '../Components/DeleteUser'
 
 const FamilyScreen = (props: any, {navigation}: any) => {
     const [userNames, setUserNames] = useState<string[]>([]);
+    const [userData, setUserData] = useState<{}[]>([]);
+    const [userId, setUserId] = useState<number>(0);
+    const [choosenUser, setChoosenUser] = useState<number>(0);
     const [deleteUser, setDeleteUser] = useState(false)
     const [visible, setVisible] = useState<boolean>(false)
     
@@ -25,8 +28,10 @@ const FamilyScreen = (props: any, {navigation}: any) => {
   
           if (data) {
               data.map(users => {
-                // console.log(users);
+                // console.log( users.id);
                   setUserNames(userNames => [...userNames, users.name as string ])
+                  setUserId(users.id)
+                  setUserData(userData => [...userData, users])
               })
           }
       }
@@ -35,6 +40,14 @@ const FamilyScreen = (props: any, {navigation}: any) => {
 
 
   // console.log(userNames);
+  // const test = () => {
+  //   Alert.alert('cliked user')
+  //   setChoosenUser()
+  // }
+
+  console.log(userData);
+  // console.log(choosenUser);
+  
   
 
   return (
@@ -46,11 +59,14 @@ const FamilyScreen = (props: any, {navigation}: any) => {
         <Text style={styles.h2}>användare</Text>
         <View style={styles.userRow}>
           <ScrollView horizontal={true}>
-          {userNames.map((user, key) => {
-            return <View style={styles.userProfiles} key={key} >
+            {userData.map((user, id,) => {
+            return <TouchableOpacity onPress={() => setChoosenUser(user.id)}>
+            <View style={styles.userProfiles} key={id}>
               <Image style={styles.userImage} source={testUser}/>
-              <Text>{user}</Text>
+              <Text>{user.name}</Text>
+
             </View>
+            </TouchableOpacity> 
           })}
           </ScrollView>
           </View>
@@ -58,6 +74,11 @@ const FamilyScreen = (props: any, {navigation}: any) => {
        <View style={styles.currentUserSection}>
         <Image style={styles.selectedUserImg} source={testUser}/>
         <View style={styles.userInfoContainer}>
+          {userData.map(user => {
+            if(choosenUser == user.id) {
+              return <Text>{user.name}</Text>
+            }
+          })}
         <Text style={styles.userInfo}>Jane Doe</Text>
           <TouchableOpacity onPress={() => setDeleteUser(true)}>
             <Text style={styles.userInfo}>Radera Användare </Text>

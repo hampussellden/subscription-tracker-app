@@ -38,6 +38,7 @@ export default function App() {
               component={SettingScreen}
               initialParams={{ session: session }}
             />
+            
             <Stack.Screen
               name='Home'
               component={HomeScreen}
@@ -53,7 +54,7 @@ export default function App() {
             />
 
             <Stack.Screen
-              name='addUser'
+              name='AddUser'
               component={AddUserScreen}
               initialParams={{ session: session }}
             />
