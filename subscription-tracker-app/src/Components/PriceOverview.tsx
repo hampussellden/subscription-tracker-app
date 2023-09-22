@@ -15,11 +15,15 @@ import { Subscription, Service, SubscriptionTier } from "../types";
 const PriceOverview = ({
   profileId,
   subscriptions,
+  priceOverviewActive,
+  onPress,
 }: {
   profileId: any;
   subscriptions: Subscription[];
+  priceOverviewActive: boolean;
+  onPress: any;
 }) => {
-  const [active, setActive] = React.useState(true);
+  const [active, setActive] = React.useState(false);
   const [unlocked, setUnlocked] = React.useState(false);
   const [showPinInput, setShowPinInput] = React.useState(false);
   const darkMode = false;
@@ -45,20 +49,30 @@ const PriceOverview = ({
   const handleUnlock = () => {
     setUnlocked(true);
     setShowPinInput(false);
+    onPress(false);
   };
 
   const handlePress = () => {
     if (!unlocked) {
+      onPress(true);
       setShowPinInput(true);
       return;
     }
     setActive(!active);
   };
+  const handleGoBackPress = () => {
+    onPress(false);
+    setShowPinInput(false);
+  };
 
   return (
     <View>
       {showPinInput && !unlocked && (
-        <PinCodePopUp profileId={profileId} handleUnlock={handleUnlock} />
+        <PinCodePopUp
+          profileId={profileId}
+          handleUnlock={handleUnlock}
+          onPress={handleGoBackPress}
+        />
       )}
       <Text style={S.subTitleBold}>Mina Kostnader</Text>
       <Pressable

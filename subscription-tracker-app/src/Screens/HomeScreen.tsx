@@ -27,6 +27,7 @@ const HomeScreen = (props: any) => {
   const [subscriptionTiers, setSubscriptionTiers] = useState<
     SubscriptionTier[]
   >([]);
+  const [priceOverviewActive, setPriceOverviewActive] = React.useState(false);
   const session = props.route.params.session;
   const profileId = session.user.id;
   //fetching of users on the authenticated profile
@@ -102,7 +103,6 @@ const HomeScreen = (props: any) => {
       }
       if (subscriptions) {
         console.log("subs: " + subscriptions);
-
         setSubscriptions(subscriptions as any[]);
       }
     };
@@ -153,7 +153,10 @@ const HomeScreen = (props: any) => {
           //   props.navigation.navigate("Onboard", { session: session })
           <Onboarding session={session} onClick={handlePress} />
         ) : (
-          <ScrollView contentContainerStyle={styles.main}>
+          <ScrollView
+            contentContainerStyle={styles.main}
+            scrollEnabled={!priceOverviewActive}
+          >
             {subscriptions.length > 0 && categories.length > 0 && (
               <ActiveSubscriptionsContainer
                 categories={categories}
@@ -166,6 +169,8 @@ const HomeScreen = (props: any) => {
             <PriceOverview
               profileId={profileId}
               subscriptions={subscriptions}
+              priceOverviewActive={priceOverviewActive}
+              onPress={setPriceOverviewActive}
             />
           </ScrollView>
         ))}

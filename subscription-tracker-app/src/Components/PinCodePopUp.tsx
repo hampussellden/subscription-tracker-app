@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
 import { supabase } from "../../lib/supabase";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
+import { Button } from "react-native-elements";
 import NumberInput from "./NumberInput";
 const PinCodePopUp = ({
   profileId,
   handleUnlock,
+  onPress,
 }: {
   profileId: any;
   handleUnlock: any;
+  onPress: any;
 }) => {
   const [inputValue, setInputValue] = React.useState<string>("");
   const [correctPin, setCorrectPin] = React.useState<string | null>(null);
@@ -30,7 +33,6 @@ const PinCodePopUp = ({
         console.log(error);
       }
       if (pinCode) {
-        console.log(pinCode);
         setCorrectPin(pinCode[0]?.pin_code);
       }
     };
@@ -79,6 +81,27 @@ const PinCodePopUp = ({
           ))}
         </View>
       </View>
+      <Button
+        title='Gå Tillbaka'
+        titleStyle={{ color: "black", fontWeight: "bold", fontSize: 24 }}
+        buttonStyle={{
+          marginTop: 20,
+          maxWidth: 396,
+          width: "100%",
+          paddingHorizontal: 24,
+          paddingVertical: 16,
+          borderRadius: 5,
+          borderWidth: 2,
+          borderColor: "#000000",
+          backgroundColor: "white",
+          alignSelf: "center",
+        }}
+        containerStyle={{
+          width: "100%",
+        }}
+        // disabled={loading}
+        onPress={onPress}
+      />
     </View>
   );
 };
@@ -94,7 +117,6 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0,0,0,0.8))",
     zIndex: 50,
     display: "flex",
-    flex: 1,
     justifyContent: "center",
     alignItems: "center",
     flexDirection: "column",
@@ -111,8 +133,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 4,
     gap: 16,
-    transform: [{ translateY: -100 }],
+    // transform: [{ translateY: -100 }],
     paddingHorizontal: 16,
     paddingVertical: 24,
+    marginHorizontal: 16,
   },
 });

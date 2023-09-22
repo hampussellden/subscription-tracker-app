@@ -1,15 +1,16 @@
-import { View, Text, StyleSheet, Alert } from 'react-native'
-import { Button } from 'react-native-elements'
-import React from 'react'
+import { View, Text, StyleSheet, Alert } from "react-native";
+import { Button } from "react-native-elements";
+import React from "react";
 
 const DeleteUser = (props: any) => {
-
-    const handlePress = () => {
-        props.setState(false)
-    }
+  const handlePress = () => {
+    props.setState(false);
+  };
   return (
     <View style={styles.deleteContainer}>
-      <Text style={{fontWeight: 'bold'}}>Är du säker på att du vill ta bort användaren?</Text>
+      <Text style={{ fontWeight: "bold" }}>
+        Är du säker på att du vill ta bort användaren?
+      </Text>
       <Button
         title='Radera användare'
         titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
@@ -37,7 +38,7 @@ const DeleteUser = (props: any) => {
           paddingVertical: 16,
           borderRadius: 5,
           borderWidth: 2,
-          borderColor: '#000000', 
+          borderColor: "#000000",
           backgroundColor: "white",
           alignSelf: "center",
         }}
@@ -45,19 +46,19 @@ const DeleteUser = (props: any) => {
         onPress={handlePress}
       />
     </View>
-  )
-}
+  );
+};
 
-export default DeleteUser
+export default DeleteUser;
 
 const styles = StyleSheet.create({
-    deleteContainer: {
-        height: 208,
-        width: 395.2,
-        zIndex: 100,
-        padding: 5,
-        position: 'absolute',
-        top: '30%',
-        opacity: 1,
-    }
-})
+  deleteContainer: {
+    height: 208,
+    width: 395.2,
+    zIndex: 100,
+    padding: 5,
+    position: "absolute",
+    top: "30%",
+    opacity: 1,
+  },
+});
