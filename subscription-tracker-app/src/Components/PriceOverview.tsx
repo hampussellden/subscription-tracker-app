@@ -15,18 +15,32 @@ import { Subscription, Service, SubscriptionTier } from "../types";
 const PriceOverview = ({
   profileId,
   subscriptions,
-  services,
-  subscriptionTiers,
 }: {
   profileId: any;
   subscriptions: Subscription[];
-  services: Service[];
-  subscriptionTiers: SubscriptionTier[];
 }) => {
   const [active, setActive] = React.useState(true);
   const [unlocked, setUnlocked] = React.useState(false);
   const [showPinInput, setShowPinInput] = React.useState(false);
   const darkMode = false;
+
+  const sumOfThisMontsSubs = (subscriptions: Subscription[]): number => {
+    const now = new Date();
+    var oneMonthFromNow = new Date();
+    oneMonthFromNow.setMonth(now.getMonth() + 1);
+
+    let totalPrice = 0;
+
+    for (const subscription of subscriptions) {
+      const renewalDate = new Date(subscription.renewal_date);
+
+      // Check if the renewal date is within one month from now
+      if (renewalDate <= oneMonthFromNow) {
+        totalPrice += subscription.subscription_tiers.price;
+      }
+    }
+    return totalPrice;
+  };
 
   const handleUnlock = () => {
     setUnlocked(true);
@@ -68,7 +82,9 @@ const PriceOverview = ({
               marginTop: 8,
             }}
           >
-            <Text style={S.subTitleBold}> 1 000kr/mån</Text>
+            <Text style={S.subTitleBold}>
+              {sumOfThisMontsSubs(subscriptions)} Kr/mån
+            </Text>
           </View>
         )}
         <View>

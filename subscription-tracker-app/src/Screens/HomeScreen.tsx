@@ -169,8 +169,6 @@ const HomeScreen = (props: any) => {
             <PriceOverview
               profileId={profileId}
               subscriptions={subscriptions}
-              services={services}
-              subscriptionTiers={subscriptionTiers}
             />
           </ScrollView>
         ))}
