@@ -1,10 +1,29 @@
-import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native'
 import { Input, Button } from 'react-native-elements'
 import React, { useState } from 'react'
 import { testUser, penIcon } from '../images/images'
+import { supabase } from '../../lib/supabase'
 
-const AddUserScreen = () => {
+const AddUserScreen = (props: any) => {
   const [text, setText] = useState('');
+
+  const session = props.route.params.session;
+
+  const addUser = async () => {
+    const {error, data} = await supabase 
+    .from('users')
+    .insert({name: 'test3', avatar_url: 'portrait1.jpeg', profile_id: session?.user.id})
+    .select()
+
+    if(error) {
+      console.log(error);
+    }
+
+    if (data) {
+      Alert.alert('user Created succesfully');
+    }
+
+  }
 
   return (
     <View style={styles.addUserScreenWrapper}>
@@ -43,7 +62,7 @@ const AddUserScreen = () => {
         borderRadius: 5,
         backgroundColor: "rgba(0, 0, 0, 1)",
       }}
-      // onPress={() => supabase.auth.signOut()}
+      onPress={addUser}
     />
     </View>
   )
