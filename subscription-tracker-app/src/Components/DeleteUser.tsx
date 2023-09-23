@@ -23,6 +23,7 @@ const DeleteUser = (props: any) => {
 
     if(data) {
       Alert.alert('user was deleted')
+      handlePress();
     }
   };
 

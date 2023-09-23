@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { testUser, penIcon } from '../images/images'
 import { supabase } from '../../lib/supabase'
 
-const AddUserScreen = (props: any) => {
+const AddUserScreen = (props: any, {navigation}: any) => {
   const [text, setText] = useState<string>('');
 
   const session = props.route.params.session;
@@ -21,6 +21,7 @@ const AddUserScreen = (props: any) => {
 
     if (data) {
       Alert.alert('user Created succesfully');
+      props.navigation.goBack();
     }
 
   }
