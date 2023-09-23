@@ -11,13 +11,18 @@ const DeleteUser = (props: any) => {
   };
 
   const deleteFunction = async () => {
-    const {error} = await supabase
+    const {error, data} = await supabase
     .from('users')
     .delete()
     .eq('id', props.choosenUser)
+    .select()
 
     if(error) {
       console.log(error);
+    }
+
+    if(data) {
+      Alert.alert('user was deleted')
     }
   };
 

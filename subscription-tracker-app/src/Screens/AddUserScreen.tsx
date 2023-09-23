@@ -5,14 +5,14 @@ import { testUser, penIcon } from '../images/images'
 import { supabase } from '../../lib/supabase'
 
 const AddUserScreen = (props: any) => {
-  const [text, setText] = useState('');
+  const [text, setText] = useState<string>('');
 
   const session = props.route.params.session;
 
   const addUser = async () => {
     const {error, data} = await supabase 
     .from('users')
-    .insert({name: 'test3', avatar_url: 'portrait1.jpeg', profile_id: session?.user.id})
+    .insert({name: text, avatar_url: 'portrait1.jpeg', profile_id: session?.user.id})
     .select()
 
     if(error) {
