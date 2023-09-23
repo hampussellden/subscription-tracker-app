@@ -11,8 +11,13 @@ import SettingScreen from "./src/Screens/SettingScreen";
 import HomeScreen from "./src/Screens/HomeScreen";
 import FamilyScreen from "./src/Screens/FamilyScreen";
 import AddUserScreen from "./src/Screens/AddUserScreen";
+import {useFonts} from 'expo-font';
 
 export default function App() {
+  const [fontsLoaded] = useFonts({
+    DM_Sans: require('./assets/fonts/DMSans-VariableFont_opsz,wght.ttf'
+    )
+  });1
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
@@ -32,27 +37,21 @@ export default function App() {
       <Stack.Navigator>
         {session && session.user ? (
           <>
-
-            <Stack.Screen
-              name='Settings'
-              component={SettingScreen}
-              initialParams={{ session: session }}
-            />
-            
             <Stack.Screen
               name='Home'
               component={HomeScreen}
               initialParams={{ session: session }}
             />
-
-        
-
+            <Stack.Screen
+              name='Settings'
+              component={SettingScreen}
+              initialParams={{ session: session }}
+            />
             <Stack.Screen
               name='Family'
               component={FamilyScreen}
               initialParams={{ session: session }}
             />
-
             <Stack.Screen
               name='AddUser'
               component={AddUserScreen}
