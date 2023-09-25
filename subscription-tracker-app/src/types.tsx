@@ -18,6 +18,7 @@ export type Service = {
   banner: string | null;
   category_id: number | null;
   subscription_tiers?: SubscriptionTier[];
+  categories: Category;
 };
 export type Category = {
   id: number;

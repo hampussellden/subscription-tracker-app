@@ -24,7 +24,7 @@ const HomeScreen = (props: any) => {
   const [users, setUsers] = useState<any[]>([]);
   const [userIds, setUserIds] = useState<number[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [subscriptionTiers, setSubscriptionTiers] = useState<
     SubscriptionTier[]
@@ -60,19 +60,19 @@ const HomeScreen = (props: any) => {
   }, []);
   //fetching of categories
   useEffect(() => {
-    const fetchCategories = async () => {
-      const { data: categories, error } = await supabase
-        .from("categories")
-        .select("*");
-      if (error) {
-        console.log(error);
+    let categories: string[] = [];
+    subscriptions.forEach((subscription) => {
+      if (
+        !categories.includes(
+          subscription?.services?.categories?.name as string
+        ) &&
+        subscription.active
+      ) {
+        categories.push(subscription?.services?.categories?.name as string);
       }
-      if (categories) {
-        setCategories(categories);
-      }
-    };
-    fetchCategories();
-  }, []);
+    });
+    setCategories(categories);
+  }, [subscriptions]);
   //fetching of subscriptions
   useEffect(() => {
     const fetchSubscriptions = async () => {
@@ -80,7 +80,7 @@ const HomeScreen = (props: any) => {
         .from("subscriptions")
         .select(
           `*,
-        services (*),
+        services (banner, categories(*),color, icon, name),
         subscription_tiers (*),
         users (*)
       `
@@ -91,7 +91,6 @@ const HomeScreen = (props: any) => {
         console.log(error);
       }
       if (subscriptions) {
-        console.log("subs: " + subscriptions);
         setSubscriptions(subscriptions as any[]);
         reload && setReload(false);
       }
@@ -117,7 +116,7 @@ const HomeScreen = (props: any) => {
       }
     };
     fetchTos();
-  }, [loading]);
+  }, []);
   useEffect(() => {
     if (tosAccepted == true && subscriptions.length > 0) {
       setLoading(false);
@@ -146,7 +145,6 @@ const HomeScreen = (props: any) => {
       {loading && <Text>Loading...</Text>}
       {!loading &&
         (!tosAccepted ? (
-          //   props.navigation.navigate("Onboard", { session: session })
           <Onboarding session={session} onClick={handlePress} />
         ) : activeSingleSubscription ? (
           <SingleSubscription

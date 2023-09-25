@@ -15,17 +15,17 @@ const ActiveSubscriptionsContainer = ({
   subscriptions,
   handleOpenSingleSubscription,
 }: {
-  categories: Category[];
+  categories: string[];
   subscriptions: Subscription[];
-  handleOpenSingleSubscription: any;
+  handleOpenSingleSubscription: (subscription: Subscription) => void;
 }) => {
   return (
     <>
       <ScrollView>
-        {categories.map((category: Category, i: number) => (
+        {categories.map((category: string, i: number) => (
           <>
             <View style={styles.subTitleContainer} key={i}>
-              <Text style={styles.subTitle}>{category.name}</Text>
+              <Text style={styles.subTitle}>{category}</Text>
               <View style={styles.arrowsContainer}>
                 <Image source={arrowLeft} style={styles.arrows} />
                 <Image source={arrowRight} style={styles.arrows} />
@@ -38,7 +38,7 @@ const ActiveSubscriptionsContainer = ({
             >
               {subscriptions.map(
                 (subscription: Subscription, i: number) =>
-                  subscription.services?.category_id == category.id &&
+                  subscription.services?.categories.name == category &&
                   subscription.active && (
                     <ActiveSubscription
                       subscription={subscription}

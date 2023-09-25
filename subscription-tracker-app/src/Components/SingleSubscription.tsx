@@ -58,7 +58,7 @@ const SingleSubscription = ({
   navigation: any;
   activeSingleSub: boolean;
 }) => {
-  console.log("single sub: " + subscription);
+  console.log(subscription);
 
   const imageUrl = supabase.storage
     .from("banners")
