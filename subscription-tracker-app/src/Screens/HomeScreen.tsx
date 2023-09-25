@@ -15,6 +15,7 @@ import {
   SubscriptionTier,
 } from "../types";
 import SingleSubscription from "../Components/SingleSubscription";
+import Header from "../Components/Header";
 
 const HomeScreen = (props: any) => {
   const [reload, setReload] = useState<boolean>(false);
@@ -23,7 +24,6 @@ const HomeScreen = (props: any) => {
   const [users, setUsers] = useState<any[]>([]);
   const [userIds, setUserIds] = useState<number[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [services, setServices] = useState<Service[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [subscriptions, setSubscriptions] = useState<Subscription[]>([]);
   const [subscriptionTiers, setSubscriptionTiers] = useState<
@@ -57,21 +57,6 @@ const HomeScreen = (props: any) => {
       }
     };
     fetchUsers();
-  }, []);
-  //fetching of services
-  useEffect(() => {
-    const fetchServices = async () => {
-      const { data: services, error } = await supabase
-        .from("services")
-        .select("*");
-      if (error) {
-        console.log(error);
-      }
-      if (services) {
-        setServices(services as Service[]);
-      }
-    };
-    fetchServices();
   }, []);
   //fetching of categories
   useEffect(() => {
@@ -166,7 +151,9 @@ const HomeScreen = (props: any) => {
         ) : activeSingleSubscription ? (
           <SingleSubscription
             subscription={activeSingleSubscription}
+            navigation={props.navigation}
             closeSingle={handleCloseSingleSubscription}
+            activeSingleSub={true}
           />
         ) : (
           <ScrollView
@@ -189,6 +176,7 @@ const HomeScreen = (props: any) => {
               priceOverviewActive={priceOverviewActive}
               onPress={setPriceOverviewActive}
             />
+            <Header navigation={props.navigation} />
           </ScrollView>
         ))}
     </View>
@@ -201,5 +189,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     gap: 16,
     flexDirection: "column-reverse",
+    marginTop: 48,
   },
 });

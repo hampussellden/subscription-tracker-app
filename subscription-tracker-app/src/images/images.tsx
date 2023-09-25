@@ -20,3 +20,5 @@ export const unlockedLight = require("./unlockedLight.png");
 export const cashFileDark = require("./cashFileDark.png");
 export const cashFileLight = require("./cashFileLight.png");
 export const penIcon = require("./penIcon.png");
+export const gearDark = require("./gearDark.png");
+export const gearLight = require("./gearLight.png");

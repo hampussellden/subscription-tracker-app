@@ -11,6 +11,7 @@ import {
 import { arrowDown } from "../images/images";
 import { Interval_periods, Subscription } from "../types";
 import { Button } from "react-native-elements";
+import Header from "./Header";
 
 const formatDateString = (renewal_date: string): string => {
   const date = new Date(renewal_date);
@@ -49,9 +50,13 @@ const getIntervalPeriod = (intervalPeriod: Interval_periods): string => {
 const SingleSubscription = ({
   subscription,
   closeSingle,
+  navigation,
+  activeSingleSub,
 }: {
   subscription: Subscription;
-  closeSingle: any;
+  closeSingle: () => void;
+  navigation: any;
+  activeSingleSub: boolean;
 }) => {
   console.log("single sub: " + subscription);
 
@@ -73,49 +78,61 @@ const SingleSubscription = ({
     }
   };
   return (
-    <ScrollView style={{}} contentContainerStyle={{ paddingBottom: 100 }}>
-      <Image
-        style={{ width: 400, height: 300 }}
-        source={{
-          uri: imageUrl.data.publicUrl,
-        }}
-      />
-      <View style={styles.infoWrapper}>
-        <Text style={styles.subTitle}>Prenumerationstyp</Text>
-        <Text style={styles.bigText}>
-          {subscription.subscription_tiers.name}
-        </Text>
-        <Text style={styles.subTitle}>Betalningsdatum</Text>
-        <Text style={styles.bigText}>
-          {formatDateString(subscription.renewal_date).replace(/-/g, " ")}
-        </Text>
-        <Pressable style={styles.costContainer}>
-          <Text style={styles.bigText}>
-            {subscription.subscription_tiers.price}/
-            {getIntervalPeriod(subscription.subscription_tiers.interval_period)}
-          </Text>
-          <Image source={arrowDown} style={{ width: 40, height: 40 }} />
-        </Pressable>
-        <Button
-          title='Avsluta Prenumeration'
-          titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
-          buttonStyle={{
-            marginTop: 20,
-            borderRadius: 5,
-            backgroundColor: "black",
-            alignSelf: "center",
-            width: 360,
-            paddingHorizontal: 24,
-            paddingVertical: 16,
-          }}
-          containerStyle={{
-            alignSelf: "center",
-            margin: 0,
-          }}
-          onPress={cancelSubHandler}
+    <View style={{ display: "flex", position: "relative" }}>
+      <ScrollView
+        style={{ position: "relative" }}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
+        <Header
+          navigation={navigation}
+          activeSingleSub={activeSingleSub}
+          closeSingle={closeSingle}
         />
-      </View>
-    </ScrollView>
+        <Image
+          style={{ width: 400, height: 500 }}
+          source={{
+            uri: imageUrl.data.publicUrl,
+          }}
+        />
+        <View style={styles.infoWrapper}>
+          <Text style={styles.subTitle}>Prenumerationstyp</Text>
+          <Text style={styles.bigText}>
+            {subscription.subscription_tiers.name}
+          </Text>
+          <Text style={styles.subTitle}>Betalningsdatum</Text>
+          <Text style={styles.bigText}>
+            {formatDateString(subscription.renewal_date).replace(/-/g, " ")}
+          </Text>
+          <Pressable style={styles.costContainer}>
+            <Text style={styles.bigText}>
+              {subscription.subscription_tiers.price}/
+              {getIntervalPeriod(
+                subscription.subscription_tiers.interval_period
+              )}
+            </Text>
+            <Image source={arrowDown} style={{ width: 40, height: 40 }} />
+          </Pressable>
+          <Button
+            title='Avsluta Prenumeration'
+            titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
+            buttonStyle={{
+              marginTop: 20,
+              borderRadius: 5,
+              backgroundColor: "black",
+              alignSelf: "center",
+              width: 360,
+              paddingHorizontal: 24,
+              paddingVertical: 16,
+            }}
+            containerStyle={{
+              alignSelf: "center",
+              margin: 0,
+            }}
+            onPress={cancelSubHandler}
+          />
+        </View>
+      </ScrollView>
+    </View>
   );
 };
 export default SingleSubscription;
