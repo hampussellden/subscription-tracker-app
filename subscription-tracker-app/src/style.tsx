@@ -18,20 +18,22 @@ const S = StyleSheet.create({
     backgroundColor: darkMode ? "#F5F1EC" : "#1F2627",
   },
   backgroundTransparencyColor: {
-    backgroundColor: darkMode ? "rgba(31, 38, 39, 0.8)" : "rgba(245, 241, 236, 0.8)",
+    backgroundColor: darkMode
+      ? "rgba(31, 38, 39, 0.8)"
+      : "rgba(245, 241, 236, 0.8)",
   },
   iconFillColor: {
     backgroundColor: "#FFFFFF",
   },
   headingOne: {
-    fontFamily: "DM_Sans",
+    fontFamily: "DM_Sans_Bold",
     fontSize: 36,
     fontWeight: "700",
     lineHeight: 42,
     letterSpacing: -1.8,
   },
-  headingTwo:{
-    fontFamily: "DM_Sans",
+  headingTwo: {
+    fontFamily: "DM_Sans_Medium",
     fontSize: 24,
     fontWeight: "500",
     lineHeight: 28,
@@ -42,8 +44,8 @@ const S = StyleSheet.create({
     fontSize: 18,
     fontWeight: "400",
   },
-  label:{
-    fontFamily: "DM_Sans",
+  label: {
+    fontFamily: "DM_Sans_Regular",
     fontSize: 16,
     fontWeight: "400",
     lineHeight: 20,
@@ -58,7 +60,7 @@ const S = StyleSheet.create({
   },
   borderRadiusLarge: {
     borderRadius: 12,
-  }
+  },
 });
 
 export default S;
