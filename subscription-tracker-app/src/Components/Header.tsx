@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { arrowBack, gearDark, gearLight } from "../images/images";
-const darkMode = false;
-const gearIcon = darkMode ? gearLight : gearDark;
+import ArrowLeft from "../images/arrowLeft.svg";
+import S from "../style";
 enum Routes {
   Home = "Home",
   AddSubscription = "AddSubscription",
@@ -40,19 +40,11 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
         <Pressable
           onPress={activeSingleSub ? closeSingle : () => navigation.goBack()}
         >
-          <Image
-            source={arrowBack}
-            style={{ width: 24, height: 24, padding: 16 }}
-          />
+          <ArrowLeft height={40} width={40} color={S.onBackgroundText.color} />
         </Pressable>
       ) : currentRoute === "Family" || currentRoute === "Settings" ? (
-        <Pressable
-          onPress={() => navigation.goBack()}
-        >
-          <Image
-            source={arrowBack}
-            style={{ width: 24, height: 24, padding: 16 }}
-          />
+        <Pressable onPress={() => navigation.goBack()}>
+          <ArrowLeft height={40} width={40} color={S.onBackgroundText.color} />
         </Pressable>
       ) : (
         <View></View>
@@ -61,7 +53,10 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
         <View></View>
       ) : (
         <Pressable onPress={() => navigation.navigate("Settings")}>
-          <Image source={gearIcon} style={{ width: 40, height: 40 }} />
+          <Image
+            source={true ? gearLight : gearDark}
+            style={{ width: 40, height: 40 }}
+          />
         </Pressable>
       )}
     </View>

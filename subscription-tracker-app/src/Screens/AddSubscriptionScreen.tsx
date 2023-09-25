@@ -4,7 +4,7 @@ import { View, Text, StyleSheet } from "react-native";
 const AddSubscriptionScreen = () => {
   return (
     <View>
-      <Text />
+      <Text>Halloj</Text>
     </View>
   );
 };

@@ -17,6 +17,7 @@ import {
 } from "../types";
 import SingleSubscription from "../Components/SingleSubscription";
 import Header from "../Components/Header";
+import AddSubscriptionFooter from "../Components/AddSubscriptionFooter";
 
 const HomeScreen = (props: any) => {
   const [reload, setReload] = useState<boolean>(false);
@@ -159,6 +160,7 @@ const HomeScreen = (props: any) => {
             contentContainerStyle={styles.main}
             scrollEnabled={!priceOverviewActive}
           >
+            <AddSubscriptionFooter navigation={props.navigation} />
             {subscriptions.length > 0 && categories.length > 0 && (
               <ActiveSubscriptionsContainer
                 categories={categories}
@@ -175,7 +177,7 @@ const HomeScreen = (props: any) => {
               priceOverviewActive={priceOverviewActive}
               onPress={setPriceOverviewActive}
             />
-            <Header navigation={props.navigation} />
+            {!priceOverviewActive && <Header navigation={props.navigation} />}
           </ScrollView>
         ))}
     </View>

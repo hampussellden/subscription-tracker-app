@@ -1,5 +1,5 @@
 import "react-native-url-polyfill/auto";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "./lib/supabase";
 import LoginScreen from "./src/Screens/LoginScreen";
 import { View } from "react-native";
@@ -11,6 +11,7 @@ import SettingScreen from "./src/Screens/SettingScreen";
 import HomeScreen from "./src/Screens/HomeScreen";
 import FamilyScreen from "./src/Screens/FamilyScreen";
 import AddUserScreen from "./src/Screens/AddUserScreen";
+import AddSubscriptionScreen from "./src/Screens/AddSubscriptionScreen";
 import { useFonts } from "expo-font";
 
 export default function App() {
@@ -45,6 +46,11 @@ export default function App() {
             <Stack.Screen
               name='Home'
               component={HomeScreen}
+              initialParams={{ session: session }}
+            />
+            <Stack.Screen
+              name='AddSubscription'
+              component={AddSubscriptionScreen}
               initialParams={{ session: session }}
             />
             <Stack.Screen

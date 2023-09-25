@@ -3,6 +3,7 @@ import { supabase } from "../../lib/supabase";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Button } from "react-native-elements";
 import NumberInput from "./NumberInput";
+import S from "../style";
 const PinCodePopUp = ({
   profileId,
   handleUnlock,
@@ -86,14 +87,14 @@ const PinCodePopUp = ({
         titleStyle={{ color: "black", fontWeight: "bold", fontSize: 24 }}
         buttonStyle={{
           marginTop: 20,
-          maxWidth: 396,
+          maxWidth: 364,
           width: "100%",
           paddingHorizontal: 24,
           paddingVertical: 16,
           borderRadius: 5,
           borderWidth: 2,
           borderColor: "#000000",
-          backgroundColor: "white",
+          backgroundColor: S.primaryColor.backgroundColor,
           alignSelf: "center",
         }}
         containerStyle={{
