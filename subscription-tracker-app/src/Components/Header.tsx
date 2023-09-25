@@ -45,6 +45,15 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
             style={{ width: 24, height: 24, padding: 16 }}
           />
         </Pressable>
+      ) : currentRoute === "Family" || currentRoute === "Settings" ? (
+        <Pressable
+          onPress={activeSingleSub ? closeSingle : () => navigation.goBack()}
+        >
+          <Image
+            source={arrowBack}
+            style={{ width: 24, height: 24, padding: 16 }}
+          />
+        </Pressable>
       ) : (
         <View></View>
       )}
