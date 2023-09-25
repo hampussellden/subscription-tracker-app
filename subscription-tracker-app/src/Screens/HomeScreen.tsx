@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Alert } from "react-native";
+import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from "react-native";
 import ActiveSubscriptionsContainer from "../Components/ActiveSubscribstionsContainer";
 import { supabase } from "../../lib/supabase";
 import Onboarding from "../Components/Onboarding";
@@ -36,6 +36,25 @@ const HomeScreen = (props: any) => {
     React.useState<Subscription | false>(false);
   const session = props.route.params.session;
   const profileId = session.user.id;
+
+    //fetching of tos_accepted
+    useEffect(() => {
+      const fetchTos = async () => {
+        const { data, error } = await supabase
+          .from("profiles")
+          .select("tos_accepted")
+          .eq("id", session?.user.id);
+  
+        if (data) {
+          console.log(data);
+          setTosAccepted(data[0].tos_accepted);
+        }
+        if (error) {
+          console.log(error);
+        }
+      };
+      fetchTos();
+    }, []);
   //fetching of users on the authenticated profile
   useEffect(() => {
     const fetchUsers = async () => {
@@ -56,27 +75,15 @@ const HomeScreen = (props: any) => {
           })
         );
         setUsers(users);
+        console.log(users);
       }
     };
     fetchUsers();
-  }, []);
-  //fetching of categories
-  useEffect(() => {
-    let categories: string[] = [];
-    subscriptions.forEach((subscription) => {
-      if (
-        !categories.includes(
-          subscription?.services?.categories?.name as string
-        ) &&
-        subscription.active
-      ) {
-        categories.push(subscription?.services?.categories?.name as string);
-      }
-    });
-    setCategories(categories);
-  }, [subscriptions]);
+  }, [tosAccepted]);
+
   //fetching of subscriptions
   useEffect(() => {
+    console.log(userIds);
     const fetchSubscriptions = async () => {
       const { data: subscriptions, error } = await supabase
         .from("subscriptions")
@@ -92,38 +99,45 @@ const HomeScreen = (props: any) => {
       if (error) {
         console.log(error);
       }
-      if (subscriptions) {
+      if (subscriptions && subscriptions?.length > 0) {
         setSubscriptions(subscriptions as any[]);
         reload && setReload(false);
       }
+      if(subscriptions?.length == 0) {
+        console.log(subscriptions)
+        !reload && setReload(true);
+      }
     };
     fetchSubscriptions();
-  }, [tosAccepted, reload]);
+  }, [tosAccepted, reload, userIds]);
+
+    //sorting of categories
+    useEffect(() => {
+      let categories: string[] = [];
+      subscriptions.forEach((subscription) => {
+        if (
+          !categories.includes(
+            subscription?.services?.categories?.name as string
+          ) &&
+          subscription.active
+        ) {
+          categories.push(subscription?.services?.categories?.name as string);
+        }
+      });
+      setCategories(categories);
+    }, [subscriptions]);
+
   if (props.route.params.accepted != undefined && loading == true) {
     setTosAccepted(props.route.params.accepted);
   }
-  //fetching of tos_accepted
   useEffect(() => {
-    const fetchTos = async () => {
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("tos_accepted")
-        .eq("id", session?.user.id);
-
-      if (data) {
-        setTosAccepted(data[0].tos_accepted);
-      }
-      if (error) {
-        console.log(error);
-      }
-    };
-    fetchTos();
-  }, []);
-  useEffect(() => {
-    if (tosAccepted == true && subscriptions.length > 0) {
+    if (tosAccepted == true && subscriptions.length > 0 && users.length > 0) {
       setLoading(false);
+    } else {
+      console.log("loading");
+      setReload(true);
     }
-  }, [tosAccepted, subscriptions]);
+  }, [tosAccepted, subscriptions, users]);
   const handlePress = async () => {
     const { error } = await supabase
       .from("profiles")
@@ -144,7 +158,11 @@ const HomeScreen = (props: any) => {
   };
   return (
     <View style={{ backgroundColor: S.primaryColor.backgroundColor }}>
-      {loading && <Text>Loading...</Text>}
+      {loading && 
+        <View style={{height:'100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size="large" color="#0000ff" />
+        </View>
+      }
       {!loading &&
         (!tosAccepted ? (
           <Onboarding session={session} onClick={handlePress} />

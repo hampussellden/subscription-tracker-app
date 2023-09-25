@@ -12,14 +12,16 @@ import HomeScreen from "./src/Screens/HomeScreen";
 import FamilyScreen from "./src/Screens/FamilyScreen";
 import AddUserScreen from "./src/Screens/AddUserScreen";
 import AddSubscriptionScreen from "./src/Screens/AddSubscriptionScreen";
-import { useFonts } from "expo-font";
+import * as Font from "expo-font";
 
 export default function App() {
-  const [fontsLoaded] = useFonts({
-    DM_Sans_Regular: require("./assets/fonts/DMSans_18pt-Regular.ttf"),
-    DM_Sans_Bold: require("./assets/fonts/DMSans_18pt-Bold.ttf"),
-    DM_Sans_Medium: require("./assets/fonts/DMSans_18pt-Medium.ttf"),
-  });
+  useEffect(() => {
+    Font.loadAsync({
+      'DM_Sans_Regular': require("./assets/fonts/DMSans_18pt-Regular.ttf"),
+      'DM_Sans_Bold': require("./assets/fonts/DMSans_18pt-Bold.ttf"),
+      'DM_Sans_Medium': require("./assets/fonts/DMSans_18pt-Medium.ttf"),
+    });
+  },[]);
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {

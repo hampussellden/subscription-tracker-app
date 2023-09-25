@@ -40,7 +40,7 @@ const S = StyleSheet.create({
     letterSpacing: -1.2,
   },
   headingThree: {
-    fontFamily: "DM Sans",
+    fontFamily: "DM_Sans_Bold",
     fontSize: 24,
     fontWeight: "400",
     lineHeight: 30,
