@@ -7,6 +7,7 @@ import DeleteUser from '../Components/DeleteUser'
 import { User } from '../types'
 import FamilyUser from '../Components/FamilyUser'
 import Header from '../Components/Header'
+import S from '../style'
 
 const FamilyScreen = (props: any, {navigation}: any,  user: User ) => {
     const [userNames, setUserNames] = useState<string[]>([]);
@@ -109,6 +110,7 @@ export default FamilyScreen
 
 const styles = StyleSheet.create({
     wrapper: {
+      backgroundColor: S.primaryColor.backgroundColor,
         height: '100%',
         width: '100%',
         padding: 5,
@@ -182,6 +184,7 @@ const styles = StyleSheet.create({
       justifyContent: 'flex-end',
       width: '100%',
       height: 'auto',
+      marginBottom: 100,
     },
     addUserImg: {
       height: 50,

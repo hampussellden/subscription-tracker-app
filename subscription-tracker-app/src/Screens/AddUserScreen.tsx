@@ -3,6 +3,8 @@ import { Input, Button } from 'react-native-elements'
 import React, { useState } from 'react'
 import { testUser, penIcon } from '../images/images'
 import { supabase } from '../../lib/supabase'
+import S from '../style'
+import Header from '../Components/Header'
 
 const AddUserScreen = (props: any, {navigation}: any) => {
   const [text, setText] = useState<string>('');
@@ -28,6 +30,7 @@ const AddUserScreen = (props: any, {navigation}: any) => {
 
   return (
     <View style={styles.addUserScreenWrapper}>
+      <Header navigation={props.navigation} />
       <Text style={styles.h1}>Lägg till användare</Text>
       <View style={styles.userContainer}>
         <ImageBackground source={testUser} resizeMode="cover" imageStyle={{borderRadius: 200}}>
@@ -61,7 +64,7 @@ const AddUserScreen = (props: any, {navigation}: any) => {
         paddingHorizontal: 24,
         paddingVertical: 16,
         borderRadius: 5,
-        backgroundColor: "rgba(0, 0, 0, 1)",
+        backgroundColor: S.primaryColor.backgroundColor,
       }}
       onPress={addUser}
     />

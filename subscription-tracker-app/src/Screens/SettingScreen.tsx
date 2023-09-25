@@ -150,6 +150,7 @@ export default SettingScreen
 
 const styles = StyleSheet.create({
     settingsScreenWrapper: {
+      backgroundColor: S.primaryColor.backgroundColor,
         marginTop: 48,
         height: '100%',
         flex: 1,
