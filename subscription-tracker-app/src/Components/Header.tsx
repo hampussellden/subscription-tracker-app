@@ -1,7 +1,7 @@
-import React, { useEffect } from "react";
-import { View, Text, StyleSheet, Image, Pressable } from "react-native";
+import React from "react";
+import { View, StyleSheet, Image, Pressable } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { arrowBack, gearDark, gearLight } from "../images/images";
+import { gearDark, gearLight } from "../images/images";
 import ArrowLeft from "../images/arrowLeft.svg";
 import S from "../style";
 enum Routes {

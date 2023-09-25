@@ -6,7 +6,6 @@ import ArrowLeft from "../images/arrowLeft.svg";
 import ArrowRight from "../images/arrowRight.svg";
 import S from "../style";
 import {
-  Category,
   Subscription,
 } from "../types";
 const SubscriptionScroller = ({
@@ -22,8 +21,6 @@ const SubscriptionScroller = ({
   let placement: number = 0;
   const handleButtonClickRight = () => {
     placement += 250;
-    console.log(placement);
-    
     scrollViewRef.current?.scrollTo({ x: placement, animated: true });
   }; 
   const handleButtonClickLeft = () => {
@@ -31,7 +28,6 @@ const SubscriptionScroller = ({
     if(placement<0){
       placement=0;
     }
-    console.log(placement);
     scrollViewRef.current?.scrollTo({ x: placement, animated: true });
   };
 

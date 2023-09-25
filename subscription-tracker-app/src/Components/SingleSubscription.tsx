@@ -58,8 +58,6 @@ const SingleSubscription = ({
   navigation: any;
   activeSingleSub: boolean;
 }) => {
-  console.log(subscription);
-
   const imageUrl = supabase.storage
     .from("banners")
     .getPublicUrl(subscription.services.banner as string);
