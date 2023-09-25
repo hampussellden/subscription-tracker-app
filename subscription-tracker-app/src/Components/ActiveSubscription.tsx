@@ -1,6 +1,5 @@
 import React from "react";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
-import { arrowRight } from "../images/images";
 import { supabase } from "../../lib/supabase";
 import { Subscription } from "../types";
 import S from "../style";
@@ -40,14 +39,6 @@ const ActiveSubscription = ({
     icon: {
       width: 40,
       height: 40,
-    },
-    subTitle: {
-      fontSize: 24,
-      fontWeight: "400",
-    },
-    name: {
-      fontSize: 24,
-      fontWeight: "500",
     },
   });
 
