@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native'
 import React from 'react'
 import { closeDark } from '../images/images'
 
@@ -10,8 +10,9 @@ const GdprPopUp = (props:any) => {
                 <Image source={closeDark}/>
                 </TouchableOpacity>
             </View>
-      <Text style={styles.text}>Dataskyddsförordning (GDPR)
-Vi värnar om din integritet och följer Dataskyddsförordningen (GDPR) för att säkerställa att dina personuppgifter hanteras på ett säkert och rättvist sätt. Nedan finns information om vilken data vi samlar in och varför:
+      <Text style={styles.text}>Dataskyddsförordning (GDPR) </Text>
+      <ScrollView>
+      <Text> Vi värnar om din integritet och följer Dataskyddsförordningen (GDPR) för att säkerställa att dina personuppgifter hanteras på ett säkert och rättvist sätt. Nedan finns information om vilken data vi samlar in och varför:
 AnvändarinformationDitt namn, e-postadress, och annan relevant användarinformation.
 AnvändningsdataInformation om hur du använder vår app, inklusive sidvisningar, funktioner du använder, och interaktioner med innehåll.
 Teknisk information Information om din enhet och webbläsare, inklusive IP-adress, enhetsidentifikatorer och webbläsarhistorik.
@@ -21,6 +22,7 @@ Förbättrad användarupplevelseVi använder data för att anpassa och förbätt
 Analys och prestandaData hjälper oss att analysera och förbättra appens prestanda och funktionalitet.
 
 KommunikationVi använder din e-postadress för att skicka uppdateringar, nyheter och viktiga meddelanden om tjänsten.</Text>
+</ScrollView>
     </View>
   )
 }

@@ -4,14 +4,15 @@ import React, {useEffect, useState} from 'react'
 import { supabase } from '../../lib/supabase'
 import { testUser, addUser } from '../images/images'
 import DeleteUser from '../Components/DeleteUser'
+import { User } from '../types'
+import FamilyUser from '../Components/FamilyUser'
 
-const FamilyScreen = (props: any, {navigation}: any) => {
+const FamilyScreen = (props: any, {navigation}: any,  user: User ) => {
     const [userNames, setUserNames] = useState<string[]>([]);
-    const [userData, setUserData] = useState<{}[]>([]);
+    const [userData, setUserData] = useState<User[]>([]);
     const [userId, setUserId] = useState<number>(0);
-    const [choosenUser, setChoosenUser] = useState<number>(0);
+    const [choosenUser, setChoosenUser] = useState<User | null>(null);
     const [deleteUser, setDeleteUser] = useState(false)
-    const [visible, setVisible] = useState<boolean>(false)
     
 
     const session = props.route.params.session;
@@ -25,20 +26,29 @@ const FamilyScreen = (props: any, {navigation}: any) => {
           if (error) {
               console.log(error);
           }
-  
-          if (data) {
-              data.map(users => {
-                // console.log( users.id);
-                  setUserNames(userNames => [...userNames, users.name as string ])
-                  setUserId(users.id)
-                  setUserData(userData => [...userData, users])
-              })
-          }
+          
+            if (data) {
+                data.map(users => {
+                  // console.log(typeof users.avatar_url);
+                    setUserNames(userNames => [...userNames, users.name as string ])
+                    setUserId(users.id)
+                    // setUserData(userData => [...userData, users])
+                    
+                  })
+                  setUserData(data as User[])
+            }
       }
       fetchUsers()
+
+      
   },[])
 
+    const imageUrl = supabase.storage
+      .from("user_avatars")
+      .getPublicUrl(choosenUser?.avatar_url as string);
 
+      
+  
   // console.log(userNames);
   // const test = () => {
   //   Alert.alert('cliked user')
@@ -52,34 +62,32 @@ const FamilyScreen = (props: any, {navigation}: any) => {
 
   return (
     <View>
-    {deleteUser && <DeleteUser choosenUser={ choosenUser} setState={setDeleteUser} />}
+    {deleteUser && <DeleteUser choosenUser={ choosenUser?.id} setState={setDeleteUser} />}
     <View style={[deleteUser ? styles.blurred : styles.wrapper]}>
       <Text style={styles.h1}>Familjehantering</Text>
       <View style={styles.userSection}>
         <Text style={styles.h2}>användare</Text>
         <View style={styles.userRow}>
           <ScrollView horizontal={true}>
-            {userData.map((user, id,) => {
-            return <TouchableOpacity onPress={() => setChoosenUser(user.id)}>
-            <View style={styles.userProfiles} key={id}>
-              <Image style={styles.userImage} source={testUser}/>
-              <Text>{user.name}</Text>
-
-            </View>
+            {userData.map((user, id) => {
+            return <TouchableOpacity onPress={() => setChoosenUser(user)} key={id}>
+            <FamilyUser user={user}/>
             </TouchableOpacity> 
           })}
           </ScrollView>
           </View>
         </View>
        <View style={styles.currentUserSection}>
-        <Image style={styles.selectedUserImg} source={testUser}/>
+        <Image style={styles.selectedUserImg} source={{ uri: imageUrl.data.publicUrl }}/>
         <View style={styles.userInfoContainer}>
-          {userData.map(user => {
-            if(choosenUser == user.id) {
-              return <Text>{user.name}</Text>
+          {userData.map(users => {
+            if(choosenUser?.id == users.id) {
+              return <View>
+                <Text style={styles.userInfo}>{users.name}</Text>
+              </View>
             }
           })}
-        <Text style={styles.userInfo}>Jane Doe</Text>
+        {/* <Text style={styles.userInfo}>Jane Doe</Text> */}
           <TouchableOpacity onPress={() => setDeleteUser(true)}>
             <Text style={styles.userInfo}>Radera Användare </Text>
           </TouchableOpacity>
@@ -137,7 +145,9 @@ const styles = StyleSheet.create({
     userProfiles: {
     justifyContent: 'center',
     alignItems: 'center',
-    gap: 20
+    gap: 20,
+    marginRight: 5,
+    marginLeft: 5,
     },
     userImage: {
       height: 100,

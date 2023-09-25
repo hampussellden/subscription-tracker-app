@@ -52,8 +52,6 @@ const SettingScreen = (props:any, {navigation}: any) => {
   !notificationEnabled && noNotificationsUpdate();
   
   
-
-
     const toggleDarkModeSwitch = () => {
         setDarkModeEnabled(previousState => !previousState)
     }
@@ -72,7 +70,6 @@ const SettingScreen = (props:any, {navigation}: any) => {
 
   return (
     <View style={styles.settingsScreenWrapper}>
-    <ScrollView style={styles.settingsScreenWrapper}>
       {viewCookies && <CookiepopUp onClick={handleCookies}/>}
       {viewTos && <TosService onClick={handleTos}/>}
       {viewGdpr && <GdprPopUp onClick={handleGdpr}/>}
@@ -142,7 +139,6 @@ const SettingScreen = (props:any, {navigation}: any) => {
     />
     
       </View>
-    </ScrollView>
     </View>
   )
 }
