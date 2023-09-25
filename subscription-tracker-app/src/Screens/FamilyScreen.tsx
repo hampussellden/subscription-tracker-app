@@ -6,6 +6,7 @@ import { testUser, addUser } from '../images/images'
 import DeleteUser from '../Components/DeleteUser'
 import { User } from '../types'
 import FamilyUser from '../Components/FamilyUser'
+import Header from '../Components/Header'
 
 const FamilyScreen = (props: any, {navigation}: any,  user: User ) => {
     const [userNames, setUserNames] = useState<string[]>([]);
@@ -61,8 +62,9 @@ const FamilyScreen = (props: any, {navigation}: any,  user: User ) => {
   
 
   return (
-    <View>
+    <View style={styles.marginTop}>
     {deleteUser && <DeleteUser choosenUser={ choosenUser?.id} setState={setDeleteUser} />}
+    <Header navigation={props.navigation}/>
     <View style={[deleteUser ? styles.blurred : styles.wrapper]}>
       <Text style={styles.h1}>Familjehantering</Text>
       <View style={styles.userSection}>
@@ -113,6 +115,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         zIndex: 0,
         position: 'relative',
+    },
+    marginTop: {
+      marginTop: 48,
     },
     blurred: {
       height: '100%',

@@ -47,7 +47,7 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
         </Pressable>
       ) : currentRoute === "Family" || currentRoute === "Settings" ? (
         <Pressable
-          onPress={activeSingleSub ? closeSingle : () => navigation.goBack()}
+          onPress={() => navigation.goBack()}
         >
           <Image
             source={arrowBack}

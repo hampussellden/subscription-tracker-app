@@ -6,9 +6,10 @@ import { supabase } from '../../lib/supabase'
 import CookiepopUp from '../Components/CookiepopUp'
 import TosService from '../Components/TosService'
 import GdprPopUp from '../Components/GdprPopUp'
+import Header from '../Components/Header'
 
 
-const SettingScreen = (props:any, {navigation}: any) => {
+const SettingScreen = (props:any) => {
 
   const session = props.route.params.session;
 
@@ -70,6 +71,7 @@ const SettingScreen = (props:any, {navigation}: any) => {
 
   return (
     <View style={styles.settingsScreenWrapper}>
+      <Header navigation={props.navigation} />
       {viewCookies && <CookiepopUp onClick={handleCookies}/>}
       {viewTos && <TosService onClick={handleTos}/>}
       {viewGdpr && <GdprPopUp onClick={handleGdpr}/>}
@@ -147,6 +149,7 @@ export default SettingScreen
 
 const styles = StyleSheet.create({
     settingsScreenWrapper: {
+        marginTop: 48,
         height: '100%',
         flex: 1,
         gap: 10,
