@@ -10,10 +10,12 @@ enum Routes {
   Settings = "Settings",
   Family = "Family",
   SingleSubscription = "SingleSubscription",
+  AddUser = "AddUser",
 }
 type Route = {
   name: Routes;
 };
+const backAbleRoutes = ["Family","Settings","AddUser"] as Routes[];
 
 const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
   const route = useRoute() as Route;
@@ -42,14 +44,14 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
         >
           <ArrowLeft height={40} width={40} color={S.onBackgroundText.color} />
         </Pressable>
-      ) : currentRoute === "Family" || currentRoute === "Settings" ? (
+      ) : backAbleRoutes.includes(currentRoute) ? (
         <Pressable onPress={() => navigation.goBack()}>
           <ArrowLeft height={40} width={40} color={S.onBackgroundText.color} />
         </Pressable>
       ) : (
         <View></View>
       )}
-      {currentRoute === "Family" || currentRoute === "Settings" ? (
+      {backAbleRoutes.includes(currentRoute) ? (
         <View></View>
       ) : (
         <Pressable onPress={() => navigation.navigate("Settings")}>
