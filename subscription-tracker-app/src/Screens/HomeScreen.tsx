@@ -46,7 +46,6 @@ const HomeScreen = (props: any) => {
           .eq("id", session?.user.id);
   
         if (data) {
-          console.log(data);
           setTosAccepted(data[0].tos_accepted);
         }
         if (error) {
@@ -75,7 +74,6 @@ const HomeScreen = (props: any) => {
           })
         );
         setUsers(users);
-        console.log(users);
       }
     };
     fetchUsers();
@@ -83,7 +81,6 @@ const HomeScreen = (props: any) => {
 
   //fetching of subscriptions
   useEffect(() => {
-    console.log(userIds);
     const fetchSubscriptions = async () => {
       const { data: subscriptions, error } = await supabase
         .from("subscriptions")
@@ -104,7 +101,6 @@ const HomeScreen = (props: any) => {
         reload && setReload(false);
       }
       if(subscriptions?.length == 0) {
-        console.log(subscriptions)
         !reload && setReload(true);
       }
     };
@@ -134,7 +130,6 @@ const HomeScreen = (props: any) => {
     if (tosAccepted == true && subscriptions.length > 0 && users.length > 0) {
       setLoading(false);
     } else {
-      console.log("loading");
       setReload(true);
     }
   }, [tosAccepted, subscriptions, users]);
