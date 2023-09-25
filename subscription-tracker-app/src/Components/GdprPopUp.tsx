@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native'
 import React from 'react'
 import { closeDark } from '../images/images'
+import S from '../style'
 
 const GdprPopUp = (props:any) => {
   return (
@@ -10,9 +11,9 @@ const GdprPopUp = (props:any) => {
                 <Image source={closeDark}/>
                 </TouchableOpacity>
             </View>
-      <Text style={styles.text}>Dataskyddsförordning (GDPR) </Text>
+      <Text style={S.label}>Dataskyddsförordning (GDPR) </Text>
       <ScrollView>
-      <Text> Vi värnar om din integritet och följer Dataskyddsförordningen (GDPR) för att säkerställa att dina personuppgifter hanteras på ett säkert och rättvist sätt. Nedan finns information om vilken data vi samlar in och varför:
+      <Text style={S.label}> Vi värnar om din integritet och följer Dataskyddsförordningen (GDPR) för att säkerställa att dina personuppgifter hanteras på ett säkert och rättvist sätt. Nedan finns information om vilken data vi samlar in och varför:
 AnvändarinformationDitt namn, e-postadress, och annan relevant användarinformation.
 AnvändningsdataInformation om hur du använder vår app, inklusive sidvisningar, funktioner du använder, och interaktioner med innehåll.
 Teknisk information Information om din enhet och webbläsare, inklusive IP-adress, enhetsidentifikatorer och webbläsarhistorik.
@@ -34,18 +35,11 @@ const styles = StyleSheet.create({
       height: '100%',
       width: '100%',
       padding: 10,
-      backgroundColor: '#F1F1F1',
+      backgroundColor: S.primaryColor.backgroundColor,
     },
     header: {
         width:'100%',
       flexDirection: 'row',
       justifyContent: 'flex-end',
       },
-      text: {
-        fontSize: 16,
-    fontStyle: 'normal',
-    fontWeight: '700',
-    lineHeight: 20, /* 125% */
-    letterSpacing: 0.8,
-      }
   })

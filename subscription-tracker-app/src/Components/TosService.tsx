@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView } from 'react-native'
 import React from 'react'
 import { closeDark } from '../images/images'
+import S from '../style'
 
 const TosService = (props:any) => {
   return (
@@ -10,9 +11,9 @@ const TosService = (props:any) => {
                 <Image source={closeDark}/>
                 </TouchableOpacity>
             </View>
-      <Text style={styles.text}>Användarvillkor & Integritetspolicy </Text>
+      <Text style={S.label}>Användarvillkor & Integritetspolicy </Text>
       <ScrollView>
-      <Text> Våra användarvillkor och integritetspolicy är viktiga dokument som reglerar din användning av vår app och skyddet av dina personuppgifter. Vi uppmuntrar dig att noggrant läsa igenom och förstå dessa dokument innan du fortsätter att använda appen. Nedan hittar du en sammanfattning:
+      <Text style={S.label}> Våra användarvillkor och integritetspolicy är viktiga dokument som reglerar din användning av vår app och skyddet av dina personuppgifter. Vi uppmuntrar dig att noggrant läsa igenom och förstå dessa dokument innan du fortsätter att använda appen. Nedan hittar du en sammanfattning:
 Användarvillkor
 Våra användarvillkor innehåller regler och riktlinjer som styr din användning av vår app. Det inkluderar information om dina rättigheter och skyldigheter som användare.
 Integritetspolicy
@@ -32,7 +33,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     padding: 10,
-    backgroundColor: '#F1F1F1',
+    backgroundColor: S.primaryColor.backgroundColor,
   },
     header: {
       width: '100%',
