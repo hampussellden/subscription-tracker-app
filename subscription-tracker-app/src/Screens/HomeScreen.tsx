@@ -7,6 +7,7 @@ import NewsContainer from "../Components/NewsContainer";
 import UsersContainer from "../Components/UsersContainer";
 import UpcomingPaymentsContainer from "../Components/UpcomingPaymentsContainer";
 import PriceOverview from "../Components/PriceOverview";
+import S from "../style";
 import {
   Subscription,
   Service,
@@ -141,7 +142,7 @@ const HomeScreen = (props: any) => {
     setReload(true);
   };
   return (
-    <View>
+    <View style={{ backgroundColor: S.primaryColor.backgroundColor }}>
       {loading && <Text>Loading...</Text>}
       {!loading &&
         (!tosAccepted ? (

@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { Image } from "react-native-elements";
 import ActiveSubscription from "./ActiveSubscription";
-import { arrowLeft, arrowRight } from "../images/images";
+// import { arrowLeft, arrowRight } from "../images/images";
+import ArrowLeft from "../images/arrowLeft.svg";
+import ArrowRight from "../images/arrowRight.svg";
+import S from "../style";
 import {
   Category,
   Subscription,
@@ -22,13 +25,25 @@ const ActiveSubscriptionsContainer = ({
   return (
     <>
       <ScrollView>
-        {categories.map((category: string, i: number) => (
+        {categories.map((category_name: string, i: number) => (
           <>
             <View style={styles.subTitleContainer} key={i}>
-              <Text style={styles.subTitle}>{category}</Text>
+              <Text style={[S.headingTwo, S.onBackgroundText]}>
+                {category_name}
+              </Text>
               <View style={styles.arrowsContainer}>
-                <Image source={arrowLeft} style={styles.arrows} />
-                <Image source={arrowRight} style={styles.arrows} />
+                {/* <Image source={arrowLeft} style={styles.arrows} /> */}
+                <ArrowLeft
+                  width={40}
+                  height={40}
+                  style={{ color: S.onBackgroundText.color }}
+                />
+                <ArrowRight
+                  width={40}
+                  height={40}
+                  style={{ color: S.onBackgroundText.color }}
+                />
+                {/* <Image source={arrowRight} style={styles.arrows} /> */}
               </View>
             </View>
             <ScrollView
@@ -38,7 +53,7 @@ const ActiveSubscriptionsContainer = ({
             >
               {subscriptions.map(
                 (subscription: Subscription, i: number) =>
-                  subscription.services?.categories.name == category &&
+                  subscription.services?.categories.name == category_name &&
                   subscription.active && (
                     <ActiveSubscription
                       subscription={subscription}

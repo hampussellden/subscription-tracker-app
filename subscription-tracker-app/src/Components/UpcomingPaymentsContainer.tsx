@@ -18,7 +18,9 @@ const UpcomingPaymentsContainer = ({
 
   return (
     <View>
-      <Text style={S.subTitleBold}>Kommande Betalningar</Text>
+      <Text style={[S.headingTwo, S.onBackgroundText]}>
+        Kommande Betalningar
+      </Text>
       <ScrollView horizontal={true} contentContainerStyle={{ gap: 16 }}>
         <>
           {subscriptions.length > 0 &&

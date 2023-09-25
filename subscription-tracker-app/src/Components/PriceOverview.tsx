@@ -74,13 +74,10 @@ const PriceOverview = ({
           onPress={handleGoBackPress}
         />
       )}
-      <Text style={S.subTitleBold}>Mina Kostnader</Text>
-      <Pressable
-        style={[styles.container, S.primaryColor]}
-        onPress={handlePress}
-      >
+      <Text style={[S.headingTwo, S.onBackgroundText]}>Mina Kostnader</Text>
+      <Pressable style={styles.container} onPress={handlePress}>
         <View style={styles.topRow}>
-          <Text style={S.subTitleBold}>Månadens kostnader</Text>
+          <Text style={[S.headingTwo]}>Månadens kostnader</Text>
           <Image
             source={darkMode ? cashFileLight : cashFileDark}
             style={{ width: 40, height: 40 }}
@@ -96,7 +93,7 @@ const PriceOverview = ({
               marginTop: 8,
             }}
           >
-            <Text style={S.subTitleBold}>
+            <Text style={S.headingTwo}>
               {sumOfThisMontsSubs(subscriptions)} Kr/mån
             </Text>
           </View>
@@ -127,7 +124,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     paddingVertical: 16,
     paddingHorizontal: 8,
-    borderRadius: 4,
+    borderRadius: S.borderRadiusSmall.borderRadius,
+    backgroundColor: S.tertiaryColor.backgroundColor,
   },
   topRow: {
     display: "flex",

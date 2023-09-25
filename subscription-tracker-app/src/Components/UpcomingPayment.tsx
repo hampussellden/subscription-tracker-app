@@ -33,12 +33,12 @@ const UpcomingPayment = ({ subscription }: { subscription: Subscription }) => {
     .getPublicUrl(subscription.services.icon as string);
 
   return (
-    <View style={[styles.container, S.primaryColor]}>
+    <View style={styles.container}>
       <Image
         source={{ uri: imageUrl.data.publicUrl }}
         style={{ width: 40, height: 40 }}
       />
-      <Text style={S.text}>
+      <Text style={S.headingTwo}>
         {formatDateString(subscription.renewal_date).replace(/-/g, " ")}
       </Text>
     </View>
@@ -48,13 +48,15 @@ export default UpcomingPayment;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: "aqua",
+    backgroundColor: S.tertiaryColor.backgroundColor,
     display: "flex",
     flexDirection: "column",
     gap: 8,
     paddingVertical: 16,
     paddingHorizontal: 8,
     alignItems: "center",
-    borderRadius: 4,
+    minWidth: 86,
+    minHeight: 108,
+    borderRadius: S.borderRadiusSmall.borderRadius,
   },
 });

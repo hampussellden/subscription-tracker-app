@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { netflixIcon, spotifyIcon } from "../images/images";
 import NewsItem from "./NewsItem";
+import S from "../style";
 export type NewsItemType = {
   icon: any;
   title: string;
@@ -24,7 +25,7 @@ const NewsContainer = () => {
   ];
   return (
     <View>
-      <Text style={styles.subTitle}>Nyheter</Text>
+      <Text style={[S.headingTwo, S.onBackgroundText]}>Nyheter</Text>
       <ScrollView
         horizontal={true}
         contentContainerStyle={styles.contentContainer}

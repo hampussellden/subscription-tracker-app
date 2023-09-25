@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, Image, ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { supabase } from "../../lib/supabase";
 import UserItem from "./UserItem";
+import S from "../style";
 
 const styles = StyleSheet.create({
   usersContiner: {
@@ -10,11 +11,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     gap: 8,
     alignItems: "center",
-  },
-  subTitle: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 8,
   },
 });
 export type User = {
@@ -34,7 +30,7 @@ const UserContainer = ({
 }) => {
   return (
     <View style={{ minHeight: 130 }}>
-      <Text style={styles.subTitle}>Användare</Text>
+      <Text style={[S.headingTwo, S.onBackgroundText]}>Välj användare</Text>
       <ScrollView horizontal={true} contentContainerStyle={{ gap: 8 }}>
         {users.map((user) => {
           return <UserItem user={user} />;

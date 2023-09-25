@@ -15,7 +15,7 @@ const S = StyleSheet.create({
     backgroundColor: "#A9C0FF",
   },
   OnTertiary: {
-    backgroundColor: darkMode ? "#F5F1EC" : "#1F2627",
+    color: darkMode ? "#F5F1EC" : "#1F2627",
   },
   backgroundTransparencyColor: {
     backgroundColor: darkMode
@@ -39,6 +39,12 @@ const S = StyleSheet.create({
     lineHeight: 28,
     letterSpacing: -1.2,
   },
+  headingThree: {
+    fontFamily: "DM Sans",
+    fontSize: 24,
+    fontWeight: "400",
+    lineHeight: 30,
+  },
   paragraph: {
     fontFamily: "Helvetica",
     fontSize: 18,
@@ -60,6 +66,10 @@ const S = StyleSheet.create({
   },
   borderRadiusLarge: {
     borderRadius: 12,
+  },
+  onBackgroundText: {
+    color: darkMode ? "white" : "black",
+    marginBottom: 18,
   },
 });
 

@@ -3,6 +3,8 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { arrowRight } from "../images/images";
 import { supabase } from "../../lib/supabase";
 import { Subscription } from "../types";
+import S from "../style";
+import ArrowRight from "../images/arrowRight.svg";
 const ActiveSubscription = ({
   subscription,
   handleOpenSingleSubscription,
@@ -19,7 +21,8 @@ const ActiveSubscription = ({
       paddingVertical: 16,
       borderRadius: 4,
       minWidth: 241,
-      backgroundColor: subscription.services?.color || "rgba(0, 0, 0, 0.25)",
+      backgroundColor:
+        subscription.services?.color || S.tertiaryColor.backgroundColor,
       maxHeight: 262,
       maerginRight: 16,
     },
@@ -59,15 +62,19 @@ const ActiveSubscription = ({
     >
       <View style={styles.topRow}>
         <Image source={{ uri: imageUrl.data.publicUrl }} style={styles.icon} />
-        <Image source={arrowRight} />
+        <ArrowRight
+          height={40}
+          width={40}
+          style={{ color: S.onBackgroundText.color }}
+        />
       </View>
       <View style={styles.bottomRow}>
-        <Text style={styles.subTitle}>
+        <Text style={[S.headingThree, { color: S.OnTertiary.color }]}>
           {subscription.services?.name.charAt(0).toUpperCase()}
           {subscription.services?.name.slice(1)}
         </Text>
         <View>
-          <Text style={styles.name}>
+          <Text style={[S.headingTwo, { color: S.OnTertiary.color }]}>
             {subscription.users.name.charAt(0).toUpperCase()}
             {subscription.users.name.slice(1).toLowerCase()}
           </Text>

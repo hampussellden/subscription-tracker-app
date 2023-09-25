@@ -24,8 +24,8 @@ export default NewsItem;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: S.primaryColor.backgroundColor,
-    borderRadius: 4,
+    backgroundColor: S.tertiaryColor.backgroundColor,
+    borderRadius: S.borderRadiusSmall.borderRadius,
     gap: 8,
     paddingHorizontal: 8,
     paddingVertical: 16,
