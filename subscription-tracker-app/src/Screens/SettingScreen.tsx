@@ -7,6 +7,7 @@ import CookiepopUp from '../Components/CookiepopUp'
 import TosService from '../Components/TosService'
 import GdprPopUp from '../Components/GdprPopUp'
 import Header from '../Components/Header'
+import S from '../style'
 
 
 const SettingScreen = (props:any) => {
@@ -84,8 +85,8 @@ const SettingScreen = (props:any) => {
           <View style={styles.darkModeAlt}>
             <Text style={styles.altText}>Mörkt läge</Text>
             <Switch 
-                    trackColor={{false: '#767577', true: '#81b0ff'}}
-                    thumbColor={darkModeenabled ? '#f5dd4b' : '#f4f3f4'}
+                    trackColor={{false: "#1f2627", true: "#1f2627"}}
+                    thumbColor={darkModeenabled ? "#A9C0FF" : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={toggleDarkModeSwitch}
                     value={darkModeenabled}
@@ -94,8 +95,8 @@ const SettingScreen = (props:any) => {
           <View style={styles.notifikationAlt}>
             <Text style={styles.altText}>Tillåt notifikationer</Text>
             <Switch 
-                    trackColor={{false: '#767577', true: '#81b0ff'}}
-                    thumbColor={notificationEnabled ? '#f5dd4b' : '#f4f3f4'}
+                    trackColor={{false: "#1f2627", true: "#1f2627"}}
+                    thumbColor={notificationEnabled ? "#A9C0FF" : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={toggleNotificationEnabled}
                     value={notificationEnabled}
