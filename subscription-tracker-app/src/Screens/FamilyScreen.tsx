@@ -67,9 +67,9 @@ const FamilyScreen = (props: any, {navigation}: any,  user: User ) => {
     {deleteUser && <DeleteUser choosenUser={ choosenUser?.id} setState={setDeleteUser} />}
     <Header navigation={props.navigation}/>
     <View style={[deleteUser ? styles.blurred : styles.wrapper]}>
-      <Text style={styles.h1}>Familjehantering</Text>
+      <Text style={S.headingOne}>Familjehantering</Text>
       <View style={styles.userSection}>
-        <Text style={styles.h2}>användare</Text>
+        <Text style={S.headingTwo}>användare</Text>
         <View style={styles.userRow}>
           <ScrollView horizontal={true}>
             {userData.map((user, id) => {
@@ -86,13 +86,13 @@ const FamilyScreen = (props: any, {navigation}: any,  user: User ) => {
           {userData.map(users => {
             if(choosenUser?.id == users.id) {
               return <View>
-                <Text style={styles.userInfo}>{users.name}</Text>
+                <Text style={S.headingOne}>{users.name}</Text>
               </View>
             }
           })}
         {/* <Text style={styles.userInfo}>Jane Doe</Text> */}
           <TouchableOpacity onPress={() => setDeleteUser(true)}>
-            <Text style={styles.userInfo}>Radera Användare </Text>
+            <Text style={S.paragraph}>Radera Användare </Text>
           </TouchableOpacity>
         </View>
        </View>
@@ -166,9 +166,6 @@ const styles = StyleSheet.create({
       width: '100%',
       justifyContent: 'center',
       alignItems: 'center',
-    },
-    userInfo: {
-      fontSize: 18
     },
     selectedUserImg: {
       height: 164,

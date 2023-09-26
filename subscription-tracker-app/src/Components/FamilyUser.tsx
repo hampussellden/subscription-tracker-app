@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image } from 'react-native'
 import React from 'react'
 import { User } from '../types';
 import { supabase } from '../../lib/supabase';
+import S from '../style';
 
 const FamilyUser = ({ user }: { user: User }) => {
     const imageUrl = supabase.storage
@@ -10,7 +11,7 @@ const FamilyUser = ({ user }: { user: User }) => {
   return (
     <View style={styles.userProfiles}>
     <Image style={styles.userImage}  source={{ uri: imageUrl.data.publicUrl }}/>
-    <Text>{user.name}</Text>
+    <Text style={S.headingTwo}>{user.name}</Text>
   </View>
   )
 }

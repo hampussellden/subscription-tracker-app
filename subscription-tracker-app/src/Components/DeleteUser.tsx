@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Alert } from "react-native";
 import { Button } from "react-native-elements";
 import React from "react";
 import { supabase } from "../../lib/supabase";
+import S from "../style";
 
 const DeleteUser = (props: any) => {
 
@@ -29,7 +30,7 @@ const DeleteUser = (props: any) => {
 
   return (
     <View style={styles.deleteContainer}>
-      <Text style={{ fontWeight: "bold" }}>
+      <Text style={S.paragraph}>
         Är du säker på att du vill ta bort användaren? 
       </Text>
       <Text>{props.choosenUser}</Text>

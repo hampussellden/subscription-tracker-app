@@ -76,14 +76,14 @@ const SettingScreen = (props:any) => {
       {viewCookies && <CookiepopUp onClick={handleCookies}/>}
       {viewTos && <TosService onClick={handleTos}/>}
       {viewGdpr && <GdprPopUp onClick={handleGdpr}/>}
-      <Text style={styles.h1}>Inställningar</Text>
+      <Text style={S.headingOne}>Inställningar</Text>
       <View style={styles.profileContainer}>
         <Image style={styles.profileImg} source={gangplankProfile}/>
       </View>
       <View style={styles.alternativSection}>
         <View style={styles.switchSection}>
           <View style={styles.darkModeAlt}>
-            <Text style={styles.altText}>Mörkt läge</Text>
+            <Text style={S.headingTwo}>Mörkt läge</Text>
             <Switch 
                     trackColor={{false: "#1f2627", true: "#1f2627"}}
                     thumbColor={darkModeenabled ? "#A9C0FF" : '#f4f3f4'}
@@ -93,7 +93,7 @@ const SettingScreen = (props:any) => {
             />
           </View>
           <View style={styles.notifikationAlt}>
-            <Text style={styles.altText}>Tillåt notifikationer</Text>
+            <Text style={S.headingTwo}>Tillåt notifikationer</Text>
             <Switch 
                     trackColor={{false: "#1f2627", true: "#1f2627"}}
                     thumbColor={notificationEnabled ? "#A9C0FF" : '#f4f3f4'}
@@ -104,7 +104,7 @@ const SettingScreen = (props:any) => {
           </View>
           <View style={styles.familyAlt}>
             <TouchableOpacity onPress={() => props.navigation.navigate("Family")}>
-            <Text style={styles.altText}>Familjehantering</Text>
+            <Text style={S.headingTwo}>Familjehantering</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigation.navigate("Family")}>
             <Image source={arrowRight}/>
@@ -112,23 +112,23 @@ const SettingScreen = (props:any) => {
           </View>
         </View>
         <View style={styles.DataAlt}>
-          <Text style={styles.altText}>Integritet och data</Text>
+          <Text style={S.headingTwo}>Integritet och data</Text>
           <TouchableOpacity onPress={() => setViewCookies(true)}>
-          <Text>Cookies</Text>
+          <Text style={S.label}>Cookies</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setViewTos(true)}>
-          <Text>Användarvillkor & integritetspolicy</Text>
+          <Text style={S.label}>Användarvillkor & integritetspolicy</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setViewGdpr(true)}>
-          <Text>GDPR</Text>
+          <Text style={S.label}>GDPR</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-          <Text>Radera konto</Text>
+          <Text style={S.label}>Radera konto</Text>
           </TouchableOpacity>
         </View>
       <Button 
       title='Logga ut'
-      titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
+      titleStyle={S.label}
       buttonStyle={{
         alignSelf: "center",
         width: "100%",

@@ -11,20 +11,26 @@ const GdprPopUp = (props:any) => {
                 <Image source={closeDark}/>
                 </TouchableOpacity>
             </View>
-      <Text style={S.label}>Dataskyddsförordning (GDPR) </Text>
+      <Text style={styles.text}>Dataskyddsförordning (GDPR) </Text>
       <ScrollView>
-      <Text style={S.label}> Vi värnar om din integritet och följer Dataskyddsförordningen (GDPR) för att säkerställa att dina personuppgifter hanteras på ett säkert och rättvist sätt. Nedan finns information om vilken data vi samlar in och varför:
-AnvändarinformationDitt namn, e-postadress, och annan relevant användarinformation.
-AnvändningsdataInformation om hur du använder vår app, inklusive sidvisningar, funktioner du använder, och interaktioner med innehåll.
-Teknisk information Information om din enhet och webbläsare, inklusive IP-adress, enhetsidentifikatorer och webbläsarhistorik.
-Varför samlar vi in denna data
-Förbättrad användarupplevelseVi använder data för att anpassa och förbättra din upplevelse av vår app, inklusive att rekommendera innehåll och funktioner som kan vara av intresse för dig.
+      <Text style={S.label}> Vi värnar om din integritet och följer Dataskyddsförordningen (GDPR) för att säkerställa att dina personuppgifter hanteras på ett säkert och rättvist sätt. Nedan finns information om vilken data vi samlar in och varför:{"\n"}</Text>
+<Text style={styles.text}>Användarinformation{"\n"}</Text>
+<Text style={S.label}>Ditt namn, e-postadress, och annan relevant användarinformation.{"\n"}</Text>
+<Text style={styles.text}>AnvändningsdataInformation{"\n"}</Text> 
+<Text style={S.label}>om hur du använder vår app, inklusive sidvisningar, funktioner du använder, och interaktioner med innehåll.{"\n"}</Text>
+<Text style={styles.text}>Teknisk information{"\n"}</Text> 
+<Text style={S.label}> Information om din enhet och webbläsare, inklusive IP-adress, enhetsidentifikatorer och webbläsarhistorik.{"\n"}</Text>
+<Text style={styles.text}>Varför samlar vi in denna data?{"\n"}</Text>
+<Text style={styles.text}>Förbättrad användarupplevelse{"\n"}</Text>
+<Text style={S.label}>Vi använder data för att anpassa och förbättra din upplevelse av vår app, inklusive att rekommendera innehåll och funktioner som kan vara av intresse för dig.{"\n"}</Text>
 
-Analys och prestandaData hjälper oss att analysera och förbättra appens prestanda och funktionalitet.
+<Text style={styles.text}>Analys och prestanda{"\n"}</Text>
+<Text style={S.label}>Data hjälper oss att analysera och förbättra appens pres tanda och funktionalitet.{"\n"}</Text>
 
-KommunikationVi använder din e-postadress för att skicka uppdateringar, nyheter och viktiga meddelanden om tjänsten.</Text>
+<Text style={styles.text}>Kommunikation{"\n"}</Text>
+<Text style={S.label}>Vi använder din e-postadress för att skicka uppdateringar, nyheter och viktiga meddelanden om tjänsten.</Text>
 </ScrollView>
-    </View>
+</View>
   )
 }
 
@@ -42,4 +48,11 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'flex-end',
       },
+      text: {
+        fontFamily: "DM_Sans_Regular",
+        fontSize: 16,
+        fontWeight: "bold",
+        lineHeight: 20,
+        letterSpacing: -0.8,
+      }
   })
