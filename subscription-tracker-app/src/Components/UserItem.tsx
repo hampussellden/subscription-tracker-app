@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { User } from "../types";
 import { supabase } from "../../lib/supabase";
 const styles = StyleSheet.create({
@@ -22,12 +22,12 @@ const UserItem = ({ user }: { user: User }) => {
 
   return (
     <>
-      <View style={styles.container}>
+      <Pressable style={styles.container}>
         <Image
           source={{ uri: imageUrl.data.publicUrl }}
           style={styles.userImg}
         />
-      </View>
+      </Pressable>
     </>
   );
 };

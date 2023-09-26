@@ -188,7 +188,12 @@ const HomeScreen = (props: any) => {
             contentContainerStyle={styles.main}
             scrollEnabled={!priceOverviewActive}
           >
-            <AddSubscriptionFooter navigation={props.navigation} />
+            {users.length > 0 && (
+              <AddSubscriptionFooter
+                users={users}
+                navigation={props.navigation}
+              />
+            )}
             {subscriptions.length > 0 && categories.length > 0 && (
               <ActiveSubscriptionsContainer
                 categories={categories}

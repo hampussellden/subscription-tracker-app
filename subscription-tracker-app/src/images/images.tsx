@@ -27,3 +27,5 @@ export const addLightWhite = require("./addLightWhite.png");
 export const addSolidBlack = require("./addSolidBlack.png");
 export const addSolidWhite = require("./addSolidWhite.png");
 export const bookmarkLight = require("./bookmarkLight.png");
+export const bellDark = require("./bellDark.png");
+export const bellLight = require("./bellLight.png");

@@ -27,6 +27,8 @@ const BrowseSubscriptionTiers = ({
   handleSelectedIntervalPeriod,
   handleChooseTier,
   chosenTier,
+  selectedIntervalPeriod,
+  costValue,
 }: {
   intervalPeriods: Interval_periods[];
   service: Service;
@@ -34,9 +36,24 @@ const BrowseSubscriptionTiers = ({
   handleSelectedIntervalPeriod: any;
   handleChooseTier: (tier: SubscriptionTier | null) => void;
   chosenTier: SubscriptionTier | null;
+  selectedIntervalPeriod: Interval_periods;
+  costValue: number | null;
 }) => {
   const [opened, setOpened] = useState(false);
   const [creating, setCreating] = useState<boolean>(false);
+
+  const getIntervalPeriod = (intervalPeriod: Interval_periods): string => {
+    switch (intervalPeriod) {
+      case "monthly":
+        return "Månadsvis";
+      case "quarterly":
+        return "Kvartalsvis";
+      case "semi-annual":
+        return "Halvårsvis";
+      case "annual":
+        return "Årligen";
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -67,15 +84,20 @@ const BrowseSubscriptionTiers = ({
                 margin: 0,
                 padding: 0,
               }}
+              value={costValue?.toString()}
               onChangeText={handleCustomCostInput}
             />
             <Text style={S.headingTwo}>Kostnadsvariant:</Text>
             <ScrollView horizontal={true} contentContainerStyle={{ gap: 24 }}>
               {intervalPeriods.map((period, i) => (
                 <Button
-                  title={period}
+                  title={getIntervalPeriod(period)}
                   type='clear'
-                  titleStyle={{ color: "black" }}
+                  titleStyle={{
+                    color: "black",
+                    fontWeight:
+                      selectedIntervalPeriod === period ? "bold" : "normal",
+                  }}
                   onPress={() => handleSelectedIntervalPeriod(period)}
                   key={i}
                 />

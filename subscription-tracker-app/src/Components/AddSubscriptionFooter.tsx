@@ -7,11 +7,20 @@ import {
   addLightWhite,
 } from "../images/images";
 import S from "../style";
+import { User } from "../types";
 const darkMode = false;
-const AddSubscriptionFooter = ({ navigation }: any) => {
+const AddSubscriptionFooter = ({
+  navigation,
+  users,
+}: {
+  navigation: any;
+  users: User[];
+}) => {
   return (
     <View style={styles.container}>
-      <Pressable onPress={() => navigation.navigate("AddSubscription")}>
+      <Pressable
+        onPress={() => navigation.navigate("AddSubscription", { users: users })}
+      >
         <Image
           source={darkMode ? addSolidWhite : addSolidBlack}
           style={{ height: 60, width: 60 }}
@@ -30,6 +39,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "flex-end",
-    marginBottom: 120,
+    marginBottom: 60,
   },
 });

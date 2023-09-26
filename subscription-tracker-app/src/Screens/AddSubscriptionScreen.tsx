@@ -9,13 +9,27 @@ import {
 import Header from "../Components/Header";
 import BrowseServices from "../Components/BrowseServices";
 import S from "../style";
-import { Interval_periods, Service, SubscriptionTier } from "../types";
+import { Interval_periods, Service, SubscriptionTier, User } from "../types";
 import { supabase } from "../../lib/supabase";
 import BrowseSubscriptionTiers from "../Components/BrowseSubscriptionTiers";
 import { Button } from "react-native-elements";
-const AddSubscriptionScreen = ({ navigation }: { navigation: any }) => {
+import ChooseUserContainer from "../Components/ChooseUserContainer";
+import NotificationsForNewSub from "../Components/NoficationsForNewSub";
+const AddSubscriptionScreen = ({
+  navigation,
+  route,
+}: {
+  navigation: any;
+  route: any;
+}) => {
   //general state
   const [services, setServices] = useState<Service[]>([]);
+  //notification state
+  const [notificationEnabled, setNotificationEnabled] =
+    useState<boolean>(false);
+  //user state setup
+  const users = route.params.users as User[];
+  const [chosenUser, setChosenUser] = useState<User | null>(null);
   //when using suggested service and tiers
   const [chosenService, setChosenService] = useState<Service | null>(null);
   const [chosenTier, setChosenTier] = useState<SubscriptionTier | null>(null);
@@ -31,14 +45,22 @@ const AddSubscriptionScreen = ({ navigation }: { navigation: any }) => {
     "semi-annual",
     "annual",
   ];
-  //when using the suggested service and tiers
+  //user pick handler
+  const handleChooseUser = (user: User | null) => {
+    setChosenUser(user);
+  };
+  //notifaications
+  const handleToggleNotification = () => {
+    setNotificationEnabled((previousState) => !previousState);
+  };
+  //handlers for when using the suggested service and tiers
   const handleChooseService = (service: Service | null) => {
     setChosenService(service);
   };
   const handleChooseTier = (tier: SubscriptionTier | null) => {
     setChosenTier(tier);
   };
-  //when creating custom service and tiers
+  //handlers for when creating custom service and tiers
   const handleServiceNameChange = (text: string) => {
     setInputValue(text);
   };
@@ -64,6 +86,10 @@ const AddSubscriptionScreen = ({ navigation }: { navigation: any }) => {
       console.log("tier name: " + costValue);
       console.log("interval period: " + selectedIntervalPeriod);
     }
+    if (chosenUser) {
+      console.log("user: " + chosenUser.name);
+      console.log("notification enabled: " + notificationEnabled);
+    }
   };
   //fetch services and there tiers
   useEffect(() => {
@@ -85,7 +111,7 @@ const AddSubscriptionScreen = ({ navigation }: { navigation: any }) => {
   return (
     <ScrollView
       style={styles.wrapper}
-      contentContainerStyle={{ gap: 16, marginBottom: 40 }}
+      contentContainerStyle={{ gap: 16, marginBottom: 100 }}
     >
       {services.length > 0 ? (
         <>
@@ -104,8 +130,10 @@ const AddSubscriptionScreen = ({ navigation }: { navigation: any }) => {
                 service={chosenService}
                 handleCustomCostInput={handleCustomCostInput}
                 handleSelectedIntervalPeriod={handleSelectedIntervalPeriod}
+                selectedIntervalPeriod={selectedIntervalPeriod}
                 handleChooseTier={handleChooseTier}
                 chosenTier={chosenTier}
+                costValue={costValue}
               />
             </>
           )}
@@ -123,6 +151,21 @@ const AddSubscriptionScreen = ({ navigation }: { navigation: any }) => {
           <ActivityIndicator size='large' color='#0000ff' />
         </View>
       )}
+
+      {users.length > 0 && (
+        <View>
+          <Text style={S.headingOne}>Välj användare</Text>
+          <ChooseUserContainer
+            users={users}
+            handleChooseUser={handleChooseUser}
+            chosenUser={chosenUser}
+          />
+        </View>
+      )}
+
+      <NotificationsForNewSub
+        handleToggleNotification={handleToggleNotification}
+      />
       <Button
         title={"Lägg till"}
         onPress={handleCreateSubscription}
@@ -142,5 +185,6 @@ const styles = StyleSheet.create({
   wrapper: {
     paddingHorizontal: 16,
     marginTop: 48,
+    marginBottom: 60,
   },
 });
