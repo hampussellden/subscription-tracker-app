@@ -1,13 +1,19 @@
 import React from "react";
 import { View, Text, StyleSheet, Pressable, Image } from "react-native";
-import { addDark, addLight } from "../images/images";
+import {
+  addSolidBlack,
+  addLightBlack,
+  addSolidWhite,
+  addLightWhite,
+} from "../images/images";
 import S from "../style";
+const darkMode = false;
 const AddSubscriptionFooter = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
       <Pressable onPress={() => navigation.navigate("AddSubscription")}>
         <Image
-          source={false ? addDark : addLight}
+          source={darkMode ? addSolidWhite : addSolidBlack}
           style={{ height: 60, width: 60 }}
         />
       </Pressable>

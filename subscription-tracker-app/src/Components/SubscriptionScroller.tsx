@@ -5,9 +5,7 @@ import ActiveSubscription from "./ActiveSubscription";
 import ArrowLeft from "../images/arrowLeft.svg";
 import ArrowRight from "../images/arrowRight.svg";
 import S from "../style";
-import {
-  Subscription,
-} from "../types";
+import { Subscription } from "../types";
 const SubscriptionScroller = ({
   category,
   subscriptions,
@@ -22,62 +20,57 @@ const SubscriptionScroller = ({
   const handleButtonClickRight = () => {
     placement += 250;
     scrollViewRef.current?.scrollTo({ x: placement, animated: true });
-  }; 
+  };
   const handleButtonClickLeft = () => {
-    placement-=250;
-    if(placement<0){
-      placement=0;
+    placement -= 250;
+    if (placement < 0) {
+      placement = 0;
     }
     scrollViewRef.current?.scrollTo({ x: placement, animated: true });
   };
 
-
   return (
-          <>
-            <View style={styles.subTitleContainer}>
-              <Text style={[S.headingTwo, S.onBackgroundText]}>
-                {category}
-              </Text>
-              <View style={styles.arrowsContainer}>
-                {/* <Image source={arrowLeft} style={styles.arrows} /> */}
-                <Pressable onPress={handleButtonClickLeft}>
-                  <ArrowLeft
-                    width={40}
-                    height={40}
-                    style={{ color: S.onBackgroundText.color }}
-                  />
-                </Pressable>
-                <Pressable onPress={handleButtonClickRight}>
-                  <ArrowRight
-                    width={40}
-                    height={40}
-                    style={{ color: S.onBackgroundText.color }}
-                    />
-                </Pressable>
-                {/* <Image source={arrowRight} style={styles.arrows} /> */}
-              </View>
-            </View>
-            <ScrollView
-              horizontal={true}
-              indicatorStyle={"white"}
-              contentContainerStyle={styles.contentContainer}
-              ref={scrollViewRef}
-            >
-              {subscriptions.map(
-                (subscription: Subscription, i: number) =>
-                  subscription.services?.categories.name == category &&
-                  subscription.active && (
-                    <ActiveSubscription
-                      subscription={subscription}
-                      key={i}
-                      handleOpenSingleSubscription={
-                        handleOpenSingleSubscription
-                      }
-                    />
-                  )
-              )}
-            </ScrollView>
-          </>
+    <>
+      <View style={styles.subTitleContainer}>
+        <Text style={[S.headingTwo, S.onBackgroundText]}>{category}</Text>
+        <View style={styles.arrowsContainer}>
+          {/* <Image source={arrowLeft} style={styles.arrows} /> */}
+          <Pressable onPress={handleButtonClickLeft}>
+            <ArrowLeft
+              width={40}
+              height={40}
+              style={{ color: S.onBackgroundText.color }}
+            />
+          </Pressable>
+          <Pressable onPress={handleButtonClickRight}>
+            <ArrowRight
+              width={40}
+              height={40}
+              style={{ color: S.onBackgroundText.color }}
+            />
+          </Pressable>
+          {/* <Image source={arrowRight} style={styles.arrows} /> */}
+        </View>
+      </View>
+      <ScrollView
+        horizontal={true}
+        indicatorStyle={"white"}
+        contentContainerStyle={styles.contentContainer}
+        ref={scrollViewRef}
+      >
+        {subscriptions.map(
+          (subscription: Subscription, i: number) =>
+            subscription.services?.categories.name == category &&
+            subscription.active && (
+              <ActiveSubscription
+                subscription={subscription}
+                key={i}
+                handleOpenSingleSubscription={handleOpenSingleSubscription}
+              />
+            )
+        )}
+      </ScrollView>
+    </>
   );
 };
 export default SubscriptionScroller;
@@ -97,6 +90,6 @@ const styles = StyleSheet.create({
   arrowsContainer: {
     display: "flex",
     flexDirection: "row",
-    gap:8,
+    gap: 8,
   },
 });

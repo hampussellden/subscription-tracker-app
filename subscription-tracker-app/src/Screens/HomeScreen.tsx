@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, Alert, ActivityIndicator } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+} from "react-native";
 import ActiveSubscriptionsContainer from "../Components/ActiveSubscribstionsContainer";
 import { supabase } from "../../lib/supabase";
 import Onboarding from "../Components/Onboarding";
@@ -37,23 +44,23 @@ const HomeScreen = (props: any) => {
   const session = props.route.params.session;
   const profileId = session.user.id;
 
-    //fetching of tos_accepted
-    useEffect(() => {
-      const fetchTos = async () => {
-        const { data, error } = await supabase
-          .from("profiles")
-          .select("tos_accepted")
-          .eq("id", session?.user.id);
-  
-        if (data) {
-          setTosAccepted(data[0].tos_accepted);
-        }
-        if (error) {
-          console.log(error);
-        }
-      };
-      fetchTos();
-    }, []);
+  //fetching of tos_accepted
+  useEffect(() => {
+    const fetchTos = async () => {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("tos_accepted")
+        .eq("id", session?.user.id);
+
+      if (data) {
+        setTosAccepted(data[0].tos_accepted);
+      }
+      if (error) {
+        console.log(error);
+      }
+    };
+    fetchTos();
+  }, []);
   //fetching of users on the authenticated profile
   useEffect(() => {
     const fetchUsers = async () => {
@@ -100,28 +107,28 @@ const HomeScreen = (props: any) => {
         setSubscriptions(subscriptions as any[]);
         reload && setReload(false);
       }
-      if(subscriptions?.length == 0) {
+      if (subscriptions?.length == 0) {
         !reload && setReload(true);
       }
     };
     fetchSubscriptions();
   }, [tosAccepted, reload, userIds]);
 
-    //sorting of categories
-    useEffect(() => {
-      let categories: string[] = [];
-      subscriptions.forEach((subscription) => {
-        if (
-          !categories.includes(
-            subscription?.services?.categories?.name as string
-          ) &&
-          subscription.active
-        ) {
-          categories.push(subscription?.services?.categories?.name as string);
-        }
-      });
-      setCategories(categories);
-    }, [subscriptions]);
+  //sorting of categories
+  useEffect(() => {
+    let categories: string[] = [];
+    subscriptions.forEach((subscription) => {
+      if (
+        !categories.includes(
+          subscription?.services?.categories?.name as string
+        ) &&
+        subscription.active
+      ) {
+        categories.push(subscription?.services?.categories?.name as string);
+      }
+    });
+    setCategories(categories);
+  }, [subscriptions]);
 
   if (props.route.params.accepted != undefined && loading == true) {
     setTosAccepted(props.route.params.accepted);
@@ -153,11 +160,19 @@ const HomeScreen = (props: any) => {
   };
   return (
     <View style={{ backgroundColor: S.primaryColor.backgroundColor }}>
-      {loading && 
-        <View style={{height:'100%', width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
-          <ActivityIndicator size="large" color="#0000ff" />
+      {loading && (
+        <View
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ActivityIndicator size='large' color='#0000ff' />
         </View>
-      }
+      )}
       {!loading &&
         (!tosAccepted ? (
           <Onboarding session={session} onClick={handlePress} />

@@ -21,6 +21,7 @@ const S = StyleSheet.create({
     backgroundColor: darkMode
       ? "rgba(31, 38, 39, 0.8)"
       : "rgba(245, 241, 236, 0.8)",
+    color: darkMode ? "#1F2627" : "#F5F1EC",
   },
   iconFillColor: {
     backgroundColor: "#FFFFFF",

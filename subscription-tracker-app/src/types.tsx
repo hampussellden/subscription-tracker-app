@@ -3,6 +3,12 @@ export type Interval_periods =
   | "quarterly"
   | "semi-annual"
   | "annual";
+// export const enum Interval_periods {
+//   monthly = "monthly",
+//   quarterly = "quarterly",
+//   semiAnnual = "semi-annual",
+//   annual = "annual",
+// }
 export type SubscriptionTier = {
   id: number;
   name: string;
