@@ -10,7 +10,7 @@ import GdprPopUp from '../Components/GdprPopUp'
 import Header from '../Components/Header'
 import S from '../style'
 import Ts from '../testStyle'
-import {themeContext} from '../../App'
+import { themeContext } from '../Theme'
 
 
 const SettingScreen = (props:any) => {

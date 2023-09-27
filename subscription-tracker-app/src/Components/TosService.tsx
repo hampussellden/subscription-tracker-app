@@ -34,7 +34,7 @@ const styles = StyleSheet.create({
     height: '100%',
     width: '100%',
     padding: 10,
-    backgroundColor: S.primaryColor.backgroundColor,
+    backgroundColor: S.primaryColorLight.backgroundColor,
   },
     header: {
       width: '100%',

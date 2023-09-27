@@ -1,5 +1,5 @@
 import "react-native-url-polyfill/auto";
-import React, { useState, useEffect, createContext } from "react";
+import React, { useState, useEffect } from "react";
 import { supabase } from "./lib/supabase";
 import LoginScreen from "./src/Screens/LoginScreen";
 import { View, StyleSheet } from "react-native";
@@ -13,15 +13,15 @@ import FamilyScreen from "./src/Screens/FamilyScreen";
 import AddUserScreen from "./src/Screens/AddUserScreen";
 import AddSubscriptionScreen from "./src/Screens/AddSubscriptionScreen";
 import * as Font from "expo-font";
-// import { Hej } from "./src/style";
-// import {themeContext} from './src/Context';
 import S from "./src/style";
+import { themeContext } from "./src/Theme";
 
-export const themeContext = createContext<any>({});
+// export const themeContext = createContext<any>({});
+// export const themeContext = React.createContext({});
+
 
 export default function App() {
  const [darkTheme, setDarkTheme] = useState<boolean>(false);
- const [darkTrue, setDarkTrue] = useState(false);
   const [session, setSession] = useState<Session | null>(null);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ export default function App() {
 
   const Stack = createNativeStackNavigator();
 
-  console.log(darkTheme);
+  // console.log(darkTheme);
 
   return (
     <themeContext.Provider value={[darkTheme, setDarkTheme]} >

@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
         width: '100%',
         padding: 10,
         marginBottom: 10,
-        backgroundColor: S.primaryColor.backgroundColor,
+        backgroundColor: S.primaryColorLight.backgroundColor,
     },
     infoContainer: {
         height: 844,

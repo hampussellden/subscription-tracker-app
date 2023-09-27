@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, TouchableOpacity, ScrollView, Modal, ImageBackground, Alert } from 'react-native'
 import { Button } from 'react-native-elements'
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useContext} from 'react'
 import { supabase } from '../../lib/supabase'
 import { testUser, addUser } from '../images/images'
 import DeleteUser from '../Components/DeleteUser'
@@ -8,6 +8,8 @@ import { User } from '../types'
 import FamilyUser from '../Components/FamilyUser'
 import Header from '../Components/Header'
 import S from '../style'
+import { themeContext } from '../Theme'
+import { DarkTheme } from '@react-navigation/native'
 
 const FamilyScreen = (props: any ) => {
     const [userNames, setUserNames] = useState<string[]>([]);
@@ -15,8 +17,8 @@ const FamilyScreen = (props: any ) => {
     const [userId, setUserId] = useState<number>(0);
     const [choosenUser, setChoosenUser] = useState<User | null>(null);
     const [deleteUser, setDeleteUser] = useState(false)
+    const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
     
-
     const session = props.route.params.session;
 
     useEffect(() => {
@@ -42,75 +44,16 @@ const FamilyScreen = (props: any ) => {
       }
       fetchUsers()
 
-      
+      console.log(darkTheme);
   },[])
 
     const imageUrl = supabase.storage
       .from("user_avatars")
       .getPublicUrl(choosenUser?.avatar_url as string);
-
-      
   
-  // console.log(userNames);
-  // const test = () => {
-  //   Alert.alert('cliked user')
-  //   setChoosenUser()
-  // }
-
-  // console.log(userData);
-  // console.log(choosenUser);
-  
-  
-
-  return (
-    <View style={styles.marginTop}>
-    {deleteUser && <DeleteUser choosenUser={ choosenUser?.id} setState={setDeleteUser} />}
-    <Header navigation={props.navigation}/>
-    <View style={[deleteUser ? styles.blurred : styles.wrapper]}>
-      <Text style={S.headingOne}>Familjehantering</Text>
-      <View style={styles.userSection}>
-        <Text style={S.headingTwo}>användare</Text>
-        <View style={styles.userRow}>
-          <ScrollView horizontal={true}>
-            {userData.map((user, id) => {
-            return <TouchableOpacity onPress={() => setChoosenUser(user)} key={id}>
-            <FamilyUser user={user}/>
-            </TouchableOpacity> 
-          })}
-          </ScrollView>
-          </View>
-        </View>
-       <View style={styles.currentUserSection}>
-        <Image style={styles.selectedUserImg} source={{ uri: imageUrl.data.publicUrl }}/>
-        <View style={styles.userInfoContainer}>
-          {userData.map(users => {
-            if(choosenUser?.id == users.id) {
-              return <View>
-                <Text style={S.headingOne}>{users.name}</Text>
-              </View>
-            }
-          })}
-        {/* <Text style={styles.userInfo}>Jane Doe</Text> */}
-          <TouchableOpacity onPress={() => setDeleteUser(true)}>
-            <Text style={S.paragraph}>Radera Användare </Text>
-          </TouchableOpacity>
-        </View>
-       </View>
-       <View style={styles.addUserSection}>
-        <TouchableOpacity onPress={() => props.navigation.navigate('AddUser')}>
-        <Image style={styles.addUserImg} source={addUser}/>
-        </TouchableOpacity>
-       </View>
-       </View>
-    </View>
-  )
-}
-
-export default FamilyScreen
-
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     wrapper: {
-      backgroundColor: S.primaryColor.backgroundColor,
+      backgroundColor: darkTheme ? S.primaryColorDark.backgroundColor : S.primaryColorLight.backgroundColor,
         height: '100%',
         width: '100%',
         padding: 5,
@@ -122,6 +65,7 @@ const styles = StyleSheet.create({
       marginTop: 48,
     },
     blurred: {
+      backgroundColor: 'black',
       height: '100%',
       width: '100%',
       padding: 5,
@@ -189,3 +133,51 @@ const styles = StyleSheet.create({
     },
 
 })
+
+  return (
+    <View style={styles.marginTop}>
+    {deleteUser && <DeleteUser choosenUser={ choosenUser?.id} setState={setDeleteUser} />}
+    <Header navigation={props.navigation}/>
+    <View style={[deleteUser ? styles.blurred : styles.wrapper]}>
+      <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>Familjehantering</Text>
+      <View style={styles.userSection}>
+        <Text style={[S.headingTwo, darkTheme ? S.textLight : S.textDark]}>användare</Text>
+        <View style={styles.userRow}>
+          <ScrollView horizontal={true}>
+            {userData.map((user, id) => {
+            return <TouchableOpacity onPress={() => setChoosenUser(user)} key={id}>
+            <FamilyUser user={user}/>
+            </TouchableOpacity> 
+          })}
+          </ScrollView>
+          </View>
+        </View>
+       <View style={styles.currentUserSection}>
+        <Image style={styles.selectedUserImg} source={{ uri: imageUrl.data.publicUrl }}/>
+        <View style={styles.userInfoContainer}>
+          {userData.map(users => {
+            if(choosenUser?.id == users.id) {
+              return <View>
+                <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>{users.name}</Text>
+              </View>
+            }
+          })}
+        {/* <Text style={styles.userInfo}>Jane Doe</Text> */}
+          <TouchableOpacity onPress={() => setDeleteUser(true)}>
+            <Text style={[S.paragraph, darkTheme ? S.textLight : S.textDark]}>Radera Användare </Text>
+          </TouchableOpacity>
+        </View>
+       </View>
+       <View style={styles.addUserSection}>
+        <TouchableOpacity onPress={() => props.navigation.navigate('AddUser')}>
+        <Image style={styles.addUserImg} source={addUser}/>
+        </TouchableOpacity>
+       </View>
+       </View>
+    </View>
+  )
+  
+}
+
+export default FamilyScreen
+

@@ -1,13 +1,15 @@
 import { View, Text, StyleSheet, Image, ImageBackground, TouchableOpacity, Alert } from 'react-native'
 import { Input, Button } from 'react-native-elements'
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { testUser, penIcon } from '../images/images'
 import { supabase } from '../../lib/supabase'
 import S from '../style'
 import Header from '../Components/Header'
+import { themeContext } from '../Theme'
 
 const AddUserScreen = (props: any) => {
   const [text, setText] = useState<string>('');
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
 
   const session = props.route.params.session;
 
@@ -28,76 +30,13 @@ const AddUserScreen = (props: any) => {
 
   }
 
-  return (
-    <View style={styles.addUserScreenWrapper}>
-      <Header navigation={props.navigation} />
-      <Text style={S.headingOne}>Lägg till användare</Text>
-      <View style={styles.userContainer}>
-        <ImageBackground source={testUser} resizeMode="cover" imageStyle={{borderRadius: 200}}>
-          <TouchableOpacity style={styles.userImage}>
-          <View style={styles.penContainer}>
-          <Image source={penIcon}/>
-          </View>
-          </TouchableOpacity>
-        </ImageBackground>
-        {/* <Image style={styles.userImage} source={testUser}/> */}
-        <Input
-          label='Username:'
-          labelStyle={S.headingTwo}
-          onChangeText={(text) => setText(text)}
-          value={text}
-          placeholder='jane'
-          placeholderTextColor={"white"}
-          autoCapitalize={"none"}
-          style={styles.textInput}
-          underlineColorAndroid='transparent'
-          inputContainerStyle={{ borderBottomWidth: 0 }}
-        />
-      </View>
-      <View style={{gap: 8}}>
-      <Button 
-      title='Lägg till användare'
-      titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
-      buttonStyle={{
-        alignSelf: "center",
-        width: "100%",
-        maxWidth: 396,
-        paddingHorizontal: 24,
-        paddingVertical: 16,
-        borderRadius: 5,
-        backgroundColor: "#1f2627",
-      }}
-      onPress={addUser}
-    />
-    <Button 
-      title='Gå tillbacka'
-      titleStyle={{ color: '#1F2627', fontWeight: "bold", fontSize: 24 }}
-      buttonStyle={{
-        alignSelf: "center",
-        width: "100%",
-        maxWidth: 396,
-        paddingHorizontal: 24,
-        paddingVertical: 16,
-        borderWidth: 2,
-        borderColor: "#000000",
-        borderRadius: 5,
-        backgroundColor: S.primaryColor.backgroundColor,
-      }}
-      onPress={() => props.navigation.goBack()}
-      />
-      </View>
-    </View>
-  )
-}
-
-export default AddUserScreen
-
-const styles = StyleSheet.create({
+  const styles = StyleSheet.create({
     addUserScreenWrapper: {
         height: '100%',
         width: '100%',
         justifyContent: 'space-around',
         padding: 5,
+        backgroundColor: darkTheme ? S.primaryColorDark.backgroundColor : S.primaryColorLight.backgroundColor
     },
     h1: {
         fontSize: 36,
@@ -129,7 +68,72 @@ const styles = StyleSheet.create({
     },
     textInput: {
       borderRadius: 4,
-      backgroundColor: "#1f2627",
+      backgroundColor: darkTheme ? S.primaryColorLight.backgroundColor : S.primaryColorDark.backgroundColor,
       padding: 10,
     },
 })
+
+  return (
+    <View style={styles.addUserScreenWrapper}>
+      <Header navigation={props.navigation} />
+      <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>Lägg till användare</Text>
+      <View style={styles.userContainer}>
+        <ImageBackground source={testUser} resizeMode="cover" imageStyle={{borderRadius: 200}}>
+          <TouchableOpacity style={styles.userImage}>
+          <View style={styles.penContainer}>
+          <Image source={penIcon}/>
+          </View>
+          </TouchableOpacity>
+        </ImageBackground>
+        {/* <Image style={styles.userImage} source={testUser}/> */}
+        <Input
+          label='Username:'
+          labelStyle={[S.headingTwo, darkTheme ? S.textLight : S.textDark]}
+          onChangeText={(text) => setText(text)}
+          value={text}
+          placeholder='jane'
+          placeholderTextColor={darkTheme ? 'black' : 'white'}
+          autoCapitalize={"none"}
+          style={styles.textInput}
+          underlineColorAndroid='transparent'
+          inputContainerStyle={{ borderBottomWidth: 0 }}
+        />
+      </View>
+      <View style={{gap: 8}}>
+      <Button 
+      title='Lägg till användare'
+      titleStyle={{ color: darkTheme ? S.textDark.color : S.textLight.color, fontWeight: "bold", fontSize: 24 }}
+      buttonStyle={{
+        alignSelf: "center",
+        width: "100%",
+        maxWidth: 396,
+        paddingHorizontal: 24,
+        paddingVertical: 16,
+        borderRadius: 5,
+        backgroundColor: darkTheme ? S.primaryColorLight.backgroundColor : S.primaryColorDark.backgroundColor,
+      }}
+      onPress={addUser}
+    />
+    <Button 
+      title='Gå tillbacka'
+      titleStyle={{ color: darkTheme ? S.textLight.color : S.textDark.color, fontWeight: "bold", fontSize: 24}}
+      buttonStyle={{
+        alignSelf: "center",
+        width: "100%",
+        maxWidth: 396,
+        paddingHorizontal: 24,
+        paddingVertical: 16,
+        borderWidth: 2,
+        borderColor: darkTheme ? S.textLight.color : S.textDark.color,
+        borderRadius: 5,
+        backgroundColor: darkTheme ? S.primaryColorDark.backgroundColor : S.primaryColorLight.backgroundColor,
+      }}
+      onPress={() => props.navigation.goBack()}
+      />
+      </View>
+    </View>
+  )
+}
+
+export default AddUserScreen
+

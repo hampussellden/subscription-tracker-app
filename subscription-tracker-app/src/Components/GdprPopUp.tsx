@@ -3,7 +3,7 @@ import React, {useContext} from 'react'
 import { closeDark } from '../images/images'
 import S from '../style'
 import Ts from '../testStyle'
-import {themeContext} from '../../App'
+import { themeContext } from '../Theme'
 
 const GdprPopUp = (props:any) => {
   const [darkTheme, setDarkTheme] = useContext<any>(themeContext)

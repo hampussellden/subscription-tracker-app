@@ -1,11 +1,12 @@
 import { View, Text, StyleSheet, Alert } from "react-native";
 import { Button } from "react-native-elements";
-import React from "react";
+import React, {useContext} from "react";
 import { supabase } from "../../lib/supabase";
 import S from "../style";
+import { themeContext } from '../Theme'
 
 const DeleteUser = (props: any) => {
-
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
 
   const handlePress = () => {
     props.setState(false);
@@ -30,13 +31,12 @@ const DeleteUser = (props: any) => {
 
   return (
     <View style={styles.deleteContainer}>
-      <Text style={S.paragraph}>
+      <Text style={[S.paragraph, darkTheme ? S.textLight : S.textDark]}>
         Är du säker på att du vill ta bort användaren? 
       </Text>
-      <Text>{props.choosenUser}</Text>
       <Button
         title='Radera användare'
-        titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
+        titleStyle={{ color: darkTheme ? S.textDark.color : S.textLight.color, fontWeight: "bold", fontSize: 24 }}
         buttonStyle={{
           marginTop: 20,
           width: "100%",
@@ -44,7 +44,7 @@ const DeleteUser = (props: any) => {
           paddingHorizontal: 24,
           paddingVertical: 16,
           borderRadius: 5,
-          backgroundColor: "rgba(0, 0, 0, 1)",
+          backgroundColor: darkTheme ? S.primaryColorLight.backgroundColor : S.primaryColorDark.backgroundColor,
           alignSelf: "center",
         }}
         // disabled={loading}
@@ -54,16 +54,15 @@ const DeleteUser = (props: any) => {
         title='Gå Tillbaka'
         titleStyle={{ color: "black", fontWeight: "bold", fontSize: 24 }}
         buttonStyle={{
-          marginTop: 20,
+          alignSelf: "center",
           width: "100%",
           maxWidth: 396,
           paddingHorizontal: 24,
           paddingVertical: 16,
-          borderRadius: 5,
           borderWidth: 2,
-          borderColor: "#000000",
-          backgroundColor: "white",
-          alignSelf: "center",
+          borderColor: darkTheme ? S.textLight.color : S.textDark.color,
+          borderRadius: 5,
+          backgroundColor: S.primaryColor.backgroundColor,
         }}
         // disabled={loading}
         onPress={handlePress}
