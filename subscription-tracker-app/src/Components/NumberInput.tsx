@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 // import { Input } from "react-native-elements";
 
-const NumberInput = ({ onInputChange, index }: any) => {
+const NumberInput = ({ onValueChange, index,  }: {onValueChange: any, index: number,}) => {
   const handleInputChange = (value: string) => {
     const obj = { index: index, value: value };
-    onInputChange(obj);
+    onValueChange(obj);
   };
 
   return (
@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
     height: 40,
     borderRadius: 4,
     backgroundColor: "'rgba(0, 0, 0, 0.25)'",
-    // boxShadow: "2px 2px 4px 0px rgba(0, 0, 0, 0.25) inset",
     padding: 10,
     textAlign: "center",
   },

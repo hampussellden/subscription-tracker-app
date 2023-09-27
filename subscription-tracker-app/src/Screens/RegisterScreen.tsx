@@ -7,12 +7,12 @@ import {
   Image,
   Pressable,
   ScrollView,
+  Keyboard
 } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { supabase } from "../../lib/supabase";
 import NumberInput from "../Components/NumberInput";
 import { rnwlLogo, arrowBack } from "../images/images";
-import TextInput from "../Components/TextInput";
 
 const RegisterScreen = ({ navigation }: any) => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,24 +23,63 @@ const RegisterScreen = ({ navigation }: any) => {
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>("");
   const [pinCode, setPinCode] = useState<string>("");
   const pinCodeContainer: string[] = ["", "", "", "", "", ""];
+  const isKeyboardVisible = Keyboard.isVisible();
+  const [pinCodeHolder, setPinCodeHolder] = React.useState<string[]>([
+    "",
+    "",
+    "",
+    "",
+    "",
+    "",
+  ]);
+  
+  
   async function signUp() {
-    setLoading(true);
-    const { error } = await supabase.auth.signUp({
+    setLoading(true);    
+    const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
-
+    
     if (error) Alert.alert(error.message);
     setLoading(false);
+    if (data) {
+      console.log(
+        data
+        );
+      const {data:profile, error} = await supabase.from('profiles').update({username: username, full_name: fullName, pin_code: pinCode}).eq('id', data?.user?.id as string)
+      
+      if(error) { console.log(error)};
+    
+      if(profile ) {        
+        console.log('profile' + data.user?.id);
+        
+        const { data:user, error } = await supabase.from('users').insert({
+          profile_id: data.user?.id,
+          name: username,
+        }).select()
+  
+        if (error) {
+          console.log('error' + error.message);
+        }
+  
+        if (user) {
+          console.log('user' + user);
+          
+          navigation.navigate("HomeScreen", { session: data });
+        }
+      }
+    }
   }
-  const createProfile = (): boolean => {
+  const createProfile = async () => {
     if (password != passwordConfirmation) {
-      return false;
+      
+      return;
     }
-    if (typeof createPinCode() != "string") {
-      return false;
+    if (createPinCode()) {
+      return;
     }
-    return true;
+    await signUp();
   };
 
   const pinCodeIsOnlyNumbers = (): boolean => {
@@ -58,9 +97,49 @@ const RegisterScreen = ({ navigation }: any) => {
   };
   const handleNumberValue = (obj: { key: number; value: string }) => {
     pinCodeContainer[obj.key] = obj.value;
+    console.log(pinCodeContainer);
+    
   };
+  const handleInputChange = ({
+    value,
+    index,
+  }: {
+    value: string;
+    index: number;
+  }) => {
+    pinCodeHolder[index] = value;
+    setPinCode(pinCodeHolder.join(""));
+  };
+  
+
+  const styles = StyleSheet.create({
+    wrapper: {
+      marginTop: 8,
+      paddingBottom: isKeyboardVisible ? 100 : 8,
+    },
+    rowContainer: {
+      flexDirection: "row",
+      display: "flex",
+      gap: 2,
+    },
+    logo: {
+      height: 50,
+      width: "100%",
+      resizeMode: "contain",
+      marginBottom: 20,
+      marginTop: 20,
+    },
+    textInput: {
+      borderRadius: 4,
+      backgroundColor: "'rgba(0, 0, 0, 0.25)'",
+      padding: 10,
+    },
+  });
+  
+
+
   return (
-    <ScrollView style={{ marginHorizontal: 6, marginVertical: 8 }}>
+    <ScrollView style={styles.wrapper} contentContainerStyle={{marginHorizontal: 16}}>
       <Pressable
         onPress={() => navigation.goBack()}
         style={{ marginLeft: 24, marginTop: 35 }}
@@ -68,35 +147,67 @@ const RegisterScreen = ({ navigation }: any) => {
         <Image source={arrowBack} style={{ width: 20, height: 20 }} />
       </Pressable>
       <Image style={styles.logo} source={rnwlLogo} />
-      <TextInput
-        onChangeText={(text: string) => setFullName(text)}
+      <Input
+        onChangeText={setFullName}
         label='Fullständigt namn:'
         placeholder='Jane Doe'
         value={fullName}
+        labelStyle={{ color: "black", fontSize: 22 }}
+        placeholderTextColor={"rgba(0,0,0,0.5)"}
+        autoCapitalize={"none"}
+        style={styles.textInput}
+        underlineColorAndroid='transparent'
+        inputContainerStyle={{ borderBottomWidth: 0 }}
       />
-      <TextInput
-        onChangeText={(text: string) => setEmail(text)}
+      <Input
+        onChangeText={setEmail}
         value={email}
         placeholder='jane@doe.com'
-        label='Email'
+        label='Email:'
+        labelStyle={{ color: "black", fontSize: 22 }}
+        placeholderTextColor={"rgba(0,0,0,0.5)"}
+        autoCapitalize={"none"}
+        style={styles.textInput}
+        underlineColorAndroid='transparent'
+        inputContainerStyle={{ borderBottomWidth: 0 }}
       />
-      <TextInput
+      <Input
         value={username}
-        onChangeText={(text: string) => setUsername(text)}
+        onChangeText={setUsername}
         label='Användarnamn:'
-        placeholder='username123'
+        placeholder='John'
+        labelStyle={{ color: "black", fontSize: 22 }}
+        placeholderTextColor={"rgba(0,0,0,0.5)"}
+        autoCapitalize={"none"}
+        style={styles.textInput}
+        underlineColorAndroid='transparent'
+        inputContainerStyle={{ borderBottomWidth: 0 }}
       />
-      <TextInput
-        onChangeText={(text: string) => setPassword(text)}
+      <Input
+        onChangeText={setPassword}
         value={password}
         label='Lösenord:'
-        placeholder='Lösenord'
+        secureTextEntry={true}
+        placeholder='********'
+        labelStyle={{ color: "black", fontSize: 22 }}
+        placeholderTextColor={"rgba(0,0,0,0.5)"}
+        autoCapitalize={"none"}
+        style={styles.textInput}
+        underlineColorAndroid='transparent'
+        inputContainerStyle={{ borderBottomWidth: 0 }}
       />
-      <TextInput
-        onChangeText={(text: string) => setPasswordConfirmation(text)}
+      <Input
+        onChangeText={setPasswordConfirmation}
         value={passwordConfirmation}
         label='Bekräfta lösenord:'
-        placeholder='Lösenord'
+        secureTextEntry={true}
+        placeholder='********'
+        labelStyle={{ color: "black", fontSize: 22 }}
+        placeholderTextColor={"rgba(0,0,0,0.5)"}
+        autoCapitalize={"none"}
+        style={styles.textInput}
+        underlineColorAndroid='transparent'
+        inputContainerStyle={{ borderBottomWidth: 0 }}
       />
       <View style={{ gap: 16 }}>
         <Text
@@ -112,7 +223,7 @@ const RegisterScreen = ({ navigation }: any) => {
         </Text>
         <View style={styles.rowContainer}>
           {pinCodeContainer.map((value, i) => (
-            <NumberInput key={i} index={i} onValueChange={handleNumberValue} />
+            <NumberInput key={i} index={i} onValueChange={handleInputChange} />
           ))}
         </View>
       </View>
@@ -131,23 +242,10 @@ const RegisterScreen = ({ navigation }: any) => {
           marginTop: 28,
           marginBottom: 48,
         }}
-        onPress={() => createProfile()}
+        loading={loading}
+        onPress={createProfile}
       />
     </ScrollView>
   );
 };
 export default RegisterScreen;
-const styles = StyleSheet.create({
-  rowContainer: {
-    flexDirection: "row",
-    display: "flex",
-    gap: 4,
-  },
-  logo: {
-    height: 50,
-    width: "100%",
-    resizeMode: "contain",
-    marginBottom: 20,
-    marginTop: 20,
-  },
-});

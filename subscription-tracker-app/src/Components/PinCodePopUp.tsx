@@ -78,7 +78,7 @@ const PinCodePopUp = ({
           }}
         >
           {pinCodeHolder.map((value, i) => (
-            <NumberInput key={i} index={i} onInputChange={handleInputChange} />
+            <NumberInput key={i} index={i} onValueChange={handleInputChange} />
           ))}
         </View>
       </View>
