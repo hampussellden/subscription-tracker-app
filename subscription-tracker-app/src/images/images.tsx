@@ -5,6 +5,7 @@ export const rnwlLogo = require("./rnwl-logo.png");
 export const arrowBack = require("./arrowBack.png");
 export const arrowLeft = require("./arrowLeft.png");
 export const arrowRight = require("./arrowRight.png");
+export const arrowRightSvg = require('./arrowRight.svg');
 export const arrowDown = require("./arrowDown.png");
 export const arrowUp = require("./arrowUp.png");
 export const gangplankProfile = require("./gangplank-profile.jpeg");

@@ -8,7 +8,7 @@ import {themeContext} from '../../App'
 const GdprPopUp = (props:any) => {
   const [darkTheme, setDarkTheme] = useContext<any>(themeContext)
   return (
-    <View style={[styles.gdprWrapper, darkTheme ? Ts.primaryDark : Ts.primaryLight]}> 
+    <View style={styles.gdprWrapper}> 
          <View style={styles.header}>
                 <TouchableOpacity onPress={() => props.onClick()}>
                 <Image source={closeDark}/>
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
       height: '100%',
       width: '100%',
       padding: 10,
-      // backgroundColor: S.primaryColor.backgroundColor,
+      backgroundColor: S.primaryColorLight.backgroundColor,
     },
     header: {
         width:'100%',

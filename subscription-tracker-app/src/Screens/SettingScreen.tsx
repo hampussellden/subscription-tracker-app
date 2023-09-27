@@ -1,7 +1,8 @@
 import { View, Text, StyleSheet, Image, Switch, TouchableOpacity, Alert, ScrollView, SafeAreaView, StatusBar } from 'react-native'
 import { Button } from 'react-native-elements'
 import React, {useState, useContext} from 'react'
-import { gangplankProfile, arrowRight } from '../images/images'
+import { gangplankProfile } from '../images/images'
+import ArrowRight from '../images/arrowRight.svg'
 import { supabase } from '../../lib/supabase'
 import CookiepopUp from '../Components/CookiepopUp'
 import TosService from '../Components/TosService'
@@ -72,19 +73,20 @@ const SettingScreen = (props:any) => {
     }
 
   return (
-    <View style={[styles.settingsScreenWrapper, darkTheme ? Ts.primaryDark : Ts.primaryLight]}>
+    <View style={[styles.settingsScreenWrapper, darkTheme ? S.primaryColorDark : S.primaryColorLight]}>
       <Header navigation={props.navigation} />
       {viewCookies && <CookiepopUp onClick={handleCookies}/>}
       {viewTos && <TosService onClick={handleTos}/>}
       {viewGdpr && <GdprPopUp onClick={handleGdpr}/>}
-      <Text style={[S.headingOne, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Inställningar</Text>
+      <Text style={[S.headingOne, darkTheme ? S.onBackgroundTextDark : S.onBackgroundTextLight]}>Inställningar</Text>
       <View style={styles.profileContainer}>
         <Image style={styles.profileImg} source={gangplankProfile}/>
       </View>
       <View style={styles.alternativSection}>
+      <ScrollView>
         <View style={styles.switchSection}>
           <View style={styles.darkModeAlt}>
-            <Text style={[S.headingTwo, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Mörkt läge</Text>
+            <Text style={[S.headingTwo, darkTheme ? S.onBackgroundTextDark : S.onBackgroundTextLight]}>Mörkt läge</Text>
             <Switch 
                     trackColor={{false: "#1f2627", true: "#1f2627"}}
                     thumbColor={darkTheme ? "#A9C0FF" : '#f4f3f4'}
@@ -94,7 +96,7 @@ const SettingScreen = (props:any) => {
             />
           </View>
           <View style={styles.notifikationAlt}>
-            <Text style={[S.headingTwo, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Tillåt notifikationer</Text>
+            <Text style={[S.headingTwo, darkTheme ? S.onBackgroundTextDark : S.onBackgroundTextLight]}>Tillåt notifikationer</Text>
             <Switch 
                     trackColor={{false: "#1f2627", true: "#1f2627"}}
                     thumbColor={notificationEnabled ? "#A9C0FF" : '#f4f3f4'}
@@ -105,26 +107,26 @@ const SettingScreen = (props:any) => {
           </View>
           <View style={styles.familyAlt}>
             <TouchableOpacity onPress={() => props.navigation.navigate("Family")}>
-            <Text style={[S.headingTwo, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Familjehantering</Text>
+            <Text style={[S.headingTwo, darkTheme ? S.onBackgroundTextDark : S.onBackgroundTextLight]}>Familjehantering</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigation.navigate("Family")}>
-            <Image source={arrowRight}/>
+            <ArrowRight width={40} height={40} color={ darkTheme ? S.textLight.color : S.textDark.color} />
             </TouchableOpacity>
           </View>
         </View>
         <View style={styles.DataAlt}>
-          <Text style={[S.headingTwo, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Integritet och data</Text>
+          <Text style={[S.headingTwo, darkTheme ? S.onBackgroundTextDark : S.onBackgroundTextLight]}>Integritet och data</Text>
           <TouchableOpacity onPress={() => setViewCookies(true)}>
-          <Text style={[S.label, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Cookies</Text>
+          <Text style={[S.label, darkTheme ? S.textLight : S.textDark]}>Cookies</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setViewTos(true)}>
-          <Text style={[S.label, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Användarvillkor & integritetspolicy</Text>
+          <Text style={[S.label, darkTheme ? S.textLight : S.textDark]}>Användarvillkor & integritetspolicy</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setViewGdpr(true)}>
-          <Text style={[S.label, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>GDPR</Text>
+          <Text style={[S.label, darkTheme ? S.textLight : S.textDark]}>GDPR</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-          <Text style={[S.label, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Radera konto</Text>
+          <Text style={[S.label, darkTheme ? S.textLight : S.textDark]}>Radera konto</Text>
           </TouchableOpacity>
         </View>
       <Button 
@@ -142,6 +144,7 @@ const SettingScreen = (props:any) => {
       onPress={() => supabase.auth.signOut()}
     />
     
+      </ScrollView>
       </View>
     </View>
   )
@@ -151,9 +154,8 @@ export default SettingScreen
 
 const styles = StyleSheet.create({
     settingsScreenWrapper: {
-      // backgroundColor: S.primaryColor.backgroundColor,
         marginTop: 48,
-        height: '100%',
+        // height: '100%',
         flex: 1,
         gap: 10,
         paddingRight: 5, 
