@@ -65,6 +65,7 @@ const AddSubscriptionScreen = ({
   };
   //handlers for when creating custom service and tiers
   const handleServiceNameChange = (text: string) => {
+    console.log(text);
     setInputValue(text);
   };
   const handleCustomCostInput = (input: string) => {
@@ -85,15 +86,21 @@ const AddSubscriptionScreen = ({
   const handleDateChange = (event: any, selectedDate: any) => {
     setDate(selectedDate);
   };
+
   //when creating subscription
   const handleCreateSubscription = async () => {
     const createNewSubscription = async () => {
+      console.log(
+        inputValue,
+        costValue,
+        chosenUser,
+        date,
+        selectedIntervalPeriod
+      );
       if (chosenTier && chosenUser && chosenService && date) {
-        console.log("all chosen");
         const { data: subscription, error } = await supabase
           .from("subscriptions")
           .insert({
-            id: +1,
             user_id: chosenUser?.id,
             service_id: chosenService?.id,
             subscription_tier_id: chosenTier?.id,
@@ -106,9 +113,15 @@ const AddSubscriptionScreen = ({
           console.log(error);
         }
         if (subscription) {
-          console.log(subscription);
+          navigation.navigate("Home", { reload: true });
         }
-      } else if (inputValue && costValue && chosenUser && date) {
+      } else if (
+        inputValue &&
+        costValue &&
+        chosenUser &&
+        date &&
+        selectedIntervalPeriod
+      ) {
         const { data: service, error } = await supabase
           .from("services")
           .insert({ name: inputValue, icon: "bookMark.png", category_id: 2 })
@@ -170,19 +183,17 @@ const AddSubscriptionScreen = ({
   }, []);
 
   return (
-    <ScrollView
-      style={styles.wrapper}
-      contentContainerStyle={{ gap: 16, marginBottom: 100 }}
-    >
-      {services.length > 0 ? (
+    <ScrollView style={styles.wrapper} contentContainerStyle={{ gap: 16 }}>
+      {services ? (
         <>
           <Header navigation={navigation} />
           <Text style={S.headingOne}>Lägg till ny tjänst</Text>
           <BrowseServices
             handleChosenService={handleChooseService}
             services={services}
-            handleServiceNameChange={() => handleServiceNameChange}
+            handleServiceNameChange={handleServiceNameChange}
             chosenService={chosenService}
+            inputValue={inputValue}
           />
           {chosenService && (
             <>

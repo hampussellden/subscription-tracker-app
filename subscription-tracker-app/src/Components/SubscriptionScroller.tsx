@@ -5,12 +5,14 @@ import ActiveSubscription from "./ActiveSubscription";
 import ArrowLeft from "../images/arrowLeft.svg";
 import ArrowRight from "../images/arrowRight.svg";
 import S from "../style";
-import { Subscription } from "../types";
+import { Subscription, User } from "../types";
 const SubscriptionScroller = ({
+  chosenUser,
   category,
   subscriptions,
   handleOpenSingleSubscription,
 }: {
+  chosenUser: User | null;
   category: string;
   subscriptions: Subscription[];
   handleOpenSingleSubscription: (subscription: Subscription) => void;
@@ -61,13 +63,24 @@ const SubscriptionScroller = ({
         {subscriptions.map(
           (subscription: Subscription, i: number) =>
             subscription.services?.categories.name == category &&
-            subscription.active && (
+            subscription.active &&
+            (chosenUser ? (
+              chosenUser?.id == subscription.user_id ? (
+                <ActiveSubscription
+                  subscription={subscription}
+                  key={i}
+                  handleOpenSingleSubscription={handleOpenSingleSubscription}
+                />
+              ) : (
+                <></>
+              )
+            ) : (
               <ActiveSubscription
                 subscription={subscription}
                 key={i}
                 handleOpenSingleSubscription={handleOpenSingleSubscription}
               />
-            )
+            ))
         )}
       </ScrollView>
     </>

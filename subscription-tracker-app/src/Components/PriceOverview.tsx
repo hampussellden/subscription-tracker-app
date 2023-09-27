@@ -26,7 +26,6 @@ const PriceOverview = ({
   const [active, setActive] = React.useState(false);
   const [unlocked, setUnlocked] = React.useState(false);
   const [showPinInput, setShowPinInput] = React.useState(false);
-  const darkMode = false;
 
   const sumOfThisMontsSubs = (subscriptions: Subscription[]): number => {
     const now = new Date();
@@ -78,10 +77,7 @@ const PriceOverview = ({
       <Pressable style={styles.container} onPress={handlePress}>
         <View style={styles.topRow}>
           <Text style={[S.headingTwo]}>Månadens kostnader</Text>
-          <Image
-            source={darkMode ? cashFileLight : cashFileDark}
-            style={{ width: 40, height: 40 }}
-          />
+          <Image source={cashFileDark} style={{ width: 40, height: 40 }} />
         </View>
         {active && unlocked && (
           <View
@@ -100,15 +96,9 @@ const PriceOverview = ({
         )}
         <View>
           {unlocked ? (
-            <Image
-              source={darkMode ? unlockedLight : unlockedDark}
-              style={{ width: 20, height: 20 }}
-            />
+            <Image source={unlockedDark} style={{ width: 20, height: 20 }} />
           ) : (
-            <Image
-              source={darkMode ? lockedLight : lockedDark}
-              style={{ width: 20, height: 20 }}
-            />
+            <Image source={lockedDark} style={{ width: 20, height: 20 }} />
           )}
         </View>
       </Pressable>

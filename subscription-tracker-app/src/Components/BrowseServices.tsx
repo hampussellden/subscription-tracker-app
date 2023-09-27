@@ -24,11 +24,13 @@ const BrowseServices = ({
   services,
   handleServiceNameChange,
   chosenService,
+  inputValue,
 }: {
   handleChosenService: (service: Service | null) => void;
   services: Service[];
   handleServiceNameChange: (text: string) => void;
   chosenService: Service | null;
+  inputValue: string;
 }) => {
   const [opened, setOpened] = useState<boolean>(false);
   const [creating, setCreating] = useState<boolean>(false);
@@ -49,7 +51,10 @@ const BrowseServices = ({
       </Text>
       {creating && (
         <>
-          <CreatingService handleServiceNameChange={handleServiceNameChange} />
+          <CreatingService
+            handleServiceNameChange={handleServiceNameChange}
+            inputValue={inputValue}
+          />
         </>
       )}
       {opened && !creating && (

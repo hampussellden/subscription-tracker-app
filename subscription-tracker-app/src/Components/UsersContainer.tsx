@@ -22,18 +22,28 @@ export type User = {
 };
 
 const UserContainer = ({
+  chosenUser,
   users,
   navigation,
+  handleChosenUser,
 }: {
+  chosenUser: User | null;
   users: User[];
   navigation: any;
+  handleChosenUser: (user: User) => void;
 }) => {
   return (
     <View style={{ minHeight: 130 }}>
       <Text style={[S.headingTwo, S.onBackgroundText]}>Välj användare</Text>
       <ScrollView horizontal={true} contentContainerStyle={{ gap: 8 }}>
         {users.map((user) => {
-          return <UserItem user={user} />;
+          return (
+            <UserItem
+              chosenUser={chosenUser}
+              user={user}
+              handleChosenUser={handleChosenUser}
+            />
+          );
         })}
         <Button
           icon={{

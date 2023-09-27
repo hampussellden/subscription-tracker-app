@@ -15,7 +15,12 @@ enum Routes {
 type Route = {
   name: Routes;
 };
-const backAbleRoutes = ["Family","Settings","AddUser"] as Routes[];
+const backAbleRoutes = [
+  "Family",
+  "Settings",
+  "AddUser",
+  "AddSubscription",
+] as Routes[];
 
 const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
   const route = useRoute() as Route;
@@ -33,6 +38,7 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
       backgroundColor: activeSingleSub ? "transparent" : "inherit",
       position: activeSingleSub ? "absolute" : "relative",
       top: activeSingleSub ? 48 : 0,
+      marginTop: currentRoute === "Home" ? 48 : 0,
       zIndex: 1,
     },
   });
@@ -51,12 +57,19 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
       ) : (
         <View></View>
       )}
-      {backAbleRoutes.includes(currentRoute) ? (
+      {currentRoute === "AddSubscription" ? (
+        <Pressable onPress={() => navigation.navigate("Settings")}>
+          <Image
+            source={true ? gearLight : gearDark}
+            style={{ width: 40, height: 40 }}
+          />
+        </Pressable>
+      ) : backAbleRoutes.includes(currentRoute) ? (
         <View></View>
       ) : (
         <Pressable onPress={() => navigation.navigate("Settings")}>
           <Image
-            source={true ? gearLight : gearDark}
+            source={false ? gearLight : gearDark}
             style={{ width: 40, height: 40 }}
           />
         </Pressable>

@@ -8,8 +8,10 @@ import { supabase } from "../../lib/supabase";
 import CreateServiceCategoryScroller from "./CreateServiceCategoryScroller";
 const CreatingService = ({
   handleServiceNameChange,
+  inputValue,
 }: {
   handleServiceNameChange: (text: string) => void;
+  inputValue: string;
 }) => {
   let index: number = 0;
   const [categories, setCategories] = useState<Category[]>([]);
@@ -44,6 +46,7 @@ const CreatingService = ({
             margin: 0,
             padding: 0,
           }}
+          value={inputValue}
           onChangeText={handleServiceNameChange}
         />
         {categories.length > 0 && (

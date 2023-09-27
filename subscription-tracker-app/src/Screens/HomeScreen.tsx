@@ -41,6 +41,7 @@ const HomeScreen = (props: any) => {
   const [priceOverviewActive, setPriceOverviewActive] = React.useState(false);
   const [activeSingleSubscription, setActiveSingleSubscription] =
     React.useState<Subscription | false>(false);
+  const [chosenUser, setChosenUser] = useState<User | null>(null);
   const session = props.route.params.session;
   const profileId = session.user.id;
 
@@ -103,12 +104,9 @@ const HomeScreen = (props: any) => {
       if (error) {
         console.log(error);
       }
-      if (subscriptions && subscriptions?.length > 0) {
+      if (subscriptions) {
         setSubscriptions(subscriptions as any[]);
         reload && setReload(false);
-      }
-      if (subscriptions?.length == 0) {
-        !reload && setReload(true);
       }
     };
     fetchSubscriptions();
@@ -133,8 +131,9 @@ const HomeScreen = (props: any) => {
   if (props.route.params.accepted != undefined && loading == true) {
     setTosAccepted(props.route.params.accepted);
   }
+  //
   useEffect(() => {
-    if (tosAccepted == true && subscriptions.length > 0 && users.length > 0) {
+    if (tosAccepted == true && subscriptions && users.length > 0) {
       setLoading(false);
     } else {
       setReload(true);
@@ -157,6 +156,13 @@ const HomeScreen = (props: any) => {
   const handleCloseSingleSubscription = () => {
     setActiveSingleSubscription(false);
     setReload(true);
+  };
+  const handleChosenUser = (user: User) => {
+    if (user.id == chosenUser?.id) {
+      setChosenUser(null);
+      return;
+    }
+    setChosenUser(user);
   };
   return (
     <View style={{ backgroundColor: S.primaryColor.backgroundColor }}>
@@ -196,12 +202,18 @@ const HomeScreen = (props: any) => {
             )}
             {subscriptions.length > 0 && categories.length > 0 && (
               <ActiveSubscriptionsContainer
+                chosenUser={chosenUser}
                 categories={categories}
                 subscriptions={subscriptions}
                 handleOpenSingleSubscription={handleOpenSingleSubscription}
               />
             )}
-            <UsersContainer users={users} navigation={props.navigation} />
+            <UsersContainer
+              chosenUser={chosenUser}
+              users={users}
+              navigation={props.navigation}
+              handleChosenUser={handleChosenUser}
+            />
             <UpcomingPaymentsContainer subscriptions={subscriptions} />
             <NewsContainer />
             <PriceOverview
@@ -223,6 +235,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
     gap: 16,
     flexDirection: "column-reverse",
-    marginTop: 48,
   },
 });
