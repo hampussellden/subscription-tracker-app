@@ -1,8 +1,8 @@
 import "react-native-url-polyfill/auto";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, createContext } from "react";
 import { supabase } from "./lib/supabase";
 import LoginScreen from "./src/Screens/LoginScreen";
-import { View } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Session } from "@supabase/supabase-js";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -13,8 +13,17 @@ import FamilyScreen from "./src/Screens/FamilyScreen";
 import AddUserScreen from "./src/Screens/AddUserScreen";
 import AddSubscriptionScreen from "./src/Screens/AddSubscriptionScreen";
 import * as Font from "expo-font";
+// import { Hej } from "./src/style";
+// import {themeContext} from './src/Context';
+import S from "./src/style";
+
+export const themeContext = createContext<any>({});
 
 export default function App() {
+ const [darkTheme, setDarkTheme] = useState<boolean>(false);
+ const [darkTrue, setDarkTrue] = useState(false);
+  const [session, setSession] = useState<Session | null>(null);
+
   useEffect(() => {
     Font.loadAsync({
       'DM_Sans_Regular': require("./assets/fonts/DMSans_18pt-Regular.ttf"),
@@ -22,7 +31,8 @@ export default function App() {
       'DM_Sans_Medium': require("./assets/fonts/DMSans_18pt-Medium.ttf"),
     });
   },[]);
-  const [session, setSession] = useState<Session | null>(null);
+
+  
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -36,7 +46,10 @@ export default function App() {
 
   const Stack = createNativeStackNavigator();
 
+  console.log(darkTheme);
+
   return (
+    <themeContext.Provider value={[darkTheme, setDarkTheme]} >
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
@@ -79,5 +92,9 @@ export default function App() {
         )}
       </Stack.Navigator>
     </NavigationContainer>
+    </themeContext.Provider>
   );
 }
+
+
+

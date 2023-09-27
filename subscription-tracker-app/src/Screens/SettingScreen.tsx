@@ -1,6 +1,6 @@
 import { View, Text, StyleSheet, Image, Switch, TouchableOpacity, Alert, ScrollView, SafeAreaView, StatusBar } from 'react-native'
 import { Button } from 'react-native-elements'
-import React, {useState} from 'react'
+import React, {useState, useContext} from 'react'
 import { gangplankProfile, arrowRight } from '../images/images'
 import { supabase } from '../../lib/supabase'
 import CookiepopUp from '../Components/CookiepopUp'
@@ -8,19 +8,20 @@ import TosService from '../Components/TosService'
 import GdprPopUp from '../Components/GdprPopUp'
 import Header from '../Components/Header'
 import S from '../style'
+import Ts from '../testStyle'
+import {themeContext} from '../../App'
 
 
 const SettingScreen = (props:any) => {
 
   const session = props.route.params.session;
-
-  // console.log(session.user.id);
     
     const [darkModeenabled, setDarkModeEnabled] = useState(false);
     const [notificationEnabled, setNotificationEnabled] = useState<boolean>(false);
     const [viewCookies, setViewCookies] = useState(false);
     const [viewTos, setViewTos] = useState(false);
     const [viewGdpr, setViewGdpr] = useState(false);
+    const [darkTheme, setDarkTheme] = useContext<any>(themeContext)
 
     const toggleNotificationEnabled = () => {
       setNotificationEnabled(previousState => !previousState)
@@ -55,7 +56,7 @@ const SettingScreen = (props:any) => {
   
   
     const toggleDarkModeSwitch = () => {
-        setDarkModeEnabled(previousState => !previousState)
+      setDarkTheme((darkTheme: any) => !darkTheme)
     }
 
     const handleCookies = () => {
@@ -71,29 +72,29 @@ const SettingScreen = (props:any) => {
     }
 
   return (
-    <View style={styles.settingsScreenWrapper}>
+    <View style={[styles.settingsScreenWrapper, darkTheme ? Ts.primaryDark : Ts.primaryLight]}>
       <Header navigation={props.navigation} />
       {viewCookies && <CookiepopUp onClick={handleCookies}/>}
       {viewTos && <TosService onClick={handleTos}/>}
       {viewGdpr && <GdprPopUp onClick={handleGdpr}/>}
-      <Text style={S.headingOne}>Inställningar</Text>
+      <Text style={[S.headingOne, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Inställningar</Text>
       <View style={styles.profileContainer}>
         <Image style={styles.profileImg} source={gangplankProfile}/>
       </View>
       <View style={styles.alternativSection}>
         <View style={styles.switchSection}>
           <View style={styles.darkModeAlt}>
-            <Text style={S.headingTwo}>Mörkt läge</Text>
+            <Text style={[S.headingTwo, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Mörkt läge</Text>
             <Switch 
                     trackColor={{false: "#1f2627", true: "#1f2627"}}
-                    thumbColor={darkModeenabled ? "#A9C0FF" : '#f4f3f4'}
+                    thumbColor={darkTheme ? "#A9C0FF" : '#f4f3f4'}
                     ios_backgroundColor="#3e3e3e"
                     onValueChange={toggleDarkModeSwitch}
-                    value={darkModeenabled}
+                    value={darkTheme}
             />
           </View>
           <View style={styles.notifikationAlt}>
-            <Text style={S.headingTwo}>Tillåt notifikationer</Text>
+            <Text style={[S.headingTwo, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Tillåt notifikationer</Text>
             <Switch 
                     trackColor={{false: "#1f2627", true: "#1f2627"}}
                     thumbColor={notificationEnabled ? "#A9C0FF" : '#f4f3f4'}
@@ -104,7 +105,7 @@ const SettingScreen = (props:any) => {
           </View>
           <View style={styles.familyAlt}>
             <TouchableOpacity onPress={() => props.navigation.navigate("Family")}>
-            <Text style={S.headingTwo}>Familjehantering</Text>
+            <Text style={[S.headingTwo, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Familjehantering</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => props.navigation.navigate("Family")}>
             <Image source={arrowRight}/>
@@ -112,23 +113,23 @@ const SettingScreen = (props:any) => {
           </View>
         </View>
         <View style={styles.DataAlt}>
-          <Text style={S.headingTwo}>Integritet och data</Text>
+          <Text style={[S.headingTwo, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Integritet och data</Text>
           <TouchableOpacity onPress={() => setViewCookies(true)}>
-          <Text style={S.label}>Cookies</Text>
+          <Text style={[S.label, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Cookies</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setViewTos(true)}>
-          <Text style={S.label}>Användarvillkor & integritetspolicy</Text>
+          <Text style={[S.label, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Användarvillkor & integritetspolicy</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => setViewGdpr(true)}>
-          <Text style={S.label}>GDPR</Text>
+          <Text style={[S.label, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>GDPR</Text>
           </TouchableOpacity>
           <TouchableOpacity>
-          <Text style={S.label}>Radera konto</Text>
+          <Text style={[S.label, darkTheme ? Ts.textDarkBg : Ts.textLightBg]}>Radera konto</Text>
           </TouchableOpacity>
         </View>
       <Button 
       title='Logga ut'
-      titleStyle={S.label}
+      titleStyle={[S.label, darkTheme ? Ts.textLightBg : Ts.textDarkBg]}
       buttonStyle={{
         alignSelf: "center",
         width: "100%",
@@ -136,7 +137,7 @@ const SettingScreen = (props:any) => {
         paddingHorizontal: 24,
         paddingVertical: 16,
         borderRadius: 5,
-        backgroundColor: "rgba(0, 0, 0, 1)",
+        backgroundColor: darkTheme ? Ts.primaryLight.backgroundColor : Ts.primaryDark.backgroundColor,
       }}
       onPress={() => supabase.auth.signOut()}
     />
@@ -150,7 +151,7 @@ export default SettingScreen
 
 const styles = StyleSheet.create({
     settingsScreenWrapper: {
-      backgroundColor: S.primaryColor.backgroundColor,
+      // backgroundColor: S.primaryColor.backgroundColor,
         marginTop: 48,
         height: '100%',
         flex: 1,

@@ -9,7 +9,7 @@ import FamilyUser from '../Components/FamilyUser'
 import Header from '../Components/Header'
 import S from '../style'
 
-const FamilyScreen = (props: any, {navigation}: any,  user: User ) => {
+const FamilyScreen = (props: any ) => {
     const [userNames, setUserNames] = useState<string[]>([]);
     const [userData, setUserData] = useState<User[]>([]);
     const [userId, setUserId] = useState<number>(0);
