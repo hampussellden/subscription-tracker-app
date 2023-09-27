@@ -124,7 +124,9 @@ const BrowseSubscriptionTiers = ({
           </ScrollView>
           <Pressable
             style={styles.createNewService}
-            onPress={() => setCreating(true)}
+            onPress={() => {
+              setCreating(true), handleChooseTier(null);
+            }}
           >
             <Text style={[S.headingTwo, { color: S.onBackgroundText.color }]}>
               Skapa eget pris...

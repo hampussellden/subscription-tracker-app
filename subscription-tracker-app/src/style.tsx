@@ -1,33 +1,33 @@
 import { StyleSheet } from "react-native";
 
-const darkMode = false; //subject to change
+const darkMode = true; //subject to change
 const S = StyleSheet.create({
   primaryColor: {
     backgroundColor: darkMode ? "#1f2627" : "#F5F1EC",
   },
   primaryColorLight: {
-    backgroundColor: "#F5F1EC"
+    backgroundColor: "#F5F1EC",
   },
   primaryColorDark: {
-    backgroundColor: "#1f2627"
+    backgroundColor: "#1f2627",
   },
   onPrimaryColor: {
     backgroundColor: darkMode ? "#F5F1EC" : "#1F2627",
   },
   onPrimaryColorLight: {
-  backgroundColor: "#1F2627"
+    backgroundColor: "#1F2627",
   },
   onPrimaryColorDark: {
-    backgroundColor: "#F5F1EC"
-    },
+    backgroundColor: "#F5F1EC",
+  },
   secondaryColor: {
     backgroundColor: darkMode ? "#1F2627" : "#F5F1EC",
   },
   secondaryColorLight: {
-    backgroundColor: "#F5F1EC"
+    backgroundColor: "#F5F1EC",
   },
   secondaryColorDark: {
-    backgroundColor: "#1F2627"
+    backgroundColor: "#1F2627",
   },
   tertiaryColor: {
     backgroundColor: "#A9C0FF",
@@ -36,12 +36,12 @@ const S = StyleSheet.create({
     color: darkMode ? "#F5F1EC" : "#1F2627",
   },
   onTertiaryLight: {
-    backgroundColor: "#1F2627"
+    backgroundColor: "#1F2627",
   },
   onTertiaryDark: {
-    backgroundColor: "#F5F1EC"
+    backgroundColor: "#F5F1EC",
   },
-  
+
   backgroundTransparencyColor: {
     backgroundColor: darkMode
       ? "rgba(31, 38, 39, 0.8)"
@@ -51,11 +51,11 @@ const S = StyleSheet.create({
 
   backgroundTransparencyColorLight: {
     backgroundColor: "rgba(245, 241, 236, 0.8)",
-    color: "#F5F1EC"
+    color: "#F5F1EC",
   },
   backgroundTransparencyColorDark: {
     backgroundColor: "rgba(31, 38, 39, 0.8)",
-    color: "#1F2627"
+    color: "#1F2627",
   },
 
   iconFillColor: {
@@ -108,18 +108,18 @@ const S = StyleSheet.create({
     marginBottom: 18,
   },
   onBackgroundTextLight: {
-    color: 'black',
-    marginBottom: 18
+    color: "black",
+    marginBottom: 18,
   },
   onBackgroundTextDark: {
-    color: 'white',
-    marginBottom: 18
+    color: "white",
+    marginBottom: 18,
   },
   textLight: {
-    color: 'white'
+    color: "white",
   },
   textDark: {
-    color: 'black'
+    color: "black",
   },
 });
 

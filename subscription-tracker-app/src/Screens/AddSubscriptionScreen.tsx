@@ -15,6 +15,7 @@ import BrowseSubscriptionTiers from "../Components/BrowseSubscriptionTiers";
 import { Button } from "react-native-elements";
 import ChooseUserContainer from "../Components/ChooseUserContainer";
 import NotificationsForNewSub from "../Components/NoficationsForNewSub";
+import DatePicker from "../Components/DatePicker";
 const AddSubscriptionScreen = ({
   navigation,
   route,
@@ -38,6 +39,8 @@ const AddSubscriptionScreen = ({
   const [costValue, setCostValue] = useState<number | null>(null);
   const [selectedIntervalPeriod, setSelectedIntervalPeriod] =
     useState<Interval_periods>("monthly");
+  //date picker
+  const [date, setDate] = useState<Date>(new Date(Date.now()));
   // ------------------ //
   const intervalPeriods: Interval_periods[] = [
     "monthly",
@@ -70,28 +73,86 @@ const AddSubscriptionScreen = ({
   const handleSelectedIntervalPeriod = (period: Interval_periods) => {
     setSelectedIntervalPeriod(period);
   };
+  //handle date change
+  const formatDateToString = (date: Date): string => {
+    const currentDate = date;
+    console.log(currentDate);
+    const day = currentDate.getDate();
+    const month = currentDate.getMonth() + 1;
+    const year = currentDate.getFullYear();
+    return `${year}-${month}-${day}`;
+  };
+  const handleDateChange = (event: any, selectedDate: any) => {
+    setDate(selectedDate);
+  };
   //when creating subscription
   const handleCreateSubscription = async () => {
-    console.log("creating subscription");
-    if (chosenService) {
-      console.log("app name: " + chosenService.name);
-    } else if (inputValue) {
-      console.log("app name: " + inputValue);
-    }
-    if (chosenTier) {
-      console.log("tier name: " + chosenTier.name);
-      console.log("tier price " + chosenTier.price);
-      console.log("interval period: " + chosenTier.interval_period);
-    } else if (costValue) {
-      console.log("tier name: " + costValue);
-      console.log("interval period: " + selectedIntervalPeriod);
-    }
-    if (chosenUser) {
-      console.log("user: " + chosenUser.name);
-      console.log("notification enabled: " + notificationEnabled);
-    }
+    const createNewSubscription = async () => {
+      if (chosenTier && chosenUser && chosenService && date) {
+        console.log("all chosen");
+        const { data: subscription, error } = await supabase
+          .from("subscriptions")
+          .insert({
+            id: +1,
+            user_id: chosenUser?.id,
+            service_id: chosenService?.id,
+            subscription_tier_id: chosenTier?.id,
+            renewal_date: formatDateToString(date),
+            notifications_enabled: notificationEnabled,
+            active: true,
+          })
+          .select();
+        if (error) {
+          console.log(error);
+        }
+        if (subscription) {
+          console.log(subscription);
+        }
+      } else if (inputValue && costValue && chosenUser && date) {
+        const { data: service, error } = await supabase
+          .from("services")
+          .insert({ name: inputValue, icon: "bookMark.png", category_id: 2 })
+          .select();
+        if (error) {
+          console.log(error);
+        }
+        if (service) {
+          const { data: subscription_tier, error } = await supabase
+            .from("subscription_tiers")
+            .insert({
+              service_id: service[0].id,
+              name: inputValue,
+              price: costValue,
+              interval_period: selectedIntervalPeriod,
+            })
+            .select();
+          if (error) {
+            console.log(error);
+          }
+          if (subscription_tier) {
+            const { data: subscription, error } = await supabase
+              .from("subscriptions")
+              .insert({
+                user_id: chosenUser?.id,
+                service_id: service[0].id,
+                subscription_tier_id: subscription_tier[0].id,
+                renewal_date: formatDateToString(date),
+                notifications_enabled: notificationEnabled,
+                active: true,
+              })
+              .select();
+            if (error) {
+              console.log(error);
+            }
+            if (subscription) {
+              console.log(subscription);
+            }
+          }
+        }
+      }
+    };
+    createNewSubscription();
   };
-  //fetch services and there tiers
   useEffect(() => {
     const fetchServices = async () => {
       const { data: services, error } = await supabase
@@ -152,9 +213,15 @@ const AddSubscriptionScreen = ({
         </View>
       )}
 
+      <View style={{ alignSelf: "flex-start", marginVertical: 16 }}>
+        <DatePicker date={date} handleDateChange={handleDateChange} />
+      </View>
+
       {users.length > 0 && (
         <View>
-          <Text style={S.headingOne}>Välj användare</Text>
+          <Text style={[S.headingOne, { marginBottom: 16 }]}>
+            Välj användare
+          </Text>
           <ChooseUserContainer
             users={users}
             handleChooseUser={handleChooseUser}
