@@ -13,21 +13,27 @@ const S = StyleSheet.create({
   },
   onPrimaryColor: {
     backgroundColor: darkMode ? "#F5F1EC" : "#1F2627",
+    color: darkMode ? "#F5F1EC" : "#1F2627",
   },
   onPrimaryColorLight: {
     backgroundColor: "#1F2627",
+    color: "#1F2627",
   },
   onPrimaryColorDark: {
     backgroundColor: "#F5F1EC",
+    color: "#F5F1EC",
   },
   secondaryColor: {
     backgroundColor: darkMode ? "#1F2627" : "#F5F1EC",
+    color: darkMode ? "#1F2627" : "#F5F1EC",
   },
   secondaryColorLight: {
     backgroundColor: "#F5F1EC",
+    color: "#F5F1EC",
   },
   secondaryColorDark: {
     backgroundColor: "#1F2627",
+    color: "#1F2627",
   },
   tertiaryColor: {
     backgroundColor: "#A9C0FF",
@@ -37,9 +43,11 @@ const S = StyleSheet.create({
   },
   onTertiaryLight: {
     backgroundColor: "#1F2627",
+    color: "#1F2627",
   },
   onTertiaryDark: {
     backgroundColor: "#F5F1EC",
+    color: "#F5F1EC",
   },
 
   backgroundTransparencyColor: {
