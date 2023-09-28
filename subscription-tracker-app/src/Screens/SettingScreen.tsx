@@ -113,7 +113,7 @@ const SettingScreen = (props: any) => {
               <Text
                 style={[
                   S.headingTwo,
-                  darkTheme ? S.onBackgroundTextDark : S.onBackgroundTextLight,
+                  darkTheme ? S.textLight : S.textDark,
                 ]}
               >
                 Mörkt läge
@@ -130,7 +130,7 @@ const SettingScreen = (props: any) => {
               <Text
                 style={[
                   S.headingTwo,
-                  darkTheme ? S.onBackgroundTextDark : S.onBackgroundTextLight,
+                  darkTheme ? S.textLight : S.textDark,
                 ]}
               >
                 Tillåt notifikationer
@@ -138,10 +138,14 @@ const SettingScreen = (props: any) => {
               <Button title='Testa'
                titleStyle={{
                 color: darkTheme ? S.textDark.color : S.textLight.color,
-                width: 30,
-                height: 30, 
                 fontWeight: "bold",
-                fontSize: 10,
+                fontSize: 12,
+              }}
+              buttonStyle={{
+                width: 50,
+                height: 40, 
+                borderRadius: 10,
+                backgroundColor: darkTheme ? S.primaryColorLight.backgroundColor : S.primaryColorDark.backgroundColor,
               }}
               onPress={() => schedulePushNotification()}
               />
@@ -161,8 +165,8 @@ const SettingScreen = (props: any) => {
                   style={[
                     S.headingTwo,
                     darkTheme
-                      ? S.onBackgroundTextDark
-                      : S.onBackgroundTextLight,
+                      ? S.textLight
+                      : S.textDark,
                   ]}
                 >
                   Familjehantering
@@ -236,7 +240,6 @@ export default SettingScreen;
 const styles = StyleSheet.create({
   settingsScreenWrapper: {
     paddingTop: 48,
-    // height: '100%',
     flex: 1,
     gap: 10,
     paddingRight: 5,
@@ -247,7 +250,6 @@ const styles = StyleSheet.create({
   },
   profileContainer: {
     flexDirection: "row",
-    // backgroundColor: 'purple',
     height: 262.4,
     width: "100%",
     justifyContent: "center",
@@ -277,16 +279,14 @@ const styles = StyleSheet.create({
     width: "100%",
     height: "auto",
     flexDirection: "row",
-    // backgroundColor: 'blue',
-    alignContent: "center",
+    alignItems: "center",
     justifyContent: "space-between",
   },
   notifikationAlt: {
     width: "100%",
     height: "auto",
     flexDirection: "row",
-    // backgroundColor: 'red',
-    alignContent: "center",
+    alignItems: "center",
     justifyContent: "space-between",
   },
   altText: {
@@ -295,13 +295,12 @@ const styles = StyleSheet.create({
   familyAlt: {
     flexDirection: "row",
     justifyContent: "space-between",
-    // backgroundColor: 'pink',
+    alignItems: 'center',
     width: "100%",
     height: "auto",
   },
   DataAlt: {
     justifyContent: "space-between",
-    // backgroundColor: 'grey',
     width: "100%",
     height: "auto",
     gap: 10,
