@@ -38,41 +38,41 @@ const RegisterScreen = ({ navigation }: any) => {
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
+      options: {
+        data: {
+          fullName: fullName,
+          username: username,
+          pinCode: pinCode,
+        },
+      },
     });
 
-    if (error) Alert.alert(error.message);
-    setLoading(false);
-    if (data) {
-      console.log(data);
-      const { data: profile, error } = await supabase
+    if (error) {
+      Alert.alert(error.message);
+      setLoading(false);
+    }
+    if (data.user?.id) {
+      const userId = data.user?.id;
+
+      const { data: update, error } = await supabase
         .from("profiles")
         .update({ username: username, full_name: fullName, pin_code: pinCode })
-        .eq("id", data?.user?.id as string);
+        .eq("id", userId);
+
+      const { data: user } = await supabase
+        .from("users")
+        .insert({
+          profile_id: userId,
+          name: username,
+        })
+        .select();
 
       if (error) {
-        console.log(error);
+        console.log("error" + error.message);
       }
 
-      if (profile) {
-        console.log("profile" + data.user?.id);
-
-        const { data: user, error } = await supabase
-          .from("users")
-          .insert({
-            profile_id: data.user?.id,
-            name: username,
-          })
-          .select();
-
-        if (error) {
-          console.log("error" + error.message);
-        }
-
-        if (user) {
-          console.log("user" + user);
-
-          navigation.navigate("HomeScreen", { session: data });
-        }
+      if (user) {
+        navigation.navigate("Home", { session: data.session });
       }
     }
   }
