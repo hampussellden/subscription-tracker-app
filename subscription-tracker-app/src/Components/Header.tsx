@@ -48,7 +48,11 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
         <Pressable
           onPress={activeSingleSub ? closeSingle : () => navigation.goBack()}
         >
-          <ArrowLeft height={40} width={40} color={S.onBackgroundText.color} />
+          <ArrowLeft
+            height={40}
+            width={40}
+            color={S.onBackgroundTextDark.color}
+          />
         </Pressable>
       ) : backAbleRoutes.includes(currentRoute) ? (
         <Pressable onPress={() => navigation.goBack()}>

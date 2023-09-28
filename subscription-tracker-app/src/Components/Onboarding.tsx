@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   TouchableOpacity,
+  ScrollView,
 } from "react-native";
 import { Button } from "react-native-elements";
 import {
@@ -16,12 +17,12 @@ import {
 import { supabase } from "../../lib/supabase";
 import { Session } from "@supabase/supabase-js";
 import { arrowBack, arrowRight } from "../images/images";
-import { themeContext } from '../Theme'
+import { themeContext } from "../Theme";
 import S from "../style";
 
 function Onboarding(props: any) {
   // const [tosAccepted, setTosAccepted] = useState<boolean | null>(null);
-  const [darkTheme, setDarkTheme] = useContext<any>(themeContext)
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
 
   // useEffect(() => {
   //   const fetchTos = async () => {
@@ -69,8 +70,10 @@ function Onboarding(props: any) {
     screenWrapper: {
       height: "100%",
       flexDirection: "column",
-      justifyContent: "space-between",
-      backgroundColor: darkTheme ? S.primaryColorDark.backgroundColor : S.primaryColorLight.backgroundColor
+      // justifyContent: "space-between",
+      backgroundColor: darkTheme
+        ? S.primaryColorDark.backgroundColor
+        : S.primaryColorLight.backgroundColor,
     },
     header: {
       height: 392,
@@ -97,12 +100,13 @@ function Onboarding(props: any) {
       height: 55,
       // backgroundColor: 'blue',
       //  marginTop: 110,
+      marginTop: 160,
       marginBottom: 2,
       alignItems: "center",
       justifyContent: "space-around",
     },
     navContainerLast: {
-      marginTop: 0,
+      marginTop: 14,
       flexDirection: "row",
       width: "100%",
       height: 55,
@@ -124,10 +128,8 @@ function Onboarding(props: any) {
     },
   });
 
-  
-
   return (
-    <View style={styles.screenWrapper}>
+    <ScrollView style={styles.screenWrapper}>
       <View style={styles.header}>
         {count <= 0 && <Image source={onBoardingOne} />}
         {count == 1 && <Image source={onBoardingTwo} />}
@@ -136,7 +138,9 @@ function Onboarding(props: any) {
       <View style={styles.textContainer}>
         {count <= 0 && (
           <>
-            <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>Välkommen</Text>
+            <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>
+              Välkommen
+            </Text>
             <Text style={[S.paragraph, darkTheme ? S.textLight : S.textDark]}>
               Välkommen till [Appens Namn]! Vi är glada att du är här. Med vår
               app kan du enkelt hantera alla dina prenumerationer och få en klar
@@ -148,7 +152,9 @@ function Onboarding(props: any) {
 
         {count == 1 && (
           <>
-            <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>Hur börjar man?</Text>
+            <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>
+              Hur börjar man?
+            </Text>
             <Text style={[S.paragraph, darkTheme ? S.textLight : S.textDark]}>
               Nu är det dags att börja organisera dina prenumerationer. Tryck på
               knappen "Lägg till prenumeration" och fyll i detaljerna för varje
@@ -160,7 +166,9 @@ function Onboarding(props: any) {
 
         {count >= 2 && (
           <>
-            <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>Nu kör vi!</Text>
+            <Text style={[S.headingOne, darkTheme ? S.textLight : S.textDark]}>
+              Nu kör vi!
+            </Text>
             <Text style={[S.paragraph, darkTheme ? S.textLight : S.textDark]}>
               Nu när du har lagt till dina prenumerationer, kan du se en tydlig
               översikt över dina utgifter. [Appens Namn] hjälper dig att hålla
@@ -175,6 +183,7 @@ function Onboarding(props: any) {
               titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
               buttonStyle={{
                 alignSelf: "center",
+                marginTop: 20,
                 width: "100%",
                 maxWidth: 396,
                 paddingHorizontal: 24,
@@ -204,10 +213,8 @@ function Onboarding(props: any) {
           <Image source={arrowRight} />
         </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 }
-
-
 
 export default Onboarding;
