@@ -68,7 +68,7 @@ const RegisterScreen = ({ navigation }: any) => {
         .select();
 
       if (error) {
-        console.log("error" + error.message);
+        console.log(error);
       }
 
       if (user) {

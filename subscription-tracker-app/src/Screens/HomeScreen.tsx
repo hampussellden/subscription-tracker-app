@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {
   View,
   Text,
@@ -25,11 +25,12 @@ import {
 import SingleSubscription from "../Components/SingleSubscription";
 import Header from "../Components/Header";
 import AddSubscriptionFooter from "../Components/AddSubscriptionFooter";
+import { themeContext } from "../Theme";
 
 const HomeScreen = (props: any) => {
   const [reload, setReload] = useState<boolean>(false);
   const [tosAccepted, setTosAccepted] = useState<boolean | null>(null);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [users, setUsers] = useState<any[]>([]);
   const [userIds, setUserIds] = useState<number[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -44,7 +45,7 @@ const HomeScreen = (props: any) => {
   const [chosenUser, setChosenUser] = useState<User | null>(null);
   const session = props.route.params.session;
   const profileId = session.user.id;
-
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   //fetching of tos_accepted
   useEffect(() => {
     const fetchTos = async () => {
@@ -165,7 +166,13 @@ const HomeScreen = (props: any) => {
     setChosenUser(user);
   };
   return (
-    <View style={{ backgroundColor: S.primaryColor.backgroundColor }}>
+    <View
+      style={{
+        backgroundColor: darkTheme
+          ? S.primaryColorDark.backgroundColor
+          : S.primaryColorLight.backgroundColor,
+      }}
+    >
       {loading && (
         <View
           style={{

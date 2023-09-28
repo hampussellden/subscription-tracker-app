@@ -1,8 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, Image } from "react-native";
 import S from "../style";
 import { Switch } from "react-native-elements";
-import { bellDark, bellLight } from "../images/images";
+import {
+  bellSolid,
+  bellLight,
+  bellSolidWhite,
+  bellLightWhite,
+} from "../images/images";
+import { themeContext } from "../Theme";
 const styles = StyleSheet.create({
   bell: {
     width: 24,
@@ -14,6 +20,7 @@ const NotificationsForNewSub = ({
 }: {
   handleToggleNotification: () => void;
 }) => {
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const [notificationEnabled, setNotificationEnabled] =
     React.useState<boolean>(false);
 
@@ -31,13 +38,41 @@ const NotificationsForNewSub = ({
       }}
     >
       <View>
-        <Text style={S.headingTwo}>Skicka mig notiser</Text>
-        <Text style={S.label}>Speciellt för denna tjänst</Text>
+        <Text
+          style={[
+            S.headingTwo,
+            {
+              color: darkTheme
+                ? S.onPrimaryColorDark.color
+                : S.onPrimaryColorLight.color,
+            },
+          ]}
+        >
+          Skicka mig notiser
+        </Text>
+        <Text
+          style={[
+            S.label,
+            {
+              color: darkTheme
+                ? S.onPrimaryColorDark.color
+                : S.onPrimaryColorLight.color,
+            },
+          ]}
+        >
+          Speciellt för denna tjänst
+        </Text>
       </View>
       <View>
         <View style={{ display: "flex", flexDirection: "row", gap: 24 }}>
-          <Image source={bellDark} style={styles.bell} />
-          <Image source={bellLight} style={styles.bell} />
+          <Image
+            source={darkTheme ? bellSolidWhite : bellSolid}
+            style={styles.bell}
+          />
+          <Image
+            source={darkTheme ? bellLightWhite : bellLight}
+            style={styles.bell}
+          />
         </View>
         <Switch
           trackColor={{ false: "#1f2627", true: "#1f2627" }}

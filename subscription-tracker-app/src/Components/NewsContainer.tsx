@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { netflixIcon, spotifyIcon } from "../images/images";
 import NewsItem from "./NewsItem";
 import S from "../style";
+import { themeContext } from "../Theme";
+
 export type NewsItemType = {
   icon: any;
   title: string;
@@ -10,8 +12,8 @@ export type NewsItemType = {
 };
 
 const NewsContainer = () => {
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const mockNews: NewsItemType[] = [
-    //Should we get news from database?
     {
       icon: netflixIcon,
       title: "Netflix höjer priset!",
@@ -25,7 +27,19 @@ const NewsContainer = () => {
   ];
   return (
     <View>
-      <Text style={[S.headingTwo, S.onBackgroundText]}>Nyheter</Text>
+      <Text
+        style={[
+          S.headingTwo,
+          {
+            color: darkTheme
+              ? S.onBackgroundTextDark.color
+              : S.onBackgroundTextLight.color,
+          },
+          { marginBottom: 16 },
+        ]}
+      >
+        Nyheter
+      </Text>
       <ScrollView
         horizontal={true}
         contentContainerStyle={styles.contentContainer}

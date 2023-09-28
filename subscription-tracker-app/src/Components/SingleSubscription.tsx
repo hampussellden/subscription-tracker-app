@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { supabase } from "../../lib/supabase";
 import {
   Image,
@@ -12,6 +12,8 @@ import { arrowDown } from "../images/images";
 import { Interval_periods, Subscription } from "../types";
 import { Button } from "react-native-elements";
 import Header from "./Header";
+import { themeContext } from "../Theme";
+import S from "../style";
 
 const formatDateString = (renewal_date: string): string => {
   const date = new Date(renewal_date);
@@ -58,6 +60,7 @@ const SingleSubscription = ({
   navigation: any;
   activeSingleSub: boolean;
 }) => {
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const imageUrl = supabase.storage
     .from("banners")
     .getPublicUrl(subscription.services.banner as string);
@@ -71,7 +74,6 @@ const SingleSubscription = ({
       .eq("id", subscription.id)
       .select();
     if (active) {
-      console.log("update" + active);
       closeSingle();
     }
   };
@@ -93,16 +95,63 @@ const SingleSubscription = ({
           }}
         />
         <View style={styles.infoWrapper}>
-          <Text style={styles.subTitle}>Prenumerationstyp</Text>
-          <Text style={styles.bigText}>
+          <Text
+            style={[
+              S.headingTwo,
+              {
+                color: darkTheme
+                  ? S.onBackgroundTextDark.color
+                  : S.onBackgroundTextLight.color,
+              },
+            ]}
+          >
+            Prenumerationstyp
+          </Text>
+          <Text
+            style={[
+              S.headingOne,
+              {
+                color: darkTheme
+                  ? S.onBackgroundTextDark.color
+                  : S.onBackgroundTextLight.color,
+              },
+            ]}
+          >
             {subscription.subscription_tiers.name}
           </Text>
-          <Text style={styles.subTitle}>Betalningsdatum</Text>
-          <Text style={styles.bigText}>
+          <Text
+            style={[
+              S.headingTwo,
+              {
+                color: darkTheme
+                  ? S.onBackgroundTextDark.color
+                  : S.onBackgroundTextLight.color,
+              },
+            ]}
+          >
+            Betalningsdatum
+          </Text>
+          <Text
+            style={[
+              S.headingOne,
+              {
+                color: darkTheme
+                  ? S.onBackgroundTextDark.color
+                  : S.onBackgroundTextLight.color,
+              },
+            ]}
+          >
             {formatDateString(subscription.renewal_date).replace(/-/g, " ")}
           </Text>
           <Pressable style={styles.costContainer}>
-            <Text style={styles.bigText}>
+            <Text
+              style={[
+                S.headingOne,
+                {
+                  color: S.onTertiaryLight.color,
+                },
+              ]}
+            >
               {subscription.subscription_tiers.price}/
               {getIntervalPeriod(
                 subscription.subscription_tiers.interval_period
@@ -112,11 +161,19 @@ const SingleSubscription = ({
           </Pressable>
           <Button
             title='Avsluta Prenumeration'
-            titleStyle={{ color: "white", fontWeight: "bold", fontSize: 24 }}
+            titleStyle={{
+              color: darkTheme
+                ? S.onTertiaryLight.color
+                : S.secondaryColorLight.color,
+              fontWeight: "bold",
+              fontSize: 24,
+            }}
             buttonStyle={{
               marginTop: 20,
               borderRadius: 5,
-              backgroundColor: "black",
+              backgroundColor: darkTheme
+                ? S.onPrimaryColorDark.backgroundColor
+                : S.onPrimaryColorLight.backgroundColor,
               alignSelf: "center",
               width: 360,
               paddingHorizontal: 24,
@@ -162,6 +219,6 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     justifyContent: "space-between",
-    backgroundColor: "#A9C0FF",
+    backgroundColor: S.tertiaryColor.backgroundColor,
   },
 });

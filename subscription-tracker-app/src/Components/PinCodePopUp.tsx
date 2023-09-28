@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import { supabase } from "../../lib/supabase";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { Button } from "react-native-elements";
 import NumberInput from "./NumberInput";
 import S from "../style";
+import { themeContext } from "../Theme";
 const PinCodePopUp = ({
   profileId,
   handleUnlock,
@@ -13,6 +14,7 @@ const PinCodePopUp = ({
   handleUnlock: any;
   onPress: any;
 }) => {
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const [inputValue, setInputValue] = React.useState<string>("");
   const [correctPin, setCorrectPin] = React.useState<string | null>(null);
   const [pinCodeHolder, setPinCodeHolder] = React.useState<string[]>([
@@ -66,10 +68,57 @@ const PinCodePopUp = ({
     }
   };
 
+  const styles = StyleSheet.create({
+    container: {
+      position: "absolute",
+      top: 0,
+      left: -16,
+      width: Dimensions.get("window").width,
+      height: Dimensions.get("window").height * 1.3,
+      backgroundColor: darkTheme
+        ? S.backgroundTransparencyColorDark.backgroundColor
+        : S.backgroundTransparencyColorLight.backgroundColor,
+      zIndex: 50,
+      display: "flex",
+      justifyContent: "flex-start",
+      alignItems: "center",
+      flexDirection: "column",
+    },
+    pinCodeContainer: {
+      backgroundColor: darkTheme
+        ? S.onPrimaryColorDark.backgroundColor
+        : S.onPrimaryColorLight.backgroundColor,
+      minHeight: 76,
+      minWidth: 360,
+      maxWidth: 370,
+      maxHeight: 124,
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      borderRadius: 4,
+      gap: 16,
+      paddingHorizontal: 16,
+      paddingVertical: 24,
+      marginHorizontal: 16,
+      marginTop: Dimensions.get("window").height / 3.5,
+    },
+  });
+
   return (
     <View style={styles.container}>
       <View style={styles.pinCodeContainer}>
-        <Text>Ange din pinkod:</Text>
+        <Text
+          style={[
+            S.label,
+            {
+              color: darkTheme
+                ? S.secondaryColorDark.color
+                : S.secondaryColorLight.color,
+            },
+          ]}
+        >
+          Ange din pinkod:
+        </Text>
         <View
           style={{
             flexDirection: "row",
@@ -94,7 +143,7 @@ const PinCodePopUp = ({
           borderRadius: 5,
           borderWidth: 2,
           borderColor: "#000000",
-          backgroundColor: S.primaryColor.backgroundColor,
+          backgroundColor: "#FFFFFF",
           alignSelf: "center",
         }}
         containerStyle={{
@@ -107,36 +156,3 @@ const PinCodePopUp = ({
   );
 };
 export default PinCodePopUp;
-
-const styles = StyleSheet.create({
-  container: {
-    position: "absolute",
-    top: 0,
-    left: -16,
-    width: Dimensions.get("window").width,
-    height: Dimensions.get("window").height,
-    backgroundColor: "rgba(0,0,0,0.8))",
-    zIndex: 50,
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    flexDirection: "column",
-  },
-  pinCodeContainer: {
-    zIndex: 100,
-    backgroundColor: "white",
-    minHeight: 76,
-    minWidth: 360,
-    maxWidth: 370,
-    maxHeight: 124,
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    borderRadius: 4,
-    gap: 16,
-    // transform: [{ translateY: -100 }],
-    paddingHorizontal: 16,
-    paddingVertical: 24,
-    marginHorizontal: 16,
-  },
-});

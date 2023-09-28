@@ -16,7 +16,7 @@ export default ({
       display='spinner'
       is24Hour={true}
       onChange={handleDateChange}
-      textColor={"#1e5aff"}
+      textColor={S.tertiaryColor.backgroundColor}
       minimumDate={new Date(Date.now())}
     />
   );

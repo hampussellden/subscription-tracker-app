@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import {
   View,
   Text,
@@ -16,6 +16,8 @@ import { Button } from "react-native-elements";
 import ChooseUserContainer from "../Components/ChooseUserContainer";
 import NotificationsForNewSub from "../Components/NoficationsForNewSub";
 import DatePicker from "../Components/DatePicker";
+import { themeContext } from "../Theme";
+
 const AddSubscriptionScreen = ({
   navigation,
   route,
@@ -24,6 +26,7 @@ const AddSubscriptionScreen = ({
   route: any;
 }) => {
   //general state
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const [services, setServices] = useState<Service[]>([]);
   //notification state
   const [notificationEnabled, setNotificationEnabled] =
@@ -65,7 +68,6 @@ const AddSubscriptionScreen = ({
   };
   //handlers for when creating custom service and tiers
   const handleServiceNameChange = (text: string) => {
-    console.log(text);
     setInputValue(text);
   };
   const handleCustomCostInput = (input: string) => {
@@ -77,7 +79,6 @@ const AddSubscriptionScreen = ({
   //handle date change
   const formatDateToString = (date: Date): string => {
     const currentDate = date;
-    console.log(currentDate);
     const day = currentDate.getDate();
     const month = currentDate.getMonth() + 1;
     const year = currentDate.getFullYear();
@@ -90,13 +91,6 @@ const AddSubscriptionScreen = ({
   //when creating subscription
   const handleCreateSubscription = async () => {
     const createNewSubscription = async () => {
-      console.log(
-        inputValue,
-        costValue,
-        chosenUser,
-        date,
-        selectedIntervalPeriod
-      );
       if (chosenTier && chosenUser && chosenService && date) {
         const { data: subscription, error } = await supabase
           .from("subscriptions")
@@ -158,7 +152,6 @@ const AddSubscriptionScreen = ({
               console.log(error);
             }
             if (subscription) {
-              console.log(subscription);
             }
           }
         }
@@ -182,12 +175,36 @@ const AddSubscriptionScreen = ({
     fetchServices();
   }, []);
 
+  const styles = StyleSheet.create({
+    wrapper: {
+      paddingHorizontal: 16,
+      paddingTop: 48,
+      backgroundColor: darkTheme
+        ? S.primaryColorDark.backgroundColor
+        : S.primaryColorLight.backgroundColor,
+    },
+  });
+
   return (
-    <ScrollView style={styles.wrapper} contentContainerStyle={{ gap: 16 }}>
+    <ScrollView
+      style={styles.wrapper}
+      contentContainerStyle={{ gap: 16, paddingBottom: 120 }}
+    >
       {services ? (
         <>
           <Header navigation={navigation} />
-          <Text style={S.headingOne}>Lägg till ny tjänst</Text>
+          <Text
+            style={[
+              S.headingOne,
+              {
+                color: darkTheme
+                  ? S.onBackgroundTextDark.color
+                  : S.onBackgroundTextLight.color,
+              },
+            ]}
+          >
+            Lägg till ny tjänst
+          </Text>
           <BrowseServices
             handleChosenService={handleChooseService}
             services={services}
@@ -195,7 +212,7 @@ const AddSubscriptionScreen = ({
             chosenService={chosenService}
             inputValue={inputValue}
           />
-          {chosenService && (
+          {(chosenService || inputValue) && (
             <>
               <BrowseSubscriptionTiers
                 intervalPeriods={intervalPeriods}
@@ -220,7 +237,10 @@ const AddSubscriptionScreen = ({
             alignItems: "center",
           }}
         >
-          <ActivityIndicator size='large' color='#0000ff' />
+          <ActivityIndicator
+            size='large'
+            color={S.tertiaryColor.backgroundColor}
+          />
         </View>
       )}
 
@@ -230,7 +250,17 @@ const AddSubscriptionScreen = ({
 
       {users.length > 0 && (
         <View>
-          <Text style={[S.headingOne, { marginBottom: 16 }]}>
+          <Text
+            style={[
+              S.headingOne,
+              {
+                color: darkTheme
+                  ? S.onBackgroundTextDark.color
+                  : S.onBackgroundTextLight.color,
+              },
+              { marginBottom: 16 },
+            ]}
+          >
             Välj användare
           </Text>
           <ChooseUserContainer
@@ -246,9 +276,19 @@ const AddSubscriptionScreen = ({
       />
       <Button
         title={"Lägg till"}
+        titleStyle={[
+          S.headingTwo,
+          {
+            color: darkTheme
+              ? S.secondaryColorDark.color
+              : S.secondaryColorLight.color,
+          },
+        ]}
         onPress={handleCreateSubscription}
         buttonStyle={{
-          backgroundColor: S.onPrimaryColor.backgroundColor,
+          backgroundColor: darkTheme
+            ? S.onPrimaryColorDark.backgroundColor
+            : S.onPrimaryColorLight.backgroundColor,
           paddingHorizontal: 24,
           paddingVertical: 16,
         }}
@@ -258,11 +298,3 @@ const AddSubscriptionScreen = ({
 };
 
 export default AddSubscriptionScreen;
-
-const styles = StyleSheet.create({
-  wrapper: {
-    paddingHorizontal: 16,
-    marginTop: 48,
-    marginBottom: 60,
-  },
-});

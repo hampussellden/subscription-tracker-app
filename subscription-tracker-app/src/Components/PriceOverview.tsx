@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import S from "../style";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import PinCodePopUp from "./PinCodePopUp";
@@ -11,6 +11,7 @@ import {
   unlockedLight,
 } from "../images/images";
 import { Subscription, Service, SubscriptionTier } from "../types";
+import { themeContext } from "../Theme";
 
 const PriceOverview = ({
   profileId,
@@ -23,6 +24,7 @@ const PriceOverview = ({
   priceOverviewActive: boolean;
   onPress: any;
 }) => {
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const [active, setActive] = React.useState(false);
   const [unlocked, setUnlocked] = React.useState(false);
   const [showPinInput, setShowPinInput] = React.useState(false);
@@ -73,7 +75,19 @@ const PriceOverview = ({
           onPress={handleGoBackPress}
         />
       )}
-      <Text style={[S.headingTwo, S.onBackgroundText]}>Mina Kostnader</Text>
+      <Text
+        style={[
+          S.headingTwo,
+          {
+            color: darkTheme
+              ? S.onBackgroundTextDark.color
+              : S.onBackgroundTextLight.color,
+          },
+          { marginBottom: 16 },
+        ]}
+      >
+        Mina Kostnader
+      </Text>
       <Pressable style={styles.container} onPress={handlePress}>
         <View style={styles.topRow}>
           <Text style={[S.headingTwo]}>Månadens kostnader</Text>

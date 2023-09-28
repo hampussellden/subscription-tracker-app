@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, StyleSheet, Image, Pressable } from "react-native";
 import { useRoute } from "@react-navigation/native";
 import { gearDark, gearLight } from "../images/images";
 import ArrowLeft from "../images/arrowLeft.svg";
 import S from "../style";
+import { themeContext } from "../Theme";
+
 enum Routes {
   Home = "Home",
   AddSubscription = "AddSubscription",
@@ -23,6 +25,7 @@ const backAbleRoutes = [
 ] as Routes[];
 
 const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const route = useRoute() as Route;
   const currentRoute = route.name as Routes;
   const styles = StyleSheet.create({
@@ -37,7 +40,7 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
       paddingHorizontal: activeSingleSub ? 16 : 0,
       backgroundColor: activeSingleSub ? "transparent" : "inherit",
       position: activeSingleSub ? "absolute" : "relative",
-      top: activeSingleSub ? 48 : 0,
+      top: 0,
       marginTop: currentRoute === "Home" ? 48 : 0,
       zIndex: 1,
     },
@@ -56,7 +59,15 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
         </Pressable>
       ) : backAbleRoutes.includes(currentRoute) ? (
         <Pressable onPress={() => navigation.goBack()}>
-          <ArrowLeft height={40} width={40} color={S.onBackgroundText.color} />
+          <ArrowLeft
+            height={40}
+            width={40}
+            color={
+              darkTheme
+                ? S.onBackgroundTextDark.color
+                : S.onBackgroundTextLight.color
+            }
+          />
         </Pressable>
       ) : (
         <View></View>
@@ -64,7 +75,7 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
       {currentRoute === "AddSubscription" ? (
         <Pressable onPress={() => navigation.navigate("Settings")}>
           <Image
-            source={true ? gearLight : gearDark}
+            source={darkTheme ? gearLight : gearDark}
             style={{ width: 40, height: 40 }}
           />
         </Pressable>
@@ -73,7 +84,7 @@ const Header = ({ activeSingleSub, navigation, closeSingle }: any) => {
       ) : (
         <Pressable onPress={() => navigation.navigate("Settings")}>
           <Image
-            source={false ? gearLight : gearDark}
+            source={darkTheme ? gearLight : gearDark}
             style={{ width: 40, height: 40 }}
           />
         </Pressable>

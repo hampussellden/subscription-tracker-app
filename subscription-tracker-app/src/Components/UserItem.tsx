@@ -1,7 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
+import { themeContext } from "../Theme";
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { User } from "../types";
 import { supabase } from "../../lib/supabase";
+import S from "../style";
 
 const UserItem = ({
   chosenUser,
@@ -12,13 +14,19 @@ const UserItem = ({
   user: User;
   handleChosenUser: (user: User) => void;
 }) => {
+  const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const styles = StyleSheet.create({
     userImg: {
       width: 82,
       height: 82,
       borderRadius: 41,
       borderWidth: chosenUser?.id === user.id ? 4 : 0,
-      borderColor: chosenUser?.id === user.id ? "#000000" : "transparent",
+      borderColor:
+        chosenUser?.id === user.id
+          ? darkTheme
+            ? S.onTertiaryDark.color
+            : S.onTertiaryLight.color
+          : "transparent",
     },
     container: {
       display: "flex",
