@@ -15,6 +15,8 @@ import AddSubscriptionScreen from "./src/Screens/AddSubscriptionScreen";
 import * as Font from "expo-font";
 import S from "./src/style";
 import { themeContext } from "./src/Theme";
+// import {usePushNotifications} from './src/notification'
+// import NotificationScreen from './src/Screens/NotificationScreen'
 
 // export const themeContext = createContext<any>({});
 // export const themeContext = React.createContext({});
@@ -24,6 +26,9 @@ export default function App() {
  const [darkTheme, setDarkTheme] = useState<boolean>(false);
   const [session, setSession] = useState<Session | null>(null);
 
+  // const {expoPushToken} = usePushNotifications();
+  // console.log(expoPushToken);
+  
   useEffect(() => {
     Font.loadAsync({
       'DM_Sans_Regular': require("./assets/fonts/DMSans_18pt-Regular.ttf"),
@@ -58,11 +63,19 @@ export default function App() {
       >
         {session && session.user ? (
           <>
+
             <Stack.Screen
               name='Home'
               component={HomeScreen}
               initialParams={{ session: session }}
             />
+           {/* <Stack.Screen
+              name='Notification'
+              component={NotificationScreen}
+              initialParams={{ session: session }}
+            /> */}
+
+            
             <Stack.Screen
               name='AddSubscription'
               component={AddSubscriptionScreen}

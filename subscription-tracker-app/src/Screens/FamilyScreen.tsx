@@ -33,7 +33,7 @@ const FamilyScreen = (props: any) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const { data, error } = await supabase.from("users").select("*");
+      const { data, error } = await supabase.from("users").select("*").eq("profile_id", session?.user.id);;
 
       if (error) {
         console.log(error);

@@ -29,7 +29,7 @@ import AddSubscriptionFooter from "../Components/AddSubscriptionFooter";
 const HomeScreen = (props: any) => {
   const [reload, setReload] = useState<boolean>(false);
   const [tosAccepted, setTosAccepted] = useState<boolean | null>(null);
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [users, setUsers] = useState<any[]>([]);
   const [userIds, setUserIds] = useState<number[]>([]);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);

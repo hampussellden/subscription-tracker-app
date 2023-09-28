@@ -22,6 +22,8 @@ import Header from "../Components/Header";
 import S from "../style";
 import Ts from "../testStyle";
 import { themeContext } from "../Theme";
+import Notification from "../Components/Notification";
+import {schedulePushNotification} from "../Components/Notification"
 
 const SettingScreen = (props: any) => {
   const session = props.route.params.session;
@@ -33,6 +35,7 @@ const SettingScreen = (props: any) => {
   const [viewTos, setViewTos] = useState(false);
   const [viewGdpr, setViewGdpr] = useState(false);
   const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
+  const [notification, setNotification] = useState(false)
 
   const toggleNotificationEnabled = () => {
     setNotificationEnabled((previousState) => !previousState);
@@ -88,6 +91,7 @@ const SettingScreen = (props: any) => {
       ]}
     >
       <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
+        {notification && <Notification />}
         <Header navigation={props.navigation} />
         {viewCookies && <CookiepopUp onClick={handleCookies} />}
         {viewTos && <TosService onClick={handleTos} />}
@@ -131,6 +135,16 @@ const SettingScreen = (props: any) => {
               >
                 Tillåt notifikationer
               </Text>
+              <Button title='Testa'
+               titleStyle={{
+                color: darkTheme ? S.textDark.color : S.textLight.color,
+                width: 30,
+                height: 30, 
+                fontWeight: "bold",
+                fontSize: 10,
+              }}
+              onPress={() => schedulePushNotification()}
+              />
               <Switch
                 trackColor={{ false: "#1f2627", true: "#1f2627" }}
                 thumbColor={notificationEnabled ? "#A9C0FF" : "#f4f3f4"}
