@@ -7,7 +7,7 @@ import {
   Image,
   Pressable,
   ScrollView,
-  Keyboard
+  Keyboard,
 } from "react-native";
 import { Button, Input } from "react-native-elements";
 import { supabase } from "../../lib/supabase";
@@ -32,40 +32,45 @@ const RegisterScreen = ({ navigation }: any) => {
     "",
     "",
   ]);
-  
-  
+
   async function signUp() {
-    setLoading(true);    
+    setLoading(true);
     const { data, error } = await supabase.auth.signUp({
       email: email,
       password: password,
     });
-    
+
     if (error) Alert.alert(error.message);
     setLoading(false);
     if (data) {
-      console.log(
-        data
-        );
-      const {data:profile, error} = await supabase.from('profiles').update({username: username, full_name: fullName, pin_code: pinCode}).eq('id', data?.user?.id as string)
-      
-      if(error) { console.log(error)};
-    
-      if(profile ) {        
-        console.log('profile' + data.user?.id);
-        
-        const { data:user, error } = await supabase.from('users').insert({
-          profile_id: data.user?.id,
-          name: username,
-        }).select()
-  
+      console.log(data);
+      const { data: profile, error } = await supabase
+        .from("profiles")
+        .update({ username: username, full_name: fullName, pin_code: pinCode })
+        .eq("id", data?.user?.id as string);
+
+      if (error) {
+        console.log(error);
+      }
+
+      if (profile) {
+        console.log("profile" + data.user?.id);
+
+        const { data: user, error } = await supabase
+          .from("users")
+          .insert({
+            profile_id: data.user?.id,
+            name: username,
+          })
+          .select();
+
         if (error) {
-          console.log('error' + error.message);
+          console.log("error" + error.message);
         }
-  
+
         if (user) {
-          console.log('user' + user);
-          
+          console.log("user" + user);
+
           navigation.navigate("HomeScreen", { session: data });
         }
       }
@@ -73,7 +78,6 @@ const RegisterScreen = ({ navigation }: any) => {
   }
   const createProfile = async () => {
     if (password != passwordConfirmation) {
-      
       return;
     }
     if (createPinCode()) {
@@ -98,7 +102,6 @@ const RegisterScreen = ({ navigation }: any) => {
   const handleNumberValue = (obj: { key: number; value: string }) => {
     pinCodeContainer[obj.key] = obj.value;
     console.log(pinCodeContainer);
-    
   };
   const handleInputChange = ({
     value,
@@ -110,7 +113,6 @@ const RegisterScreen = ({ navigation }: any) => {
     pinCodeHolder[index] = value;
     setPinCode(pinCodeHolder.join(""));
   };
-  
 
   const styles = StyleSheet.create({
     wrapper: {
@@ -135,11 +137,12 @@ const RegisterScreen = ({ navigation }: any) => {
       padding: 10,
     },
   });
-  
-
 
   return (
-    <ScrollView style={styles.wrapper} contentContainerStyle={{marginHorizontal: 16}}>
+    <ScrollView
+      style={styles.wrapper}
+      contentContainerStyle={{ marginHorizontal: 16 }}
+    >
       <Pressable
         onPress={() => navigation.goBack()}
         style={{ marginLeft: 24, marginTop: 35 }}
