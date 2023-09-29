@@ -9,13 +9,13 @@ const GdprPopUp = (props:any) => {
   const [darkTheme, setDarkTheme] = useContext<any>(themeContext)
   return (
     <View style={styles.gdprWrapper}> 
+      <ScrollView nestedScrollEnabled={true}>
          <View style={styles.header}>
                 <TouchableOpacity onPress={() => props.onClick()}>
                 <Image source={closeDark}/>
                 </TouchableOpacity>
             </View>
       <Text style={styles.text}>Dataskyddsförordning (GDPR) </Text>
-      <ScrollView>
       <Text style={S.label}> Vi värnar om din integritet och följer Dataskyddsförordningen (GDPR) för att säkerställa att dina personuppgifter hanteras på ett säkert och rättvist sätt. Nedan finns information om vilken data vi samlar in och varför:{"\n"}</Text>
 <Text style={styles.text}>Användarinformation{"\n"}</Text>
 <Text style={S.label}>Ditt namn, e-postadress, och annan relevant användarinformation.{"\n"}</Text>

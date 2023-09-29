@@ -83,13 +83,23 @@ const SettingScreen = (props: any) => {
 
   const handleTos = () => {
     setViewTos(false);
-    setScrollEnabled(false);
+    setScrollEnabled(true);
   };
+
+  const handleTosPress = () => {
+    setViewTos(true);
+    setScrollEnabled(false);
+  }
 
   const handleGdpr = () => {
     setViewGdpr(false);
-    setScrollEnabled(false);
+    setScrollEnabled(true);
   };
+
+  const handleGdprPress = () => {
+    setViewTos(true);
+    setScrollEnabled(false);
+  }
 
   const sendNotification = () => {
     if (notificationEnabled) {
@@ -214,12 +224,12 @@ const SettingScreen = (props: any) => {
                 Cookies
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setViewTos(true)}>
+            <TouchableOpacity onPress={handleTosPress}>
               <Text style={[S.label, darkTheme ? S.textLight : S.textDark]}>
                 Användarvillkor & integritetspolicy
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => setViewGdpr(true)}>
+            <TouchableOpacity onPress={handleGdprPress}>
               <Text style={[S.label, darkTheme ? S.textLight : S.textDark]}>
                 GDPR
               </Text>
