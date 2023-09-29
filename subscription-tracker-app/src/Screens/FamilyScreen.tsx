@@ -33,7 +33,10 @@ const FamilyScreen = (props: any) => {
 
   useEffect(() => {
     const fetchUsers = async () => {
-      const { data, error } = await supabase.from("users").select("*").eq("profile_id", session?.user.id);;
+      const { data, error } = await supabase
+        .from("users")
+        .select("*")
+        .eq("profile_id", session?.user.id);
 
       if (error) {
         console.log(error);
@@ -181,10 +184,10 @@ const FamilyScreen = (props: any) => {
             source={{ uri: imageUrl.data.publicUrl }}
           />
           <View style={styles.userInfoContainer}>
-            {userData.map((users) => {
+            {userData.map((users, i) => {
               if (choosenUser?.id == users.id) {
                 return (
-                  <View>
+                  <View key={i}>
                     <Text
                       style={[
                         S.headingOne,

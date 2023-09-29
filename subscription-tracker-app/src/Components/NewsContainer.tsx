@@ -46,11 +46,7 @@ const NewsContainer = () => {
       >
         <>
           {mockNews.length > 0 &&
-            mockNews.map((item) => (
-              <>
-                <NewsItem news={item} />
-              </>
-            ))}
+            mockNews.map((item, i) => <NewsItem news={item} key={i} />)}
         </>
       </ScrollView>
     </View>

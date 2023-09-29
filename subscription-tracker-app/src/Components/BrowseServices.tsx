@@ -84,18 +84,20 @@ const BrowseServices = ({
             style={{ maxHeight: 240 }}
             contentContainerStyle={{ gap: 8 }}
           >
-            {services.map((service) => (
+            {services.map((service, i) => (
               <BrowseServiceItem
                 service={service}
                 onPress={handleChosenService}
-                key={service.id}
+                key={i}
                 chosenService={chosenService}
               />
             ))}
           </ScrollView>
           <Pressable
             style={styles.createNewServiceBtn}
-            onPress={() => setCreating(true)}
+            onPress={() => {
+              setCreating(true), handleChosenService(null);
+            }}
           >
             <Text
               style={[

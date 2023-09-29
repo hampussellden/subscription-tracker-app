@@ -14,14 +14,13 @@ const ChooseUserContainer = ({
 }) => {
   return (
     <ScrollView horizontal={true} contentContainerStyle={{ gap: 8 }}>
-      {users.map((user) => (
-        <>
-          <AddSubUserItem
-            user={user}
-            handleChooseUser={handleChooseUser}
-            chosenUser={chosenUser}
-          />
-        </>
+      {users.map((user, i) => (
+        <AddSubUserItem
+          user={user}
+          handleChooseUser={handleChooseUser}
+          chosenUser={chosenUser}
+          key={i}
+        />
       ))}
     </ScrollView>
   );

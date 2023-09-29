@@ -142,10 +142,9 @@ function Onboarding(props: any) {
               Välkommen
             </Text>
             <Text style={[S.paragraph, darkTheme ? S.textLight : S.textDark]}>
-              Välkommen till [Appens Namn]! Vi är glada att du är här. Med vår
-              app kan du enkelt hantera alla dina prenumerationer och få en klar
-              översikt över dina utgifter. Låt oss ta dig genom hur du kommer
-              igång
+              Välkommen till RNWL! Vi är glada att du är här. Med vår app kan du
+              enkelt hantera alla dina prenumerationer och få en klar översikt
+              över dina utgifter. Låt oss ta dig genom hur du kommer igång
             </Text>
           </>
         )}
@@ -171,9 +170,9 @@ function Onboarding(props: any) {
             </Text>
             <Text style={[S.paragraph, darkTheme ? S.textLight : S.textDark]}>
               Nu när du har lagt till dina prenumerationer, kan du se en tydlig
-              översikt över dina utgifter. [Appens Namn] hjälper dig att hålla
-              koll på din budget och föreslår sätt att spara pengar. Låt oss
-              tillsammans förbättra din ekonomiska situation! Lycka till med din
+              översikt över dina utgifter. RNWL hjälper dig att hålla koll på
+              din budget och föreslår sätt att spara pengar. Låt oss tillsammans
+              förbättra din ekonomiska situation! Lycka till med din
               onboarding-process! Om du har några frågor, tveka inte att
               kontakta vår support.
             </Text>

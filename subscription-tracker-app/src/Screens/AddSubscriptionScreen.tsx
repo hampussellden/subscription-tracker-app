@@ -118,7 +118,12 @@ const AddSubscriptionScreen = ({
       ) {
         const { data: service, error } = await supabase
           .from("services")
-          .insert({ name: inputValue, icon: "bookMark.png", category_id: 2 })
+          .insert({
+            name: inputValue,
+            icon: "bookmark.png",
+            banner: "defaultBanner.png",
+            category_id: 3,
+          })
           .select();
         if (error) {
           console.log(error);
@@ -152,6 +157,7 @@ const AddSubscriptionScreen = ({
               console.log(error);
             }
             if (subscription) {
+              navigation.navigate("Home", { reload: true });
             }
           }
         }
