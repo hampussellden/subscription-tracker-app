@@ -23,19 +23,20 @@ import S from "../style";
 import Ts from "../testStyle";
 import { themeContext } from "../Theme";
 import Notification from "../Components/Notification";
-import {schedulePushNotification} from "../Components/Notification";
-import {registerForPushNotificationsAsync} from "../Components/Notification";
+import { schedulePushNotification } from "../Components/Notification";
+import { registerForPushNotificationsAsync } from "../Components/Notification";
 
 const SettingScreen = (props: any) => {
   const session = props.route.params.session;
 
   const [darkModeenabled, setDarkModeEnabled] = useState(false);
-  const [notificationEnabled, setNotificationEnabled] = useState<boolean>(false);
+  const [notificationEnabled, setNotificationEnabled] =
+    useState<boolean>(false);
   const [viewCookies, setViewCookies] = useState(false);
   const [viewTos, setViewTos] = useState(false);
   const [viewGdpr, setViewGdpr] = useState(false);
   const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
-  const [notification, setNotification] = useState(false)
+  const [notification, setNotification] = useState(false);
   const [scrollEnabled, setScrollEnabled] = useState<boolean>(true);
 
   const toggleNotificationEnabled = () => {
@@ -73,33 +74,35 @@ const SettingScreen = (props: any) => {
 
   const handleCookies = () => {
     setViewCookies(false);
-    setScrollEnabled(true)
+    setScrollEnabled(true);
   };
   const handleCookiePress = () => {
     setViewCookies(true);
-    setScrollEnabled(false)
-  }
+    setScrollEnabled(false);
+  };
 
   const handleTos = () => {
     setViewTos(false);
-    setScrollEnabled(false)
+    setScrollEnabled(false);
   };
 
   const handleGdpr = () => {
     setViewGdpr(false);
-    setScrollEnabled(false)
+    setScrollEnabled(false);
   };
 
   const sendNotification = () => {
-    if(notificationEnabled) {
+    if (notificationEnabled) {
       schedulePushNotification();
     } else {
-      Alert.alert('För att få notifikationer måste du  växla notifikations knappen')
+      Alert.alert(
+        "För att få notifikationer måste du  växla notifikations knappen"
+      );
     }
-  }
+  };
 
   console.log(scrollEnabled);
-  
+
   return (
     <View
       style={[
@@ -108,10 +111,16 @@ const SettingScreen = (props: any) => {
         { paddingBottom: 60 },
       ]}
     >
-      <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }} scrollEnabled={scrollEnabled}>
-        {notification && <Notification />}
+      {notification && <Notification />}
+      {viewCookies && <CookiepopUp onClick={handleCookies} />}
+      {viewTos && <TosService onClick={handleTos} />}
+      {viewGdpr && <GdprPopUp onClick={handleGdpr} />}
+      <ScrollView
+        contentContainerStyle={{ paddingHorizontal: 16 }}
+        scrollEnabled={scrollEnabled}
+      >
         <Header navigation={props.navigation} />
-        
+
         <Text
           style={[
             S.headingOne,
@@ -120,9 +129,6 @@ const SettingScreen = (props: any) => {
         >
           Inställningar
         </Text>
-        {viewCookies && <CookiepopUp onClick={handleCookies} />}
-              {viewTos && <TosService onClick={handleTos} />}
-              {viewGdpr && <GdprPopUp onClick={handleGdpr} />}
         <View style={styles.profileContainer}>
           <Image style={styles.profileImg} source={gangplankProfile} />
         </View>
@@ -130,10 +136,7 @@ const SettingScreen = (props: any) => {
           <View style={styles.switchSection}>
             <View style={styles.darkModeAlt}>
               <Text
-                style={[
-                  S.headingTwo,
-                  darkTheme ? S.textLight : S.textDark,
-                ]}
+                style={[S.headingTwo, darkTheme ? S.textLight : S.textDark]}
               >
                 Mörkt läge
               </Text>
@@ -147,26 +150,26 @@ const SettingScreen = (props: any) => {
             </View>
             <View style={styles.notifikationAlt}>
               <Text
-                style={[
-                  S.headingTwo,
-                  darkTheme ? S.textLight : S.textDark,
-                ]}
+                style={[S.headingTwo, darkTheme ? S.textLight : S.textDark]}
               >
                 Tillåt notifikationer
               </Text>
-              <Button title='Testa'
-               titleStyle={{
-                color: darkTheme ? S.textDark.color : S.textLight.color,
-                fontWeight: "bold",
-                fontSize: 12,
-              }}
-              buttonStyle={{
-                width: 50,
-                height: 40, 
-                borderRadius: 10,
-                backgroundColor: darkTheme ? S.primaryColorLight.backgroundColor : S.primaryColorDark.backgroundColor,
-              }}
-              onPress={sendNotification}
+              <Button
+                title='Testa'
+                titleStyle={{
+                  color: darkTheme ? S.textDark.color : S.textLight.color,
+                  fontWeight: "bold",
+                  fontSize: 12,
+                }}
+                buttonStyle={{
+                  width: 50,
+                  height: 40,
+                  borderRadius: 10,
+                  backgroundColor: darkTheme
+                    ? S.primaryColorLight.backgroundColor
+                    : S.primaryColorDark.backgroundColor,
+                }}
+                onPress={sendNotification}
               />
               <Switch
                 trackColor={{ false: "#1f2627", true: "#1f2627" }}
@@ -181,12 +184,7 @@ const SettingScreen = (props: any) => {
                 onPress={() => props.navigation.navigate("Family")}
               >
                 <Text
-                  style={[
-                    S.headingTwo,
-                    darkTheme
-                      ? S.textLight
-                      : S.textDark,
-                  ]}
+                  style={[S.headingTwo, darkTheme ? S.textLight : S.textDark]}
                 >
                   Familjehantering
                 </Text>
@@ -234,7 +232,10 @@ const SettingScreen = (props: any) => {
           </View>
           <Button
             title='Logga ut'
-            titleStyle={[S.headingTwo, darkTheme ? S.textTertiaryColor : S.textLight]}
+            titleStyle={[
+              S.headingTwo,
+              darkTheme ? S.textTertiaryColor : S.textLight,
+            ]}
             buttonStyle={{
               alignSelf: "center",
               width: "100%",
@@ -314,7 +315,7 @@ const styles = StyleSheet.create({
   familyAlt: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: 'center',
+    alignItems: "center",
     width: "100%",
     height: "auto",
   },
