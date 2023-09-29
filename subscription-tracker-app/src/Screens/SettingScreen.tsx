@@ -94,7 +94,7 @@ const SettingScreen = (props: any) => {
     if(notificationEnabled) {
       schedulePushNotification();
     } else {
-      Alert.alert('För att få notifikationer måste du godkänna genom att växla notifikations knappen')
+      Alert.alert('För att få notifikationer måste du  växla notifikations knappen')
     }
   }
 
