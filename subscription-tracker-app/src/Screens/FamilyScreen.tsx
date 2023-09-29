@@ -50,8 +50,6 @@ const FamilyScreen = (props: any) => {
       }
     };
     fetchUsers();
-
-    console.log(darkTheme);
   }, []);
 
   const imageUrl = supabase.storage
@@ -79,7 +77,7 @@ const FamilyScreen = (props: any) => {
         : S.primaryColorLight.backgroundColor,
     },
     blurred: {
-      backgroundColor: "black",
+      // backgroundColor: "black",
       height: "100%",
       width: "100%",
       padding: 5,

@@ -6,6 +6,7 @@ import S from '../style'
 const CookiepopUp = (props:any) => {
   return (
     <View style={styles.infoScreenWrapper}>
+     <ScrollView nestedScrollEnabled={true} >
         <View style={styles.infoContainer}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => props.onClick()}>
@@ -13,7 +14,6 @@ const CookiepopUp = (props:any) => {
                 </TouchableOpacity>
             </View>
             <View style={styles.textContainer}>
-                <ScrollView>
                     <Text style={styles.boldText}>Cookie-inställningar</Text>
                 <Text style={S.label}>
 Vi värdesätter din integritet och använder cookies och liknande tekniker för att förbättra din upplevelse på vår app och webbplats. Nedan kan du anpassa dina cookie-inställningar. {"\n"} </Text>
@@ -25,9 +25,9 @@ Prestanda och statistik Vi använder dessa cookies för att samla in information
 Marknadsförings- och reklamcookies Vi och våra partners använder dessa cookies för att visa annonser som är relevanta för dina intressen. De kan även användas för att mäta effektiviteten av reklamkampanjer.{"\n"}</Text>
 
 <Text style={S.label}>Genom att justera dina cookie-inställningar kan du kontrollera vilka typer av cookies som används. Observera att vissa funktioner i appen kan vara begränsade om du inaktiverar vissa cookies. För mer information om hur vi hanterar dina personuppgifter, vänligen läs vår integritetspolicy. </Text>
-</ScrollView>
             </View>
         </View>
+</ScrollView>
     </View>
   )
 }

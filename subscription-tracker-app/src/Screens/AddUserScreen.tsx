@@ -113,12 +113,12 @@ const AddUserScreen = (props: any) => {
         </ImageBackground>
         {/* <Image style={styles.userImage} source={testUser}/> */}
         <Input
-          label='Username:'
+          label='Användarnamn:'
           labelStyle={[S.headingTwo, darkTheme ? S.textLight : S.textDark]}
           onChangeText={(text) => setText(text)}
           value={text}
           placeholder='jane'
-          placeholderTextColor={darkTheme ? "black" : "white"}
+          placeholderTextColor={darkTheme ? S.tertiaryColor.color : S.textLight.color}
           autoCapitalize={"none"}
           inputStyle={{ color: darkTheme ? "black" : "white" }}
           style={styles.textInput}
@@ -130,7 +130,7 @@ const AddUserScreen = (props: any) => {
         <Button
           title='Lägg till användare'
           titleStyle={{
-            color: darkTheme ? S.textDark.color : S.textLight.color,
+            color: darkTheme ? S.tertiaryColor.color : S.textLight.color,
             fontWeight: "bold",
             fontSize: 24,
           }}

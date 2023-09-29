@@ -37,6 +37,7 @@ const S = StyleSheet.create({
   },
   tertiaryColor: {
     backgroundColor: "#A9C0FF",
+    color: "#A9C0FF",
   },
   OnTertiary: {
     color: darkMode ? "#F5F1EC" : "#1F2627",
@@ -129,6 +130,10 @@ const S = StyleSheet.create({
   textDark: {
     color: "black",
   },
+  textTertiaryColor: {
+    color: "#A9C0FF"
+  },
+
 });
 
 export default S;

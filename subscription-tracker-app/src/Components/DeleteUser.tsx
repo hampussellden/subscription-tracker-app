@@ -37,7 +37,7 @@ const DeleteUser = (props: any) => {
       <Button
         title='Radera användare'
         titleStyle={{
-          color: darkTheme ? S.textDark.color : S.textLight.color,
+          color: darkTheme ? S.tertiaryColor.color : S.textLight.color,
           fontWeight: "bold",
           fontSize: 24,
         }}
@@ -58,7 +58,11 @@ const DeleteUser = (props: any) => {
       />
       <Button
         title='Gå Tillbaka'
-        titleStyle={{ color: "black", fontWeight: "bold", fontSize: 24 }}
+        titleStyle={{
+          color: darkTheme ? S.textLight.color : S.textDark.color,
+          fontWeight: "bold",
+          fontSize: 24,
+        }}
         buttonStyle={{
           alignSelf: "center",
           width: "100%",
@@ -68,7 +72,7 @@ const DeleteUser = (props: any) => {
           borderWidth: 2,
           borderColor: darkTheme ? S.textLight.color : S.textDark.color,
           borderRadius: 5,
-          backgroundColor: S.primaryColor.backgroundColor,
+          backgroundColor: darkTheme ? S.primaryColorDark.backgroundColor : S.primaryColorLight.backgroundColor,
         }}
         // disabled={loading}
         onPress={handlePress}

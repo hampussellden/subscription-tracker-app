@@ -23,19 +23,20 @@ import S from "../style";
 import Ts from "../testStyle";
 import { themeContext } from "../Theme";
 import Notification from "../Components/Notification";
-import {schedulePushNotification} from "../Components/Notification"
+import {schedulePushNotification} from "../Components/Notification";
+import {registerForPushNotificationsAsync} from "../Components/Notification";
 
 const SettingScreen = (props: any) => {
   const session = props.route.params.session;
 
   const [darkModeenabled, setDarkModeEnabled] = useState(false);
-  const [notificationEnabled, setNotificationEnabled] =
-    useState<boolean>(false);
+  const [notificationEnabled, setNotificationEnabled] = useState<boolean>(false);
   const [viewCookies, setViewCookies] = useState(false);
   const [viewTos, setViewTos] = useState(false);
   const [viewGdpr, setViewGdpr] = useState(false);
   const [darkTheme, setDarkTheme] = useContext<any>(themeContext);
   const [notification, setNotification] = useState(false)
+  const [scrollEnabled, setScrollEnabled] = useState<boolean>(true);
 
   const toggleNotificationEnabled = () => {
     setNotificationEnabled((previousState) => !previousState);
@@ -72,16 +73,33 @@ const SettingScreen = (props: any) => {
 
   const handleCookies = () => {
     setViewCookies(false);
+    setScrollEnabled(true)
   };
+  const handleCookiePress = () => {
+    setViewCookies(true);
+    setScrollEnabled(false)
+  }
 
   const handleTos = () => {
     setViewTos(false);
+    setScrollEnabled(false)
   };
 
   const handleGdpr = () => {
     setViewGdpr(false);
+    setScrollEnabled(false)
   };
 
+  const sendNotification = () => {
+    if(notificationEnabled) {
+      schedulePushNotification();
+    } else {
+      Alert.alert('För att få notifikationer måste du godkänna genom att växla notifikations knappen')
+    }
+  }
+
+  console.log(scrollEnabled);
+  
   return (
     <View
       style={[
@@ -90,12 +108,10 @@ const SettingScreen = (props: any) => {
         { paddingBottom: 60 },
       ]}
     >
-      <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }}>
+      <ScrollView contentContainerStyle={{ paddingHorizontal: 16 }} scrollEnabled={scrollEnabled}>
         {notification && <Notification />}
         <Header navigation={props.navigation} />
-        {viewCookies && <CookiepopUp onClick={handleCookies} />}
-        {viewTos && <TosService onClick={handleTos} />}
-        {viewGdpr && <GdprPopUp onClick={handleGdpr} />}
+        
         <Text
           style={[
             S.headingOne,
@@ -104,6 +120,9 @@ const SettingScreen = (props: any) => {
         >
           Inställningar
         </Text>
+        {viewCookies && <CookiepopUp onClick={handleCookies} />}
+              {viewTos && <TosService onClick={handleTos} />}
+              {viewGdpr && <GdprPopUp onClick={handleGdpr} />}
         <View style={styles.profileContainer}>
           <Image style={styles.profileImg} source={gangplankProfile} />
         </View>
@@ -147,7 +166,7 @@ const SettingScreen = (props: any) => {
                 borderRadius: 10,
                 backgroundColor: darkTheme ? S.primaryColorLight.backgroundColor : S.primaryColorDark.backgroundColor,
               }}
-              onPress={() => schedulePushNotification()}
+              onPress={sendNotification}
               />
               <Switch
                 trackColor={{ false: "#1f2627", true: "#1f2627" }}
@@ -192,7 +211,7 @@ const SettingScreen = (props: any) => {
             >
               Integritet och data
             </Text>
-            <TouchableOpacity onPress={() => setViewCookies(true)}>
+            <TouchableOpacity onPress={handleCookiePress}>
               <Text style={[S.label, darkTheme ? S.textLight : S.textDark]}>
                 Cookies
               </Text>
@@ -215,7 +234,7 @@ const SettingScreen = (props: any) => {
           </View>
           <Button
             title='Logga ut'
-            titleStyle={[S.label, darkTheme ? Ts.textLightBg : Ts.textDarkBg]}
+            titleStyle={[S.headingTwo, darkTheme ? S.textTertiaryColor : S.textLight]}
             buttonStyle={{
               alignSelf: "center",
               width: "100%",
